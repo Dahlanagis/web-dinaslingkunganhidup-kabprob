@@ -1,0 +1,78 @@
+/* Custom Sidebar Dark Theme */
+.fi-sidebar {
+    background-color: #1a2538 !important;
+}
+
+.fi-sidebar-item-label {
+    color: #cbd5e1 !important;
+}
+
+.fi-sidebar-item-icon {
+    color: #94a3b8 !important;
+}
+
+.fi-sidebar-group-label {
+    color: #64748b !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.fi-sidebar-item-active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label,
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: #ffffff !important;
+}
+
+/* Sidebar Profile Override */
+.custom-sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 10px;
+}
+
+.custom-sidebar-profile .avatar {
+    width: 45px;
+    height: 45px;
+    background-color: #3b82f6; /* Blue matching screenshot avatar */
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.custom-sidebar-profile .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-sidebar-profile .name {
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.custom-sidebar-profile .role {
+    color: #38bdf8;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Ensure main content is light */
+.fi-main {
+    background-color: #f1f5f9 !important;
+}

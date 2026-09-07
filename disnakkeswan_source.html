@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Beranda | Disnakkeswan Kab. Probolinggo</title>
+    
+        <link rel="icon" href="http://127.0.0.1:8000/storage/settings/4SHILvbYS1QPdnF7ysChL0zI5zYz0tCjOS29b0tG.png" type="image/x-icon">
+        
+    <!-- Meta SEO -->
+    <meta name="description" content="Website Resmi Dinas Peternakan dan Kesehatan Hewan Kabupaten Probolinggo. Menyediakan informasi pelayanan kesehatan hewan, inseminasi buatan, data statistik peternakan, dan pengaduan.">
+    <meta name="keywords" content="Disnakkeswan, Peternakan Probolinggo, Kesehatan Hewan, Puskeswan, SKKH, Sapi Potong, Sapi Perah, Pemkab Probolinggo">
+    <meta name="author" content="Dinas Peternakan dan Kesehatan Hewan Kab. Probolinggo">
+
+    <!-- Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS & Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom Style System — Gaya Visual Diskominfo Kab. Probolinggo -->
+    <style>
+        :root {
+            --primary: #1a3c6e;
+            --primary-dark: #0f2544;
+            --primary-light: #2a5298;
+            --accent: #e8a317;
+            --accent-hover: #c98a0f;
+            --bg-light: #f4f7fb;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-shadow: 0 4px 16px rgba(26, 60, 110, 0.06);
+            --card-shadow-hover: 0 12px 32px rgba(26, 60, 110, 0.14);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        /* ── Topbar Header ── */
+        .topbar {
+            background: linear-gradient(90deg, #0f2544, #1a3c6e);
+            color: #cbd5e1;
+            font-size: 0.82rem;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--accent);
+        }
+        .topbar a { color: #e2e8f0; text-decoration: none; transition: color 0.2s; }
+        .topbar a:hover { color: var(--accent); }
+
+        /* ── Navbar ── */
+        .navbar-main {
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+        }
+        .navbar-brand-logo { display: flex; align-items: center; gap: 12px; }
+        .brand-badge-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
+        }
+        .brand-title { font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: var(--primary-dark); letter-spacing: -0.3px; }
+        .brand-subtitle { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .nav-link-custom {
+            font-weight: 600; color: var(--text-main);
+            padding: 8px 16px !important; border-radius: 8px;
+            transition: all 0.2s ease; font-size: 0.93rem;
+        }
+        .nav-link-custom:hover, .nav-link-custom.active {
+            color: var(--primary) !important;
+            background-color: #e8edf5;
+        }
+
+        .dropdown-menu-custom {
+            border: none; border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            padding: 10px; min-width: 240px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .dropdown-item-custom {
+            font-weight: 500; font-size: 0.9rem;
+            padding: 10px 14px; border-radius: 8px;
+            color: var(--text-main);
+            display: flex; align-items: center; gap: 10px;
+            transition: all 0.2s ease;
+        }
+        .dropdown-item-custom:hover {
+            background-color: #e8edf5;
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+        .dropdown-item-custom i { color: var(--primary); font-size: 1.1rem; }
+
+        /* ── Running Ticker ── */
+        .running-ticker {
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            color: #fff; padding: 10px 0; font-size: 0.9rem;
+        }
+        .ticker-badge {
+            background: var(--accent); color: #000;
+            font-weight: 700; padding: 4px 12px;
+            border-radius: 20px; font-size: 0.78rem;
+            text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+        }
+
+        /* ── Hero Carousel ── */
+        .hero-banner-item {
+            height: 480px; background-size: cover;
+            background-position: center; position: relative;
+            border-radius: 20px; overflow: hidden;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(15, 37, 68, 0.92) 0%, rgba(26, 60, 110, 0.4) 60%, rgba(0,0,0,0.1) 100%);
+            display: flex; align-items: flex-end;
+            padding: 45px; color: #fff;
+        }
+        .hero-title { font-size: 2.2rem; font-weight: 800; line-height: 1.25; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* ── Cards ── */
+        .card-custom {
+            border: none; border-radius: 20px;
+            background: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            position: relative; overflow: hidden;
+            z-index: 1;
+        }
+        .card-custom::after {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 0; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.5s ease;
+            z-index: 2;
+        }
+        .card-custom:hover::after { width: 100%; }
+        .card-custom:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(26, 60, 110, 0.12);
+        }
+
+        .service-icon-box {
+            width: 65px; height: 65px; border-radius: 18px;
+            background: rgba(26, 60, 110, 0.06);
+            color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; margin-bottom: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .service-icon-box::before {
+            content: ''; position: absolute; inset: 0; border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            opacity: 0; transition: opacity 0.4s ease; z-index: -1;
+        }
+        .card-custom:hover .service-icon-box {
+            color: #ffffff;
+            transform: translateY(-5px) scale(1.08) rotate(5deg);
+            box-shadow: 0 12px 25px rgba(26, 60, 110, 0.25);
+        }
+        .card-custom:hover .service-icon-box::before { opacity: 1; }
+
+        /* ── Counter Box ── */
+        .counter-card {
+            background: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 30px 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 1;
+        }
+        .counter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(26, 60, 110, 0.15);
+        }
+        .counter-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        .counter-card:hover::before {
+            opacity: 1;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+        .glass-counter-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glass-icon-box {
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 2.2rem;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .glass-counter-card:hover .glass-icon-box {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .glass-counter-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .glass-counter-label {
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+        
+        /* ── Footer ── */
+        footer {
+            background: linear-gradient(180deg, #0f2544, #091a33);
+            color: #cbd5e1; padding-top: 60px; padding-bottom: 30px; margin-top: 80px;
+        }
+        footer h5 {
+            color: #ffffff; font-weight: 700; font-size: 1.1rem;
+            margin-bottom: 20px; position: relative; padding-bottom: 12px;
+            display: block; width: fit-content;
+        }
+        footer h5::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            width: 50px; height: 4px;
+            background: linear-gradient(90deg, var(--accent), #ffc107);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        footer h5:hover::after {
+            width: 100%;
+        }
+        footer a { color: #93c5fd; text-decoration: none; transition: all 0.2s ease; }
+        footer a:hover { color: var(--accent); padding-left: 5px; }
+
+        .badge-category {
+            background-color: #e8edf5; color: var(--primary);
+            font-weight: 700; padding: 6px 14px;
+            border-radius: 20px; font-size: 0.75rem; text-transform: uppercase;
+        }
+
+        /* ── Utilities ── */
+        .btn-primary-custom { background: var(--primary); color: #fff; border: none; }
+        .btn-primary-custom:hover { background: var(--primary-dark); color: #fff; }
+        .btn-outline-primary-custom { color: var(--primary); border: 2px solid var(--primary); background: transparent; }
+        .btn-outline-primary-custom:hover { background: var(--primary); color: #fff; }
+        .text-primary-custom { color: var(--primary) !important; }
+        .bg-primary-custom { background-color: var(--primary) !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    </head>
+<body>
+
+    <!-- NAVBAR MAIN -->
+    <nav class="navbar navbar-expand-lg navbar-main sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-logo" href="http://127.0.0.1:8000">
+                                    <img src="http://127.0.0.1:8000/storage/settings/logo_user_transparent.png" alt="Logo" style="height: 48px; object-fit: contain;">
+                                <div>
+                                        <div class="brand-title">Disnakkeswan</div>
+                    <div class="brand-subtitle">Kab. Probolinggo</div>
+                </div>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                  <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                                                                                                                <!-- SINGLE MENU -->
+                                  <li class="nav-item">
+                                      <a class="nav-link nav-link-custom active" href="http://127.0.0.1:8000" >
+                                          <i class="bi bi-house-door me-1"></i> HOME
+                                      </a>
+                                  </li>
+                                                                                                                        <!-- DROPDOWN MENU -->
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link nav-link-custom dropdown-toggle active" href="#" data-bs-toggle="dropdown">
+                                          PROFIL
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-custom" style="max-height: 350px; overflow-y: auto;">
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/profil-instansi" >
+                                                      <i class="bi bi-clock-history"></i> Profil Instansi
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/maklumat-pelayanan" >
+                                                      <i class="bi bi-file-earmark-text"></i> Maklumat Pelayanan
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/pejabat-pengelola" >
+                                                      <i class="bi bi-person-badge"></i> Pejabat Pengelola
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/visi-misi" >
+                                                      <i class="bi bi-compass"></i> Visi Misi
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/struktur-organisasi" >
+                                                      <i class="bi bi-diagram-3"></i> Struktur Organisasi
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/tugas-fungsi" >
+                                                      <i class="bi bi-card-checklist"></i> Tugas dan Fungsi
+                                                  </a>
+                                              </li>
+                                                                                </ul>
+                                  </li>
+                                                                                                                        <!-- DROPDOWN MENU -->
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link nav-link-custom dropdown-toggle active" href="#" data-bs-toggle="dropdown">
+                                          LAYANAN
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-custom" style="max-height: 350px; overflow-y: auto;">
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/layanan" >
+                                                      <i class="bi bi-grid"></i> Semua Layanan Publik
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/layanan/pelayanan-kesehatan-hewan-puskeswan" >
+                                                      <i class="bi bi-hospital"></i> Pelayanan Puskeswan
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/layanan/layanan-inseminasi-buatan-ib" >
+                                                      <i class="bi bi-lightning-charge"></i> Inseminasi Buatan (IB)
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/profil/maklumat-pelayanan" >
+                                                      <i class="bi bi-file-earmark-text"></i> Maklumat Pelayanan
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/layanan/rekomendasi-izin-usaha-peternakan" >
+                                                      <i class="bi bi-shield-check"></i> Izin Usaha Peternakan
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/layanan-a" >
+                                                      <i class="bi bi-play-circle"></i> layanan A
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/layanan-b-1" >
+                                                      <i class="bi bi-star"></i> layanan B
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/layanan-c" >
+                                                      <i class="bi bi-image"></i> Layanan C
+                                                  </a>
+                                              </li>
+                                                                                </ul>
+                                  </li>
+                                                                                                                        <!-- DROPDOWN MENU -->
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link nav-link-custom dropdown-toggle active" href="#" data-bs-toggle="dropdown">
+                                          DOKUMEN
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-custom" style="max-height: 350px; overflow-y: auto;">
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/dokumen" >
+                                                      <i class="bi bi-folder2-open"></i> Semua Dokumen
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/dokumen?kategori=Perencanaan Kinerja" >
+                                                      <i class="bi bi-file-earmark-text"></i> Perencanaan Kinerja
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/dokumen?kategori=Pengukuran Kinerja" >
+                                                      <i class="bi bi-graph-up"></i> Pengukuran Kinerja
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/dokumen?kategori=Pelaporan Kinerja" >
+                                                      <i class="bi bi-journal-text"></i> Pelaporan Kinerja
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/dokumen?kategori=Evaluasi Kinerja" >
+                                                      <i class="bi bi-clipboard-check"></i> Evaluasi Kinerja
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/1" >
+                                                      <i class="bi bi-link"></i> 1
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/2" >
+                                                      <i class="bi bi-chat-dots"></i> 2
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/page/3" >
+                                                      <i class="bi bi-calendar"></i> 3
+                                                  </a>
+                                              </li>
+                                                                                </ul>
+                                  </li>
+                                                                                                                        <!-- DROPDOWN MENU -->
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link nav-link-custom dropdown-toggle active" href="#" data-bs-toggle="dropdown">
+                                          INFORMASI
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-custom" style="max-height: 350px; overflow-y: auto;">
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/berita" >
+                                                      <i class="bi bi-newspaper"></i> Berita Terkini
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="https://ppid.probolinggokab.go.id" target=&quot;_blank&quot;>
+                                                      <i class="bi bi-info-circle"></i> Portal PPID Pemkab
+                                                  </a>
+                                              </li>
+                                                                                        <li>
+                                                  <a class="dropdown-item dropdown-item-custom" href="http://127.0.0.1:8000/galeri" >
+                                                      <i class="bi bi-images"></i> Galeri Foto &amp; Video
+                                                  </a>
+                                              </li>
+                                                                                </ul>
+                                  </li>
+                                                                                                                        <!-- SINGLE MENU -->
+                                  <li class="nav-item">
+                                      <a class="nav-link nav-link-custom " href="http://127.0.0.1:8000/kontak" >
+                                           HUBUNGI
+                                      </a>
+                                  </li>
+                                                                              
+                      <li class="nav-item ms-lg-4 d-flex align-items-center gap-3 mt-3 mt-lg-0 border-start ps-lg-4 border-secondary border-opacity-25">
+                          <!-- Login Admin button removed by request -->
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_of_Probolinggo_Regency.svg" alt="Logo Pemkab" style="height: 45px; width: auto; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));" onerror="this.style.display='none'">
+                      </li>
+                  </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- RUNNING TICKER -->
+    <div class="running-ticker">
+        <div class="container d-flex align-items-center gap-3">
+            <span class="ticker-badge"><i class="bi bi-megaphone-fill me-1"></i> PENGUMUMAN</span>
+            <marquee class="fw-medium text-light" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                Selamat Datang di Website Resmi Dinas Peternakan dan Kesehatan Hewan (DISNAKKESWAN) Kabupaten Probolinggo. Mari wujudkan peternakan maju, mandiri, dan modern di Kabupaten Probolinggo.
+            </marquee>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT VIEW -->
+    <main>
+        <!-- CAROUSEL SECTION -->
+<section class="py-4" id="layanan-unggulan">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main Slider (8 cols) -->
+            <div class="col-lg-8">
+                <div id="heroCarousel" class="carousel slide carousel-fade shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+                    <div class="carousel-indicators mb-4">
+                                                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                                                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" class=""></button>
+                                            </div>
+                    <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+                                <div class="hero-banner-item" style="background-image: url('http://127.0.0.1:8000/storage/banners/banner1.png');">
+                                    <div class="hero-overlay">
+                                        <div>
+                                            <h2 class="hero-title">Disnakkeswan Kab. Probolinggo</h2>
+                                                                                            <p class="text-light opacity-90 d-none d-md-block mb-3 fs-6">
+                                                    Dinas Peternakan dan Kesehatan Hewan Kabupaten Probolinggo hadir untuk mewujudkan kemandirian pangan asal hewan, menjamin kesehatan masyarakat veteriner, dan meningkatkan kesejahteraan peternak.
+                                                </p>
+                                                                                                                                        <a href="/profil" class="btn btn-primary-custom fw-bold px-4 py-2 rounded-pill shadow-sm mt-2">
+                                                    Profil Kami <i class="bi bi-arrow-right ms-1"></i>
+                                                </a>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="carousel-item ">
+                                <div class="hero-banner-item" style="background-image: url('http://127.0.0.1:8000/storage/banners/banner2.png');">
+                                    <div class="hero-overlay">
+                                        <div>
+                                            <h2 class="hero-title">Pelayanan Kesehatan Hewan Terpadu</h2>
+                                                                                            <p class="text-light opacity-90 d-none d-md-block mb-3 fs-6">
+                                                    Kami menyediakan layanan pemeriksaan, pengobatan, dan pencegahan penyakit hewan menular secara responsif dan profesional.
+                                                </p>
+                                                                                                                                        <a href="/layanan" class="btn btn-primary-custom fw-bold px-4 py-2 rounded-pill shadow-sm mt-2">
+                                                    Lihat Layanan <i class="bi bi-arrow-right ms-1"></i>
+                                                </a>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon p-3 bg-dark bg-opacity-50 rounded-circle"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon p-3 bg-dark bg-opacity-50 rounded-circle"></span>
+                    </button>
+                </div>
+                
+                <!-- Extra Cards beneath Carousel to fill empty space -->
+                <div class="row g-3 mt-1">
+                                        
+                                                                                            <div class="col-md-6">
+                            <!-- Hidden lightbox trigger -->
+                                                            <a data-fslightbox="quick-cards" href="http://127.0.0.1:8000/storage/quick_cards/jPmO5VzZRNlSyRcF47tTzzUzRtbJDmKpR48CijcS.jpg" id="lightbox-card-4" class="d-none"></a>
+                                                        <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden quick-card" 
+                                 style="background: url('http://127.0.0.1:8000/storage/quick_cards/jPmO5VzZRNlSyRcF47tTzzUzRtbJDmKpR48CijcS.jpg') center/cover no-repeat; z-index: 1; min-height: 230px; display: flex; align-items: flex-end; cursor: pointer; background-color: #0f2544;"
+                                 onclick="document.getElementById(&#039;lightbox-card-4&#039;).click();">
+                                <!-- Overlay -->
+                                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, color-mix(in srgb, #0f2544 85%, transparent) 0%, rgba(30, 41, 59, 0.3) 100%); z-index: -1;"></div>
+                                
+                                <div class="position-relative z-1 w-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <span class="badge bg-warning text-dark rounded-pill px-3 py-2 shadow-sm fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">DOKUMEN</span>
+                                        <div class="bg-white bg-opacity-10 rounded-circle d-flex justify-content-center align-items-center" style="width:40px; height:40px; backdrop-filter:blur(5px);">
+                                            <i class="bi bi-file-earmark-check fs-5 text-warning"></i>
+                                        </div>
+                                    </div>
+                                                                            <h5 class="fw-bolder m-0 text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">HASIL SKM</h5>
+                                                                                    <p class="small text-light opacity-90 mb-3" style="line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Informasi &amp; Dokumen Standar Kompetensi</p>
+                                                                                                                <a href="javascript:void(0)" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-4 hover-scale-btn shadow-sm transition-all" onclick="event.stopPropagation(); document.getElementById(&#039;lightbox-card-4&#039;).click();">
+                                        Lihat Data <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                                                                                            <div class="col-md-6">
+                            <!-- Hidden lightbox trigger -->
+                                                        <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden quick-card" 
+                                 style="background: url('http://127.0.0.1:8000/storage/berita_images/9C45tISWd7dYEBOeLrak54Kg8CDbqbS2iZJ4OZQF.jpg') center/cover no-repeat; z-index: 1; min-height: 230px; display: flex; align-items: flex-end; cursor: pointer; background-color: #1e3a8a;"
+                                 onclick="window.location.href=&#039;http://127.0.0.1:8000/berita/peternak-ayam-1788145577&#039;">
+                                <!-- Overlay -->
+                                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, color-mix(in srgb, #1e3a8a 85%, transparent) 0%, rgba(30, 41, 59, 0.3) 100%); z-index: -1;"></div>
+                                
+                                <div class="position-relative z-1 w-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <span class="badge bg-warning text-dark rounded-pill px-3 py-2 shadow-sm fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">INFO TERBARU</span>
+                                        <div class="bg-white bg-opacity-10 rounded-circle d-flex justify-content-center align-items-center" style="width:40px; height:40px; backdrop-filter:blur(5px);">
+                                            <i class="bi bi-newspaper fs-5 text-warning"></i>
+                                        </div>
+                                    </div>
+                                                                            <h5 class="fw-bolder m-0 text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">peternak ayam</h5>
+                                        <p class="small text-light opacity-90 mb-3" style="line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">31 August 2026</p>
+                                                                        <a href="http://127.0.0.1:8000/berita/peternak-ayam-1788145577" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-4 hover-scale-btn shadow-sm transition-all" onclick="event.stopPropagation(); ">
+                                        Baca Berita <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+
+            <!-- Quick Action Cards Side Panel (Dynamic Loop) -->
+            <div class="col-lg-4 d-flex flex-column gap-3">
+                                                                                    <!-- Card: Layanan Puskeswan -->
+                        <!-- Hidden lightbox trigger -->
+                                                <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden quick-card" 
+                             style="background: url('http://127.0.0.1:8000/assets/images/puskeswan_bg.png') center/cover no-repeat; z-index: 1; min-height: 230px; display: flex; align-items: flex-end; cursor: pointer; background-color: #0f2544;"
+                             onclick="window.location.href=&#039;http://127.0.0.1:8000/layanan&#039;">
+                            <!-- Overlay -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, color-mix(in srgb, rgba(15,37,68, 0.95) 85%, transparent) 0%, rgba(15, 23, 42, 0.3) 100%); z-index: -1;"></div>
+                            
+                            <div class="position-relative z-1 w-100">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-white text-dark rounded-pill px-3 py-2 shadow-sm fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">AKSES CEPAT</span>
+                                    <div class="bg-white bg-opacity-25 rounded-circle d-flex justify-content-center align-items-center" style="width:40px; height:40px; backdrop-filter:blur(5px);">
+                                        <i class="bi bi-hospital fs-5 text-white"></i>
+                                    </div>
+                                </div>
+                                                                    <h5 class="fw-bolder m-0 text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Layanan Puskeswan</h5>
+                                                                            <p class="small text-light opacity-90 mb-3" style="line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Pengobatan &amp; Dokter Hewan On-Call</p>
+                                                                                                    <a href="http://127.0.0.1:8000/layanan" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-4 hover-scale-btn shadow-sm transition-all" onclick="event.stopPropagation(); ">
+                                    Buka Tautan <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                                                                    <!-- Card: Maklumat Pelayanan -->
+                        <!-- Hidden lightbox trigger -->
+                                                <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden quick-card" 
+                             style="background: url('http://127.0.0.1:8000/assets/images/maklumat_bg.png') center/cover no-repeat; z-index: 1; min-height: 230px; display: flex; align-items: flex-end; cursor: pointer; background-color: #0f2544;"
+                             onclick="window.location.href=&#039;http://127.0.0.1:8000/profil/maklumat-pelayanan&#039;">
+                            <!-- Overlay -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, color-mix(in srgb, rgba(199, 134, 12, 0.95) 85%, transparent) 0%, rgba(15, 23, 42, 0.3) 100%); z-index: -1;"></div>
+                            
+                            <div class="position-relative z-1 w-100">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-white text-dark rounded-pill px-3 py-2 shadow-sm fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">INFO PUBLIK</span>
+                                    <div class="bg-white bg-opacity-25 rounded-circle d-flex justify-content-center align-items-center" style="width:40px; height:40px; backdrop-filter:blur(5px);">
+                                        <i class="bi bi-file-earmark-text fs-5 text-white"></i>
+                                    </div>
+                                </div>
+                                                                    <h5 class="fw-bolder m-0 text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Maklumat Pelayanan</h5>
+                                                                            <p class="small text-light opacity-90 mb-3" style="line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Standar Pelayanan Disnakkeswan</p>
+                                                                                                    <a href="http://127.0.0.1:8000/profil/maklumat-pelayanan" class="btn btn-sm bg-white fw-bold rounded-pill px-4 hover-scale-btn shadow-sm transition-all" onclick="event.stopPropagation(); ">
+                                    Lihat Dokumen <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                                                                    <!-- Card: SP4N LAPOR! -->
+                        <!-- Hidden lightbox trigger -->
+                                                <div class="p-4 rounded-4 text-white shadow-sm position-relative overflow-hidden quick-card" 
+                             style="background: url('http://127.0.0.1:8000/assets/images/lapor_bg.png') center/cover no-repeat; z-index: 1; min-height: 230px; display: flex; align-items: flex-end; cursor: pointer; background-color: #0f2544;"
+                             onclick="window.location.href=&#039;https://www.lapor.go.id/&#039;">
+                            <!-- Overlay -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, color-mix(in srgb, rgba(15, 23, 42, 0.95) 85%, transparent) 0%, rgba(15, 23, 42, 0.3) 100%); z-index: -1;"></div>
+                            
+                            <div class="position-relative z-1 w-100">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-white text-dark rounded-pill px-3 py-2 shadow-sm fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">PENGADUAN</span>
+                                    <div class="bg-white bg-opacity-25 rounded-circle d-flex justify-content-center align-items-center" style="width:40px; height:40px; backdrop-filter:blur(5px);">
+                                        <i class="bi bi-chat-left-quote fs-5 text-white"></i>
+                                    </div>
+                                </div>
+                                                                    <h5 class="fw-bolder m-0 text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">SP4N LAPOR!</h5>
+                                                                            <p class="small text-light opacity-90 mb-3" style="line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Layanan Aspirasi &amp; Aduan Peternak</p>
+                                                                                                    <a href="https://www.lapor.go.id/" class="btn btn-sm btn-warning text-dark fw-bold rounded-pill px-4 hover-scale-btn shadow-sm transition-all" onclick="event.stopPropagation(); ">
+                                    Buka Halaman <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                                                </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATISTIK POPULASI TERNAK (REDESIGN PREMIUM) -->
+<section class="py-5" style="background: #070e1a;">
+    <div class="container py-3">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <div class="d-inline-flex align-items-center gap-2 mb-3">
+                <div style="width: 28px; height: 2px; background: #f59e0b; border-radius: 2px;"></div>
+                <span class="text-warning fw-bold text-uppercase" style="font-size: 0.78rem; letter-spacing: 1.5px;">
+                    Statistik Kinerja
+                </span>
+                <div style="width: 28px; height: 2px; background: #f59e0b; border-radius: 2px;"></div>
+            </div>
+            <h2 class="fw-extrabold text-white mb-2" style="font-weight: 800; font-size: 2rem;">
+                Capaian &amp; Data Terkini
+            </h2>
+            <p class="mb-0" style="color: #64748b; font-size: 0.95rem; max-width: 580px; margin: 0 auto; line-height: 1.7;">
+                Gambaran ringkas pencapaian kinerja, populasi ternak, dan data strategis lainnya di lingkungan Dinas Peternakan dan Kesehatan Hewan Kabupaten Probolinggo.
+            </p>
+        </div>
+
+        <style>
+            .stats-slider-container {
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-bottom: 1.5rem;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(245, 158, 11, 0.4) rgba(255, 255, 255, 0.05);
+                -webkit-overflow-scrolling: touch;
+                margin-left: -0.75rem;
+                margin-right: -0.75rem;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            .stats-slider-container::-webkit-scrollbar { height: 5px; }
+            .stats-slider-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+            .stats-slider-container::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.4); border-radius: 10px; }
+
+            .stats-grid-slider {
+                display: grid;
+                grid-template-rows: repeat(2, 1fr);
+                grid-auto-flow: column;
+                grid-auto-columns: calc(25% - 1.125rem);
+                gap: 1rem;
+                scroll-snap-type: x mandatory;
+            }
+            .stats-grid-slider > div { scroll-snap-align: start; height: 100%; }
+
+            @media (max-width: 1199px) { .stats-grid-slider { grid-auto-columns: calc(33.333% - 1rem); } }
+            @media (max-width: 991px)  { .stats-grid-slider { grid-auto-columns: calc(50% - 0.75rem); } }
+            @media (max-width: 575px)  { .stats-grid-slider { grid-auto-columns: 85%; } }
+
+            .stat-card {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 14px;
+                padding: 1.25rem 1.25rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            .stat-card:hover {
+                background: rgba(255,255,255,0.06);
+                border-color: rgba(245,158,11,0.3);
+                transform: translateY(-4px);
+                box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            }
+            .stat-icon-wrap {
+                width: 48px; height: 48px;
+                border-radius: 12px;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0;
+                background: rgba(245,158,11,0.12);
+                border: 1px solid rgba(245,158,11,0.25);
+                font-size: 1.4rem;
+                color: #fbbf24;
+            }
+        </style>
+
+        <div class="stats-slider-container">
+            <div class="stats-grid-slider">
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-badge-ad"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">324.580</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Populasi Sapi Potong</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Terbesar di Jawa Timur</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-cup-hot"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">15.420</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Populasi Sapi Perah</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Kawasan Senduro &amp; Krucil</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-heart-pulse"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">192.300</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Kambing &amp; Domba</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Tersebar di 24 Kecamatan</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-hospital"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">7</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Pos Puskeswan Aktif</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Melayani seluruh wilayah</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">245.000+</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Dosis Vaksinasi PMK</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Capaian Vaksinasi 2025/2026</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-bar-chart-fill"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">234.654</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">sapi potong</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">penyambelihan sapi di kab probolinggo</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-egg"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">1.250.000</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Ayam Petelur</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Tingkat Produksi Tinggi</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-cup-hot"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">3.400.000</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Ayam Pedaging</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Pasokan Daging Lokal</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">245</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Peternak Binaan</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Tersebar di 24 Kecamatan</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-shop"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">5</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Rumah Potong Hewan</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Standar Halal &amp; Higienis</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-droplet"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">8.500</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Produksi Susu Harian</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Kualitas Premium Grade A</div>
+                                                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/statistik" class="stat-card">
+                            <div class="stat-icon-wrap">
+                                <i class="bi bi-heart-pulse"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="fw-extrabold" style="font-size: 1.55rem; color: #f1f5f9; line-height: 1.1; letter-spacing: -0.5px; font-weight: 800;">1.240</div>
+                                <div class="text-truncate" style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 2px;">Kunjungan Dokter Hewan</div>
+                                                                    <div class="text-truncate mt-1" style="font-size: 0.68rem; color: #f59e0b; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Layanan Rutin 2026</div>
+                                                            </div>
+                        </a>
+                    </div>
+                            </div>
+
+                        <div class="text-center mt-3 d-none d-lg-block">
+                <span style="font-size: 0.73rem; color: #475569;">
+                    <i class="bi bi-arrows-left-right me-1"></i> Geser untuk melihat lebih banyak
+                </span>
+            </div>
+                    </div>
+    </div>
+</section>
+
+<!-- LAYANAN UNGGULAN (DESAIN EKSEKUTIF KEDINASAN NAVY) -->
+<section class="py-5" style="background: #0c1a2e;">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div style="width: 4px; height: 28px; background: #f59e0b; border-radius: 2px;"></div>
+                    <span class="text-warning fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 1.2px;">
+                        Layanan Kami
+                    </span>
+                </div>
+                <h2 class="fw-extrabold text-white mb-1" style="font-weight: 800; font-size: 2rem; line-height: 1.25; letter-spacing: -0.3px;">Layanan Unggulan Disnakkeswan</h2>
+                <p class="text-light mb-0" style="line-height: 1.65; opacity: 0.8; font-size: 0.95rem;">Memberikan pelayanan yang prima dan profesional demi terwujudnya kesehatan hewan dan kesejahteraan peternak.</p>
+            </div>
+            <a href="http://127.0.0.1:8000/layanan" class="btn fw-semibold px-4 py-2 mt-3 mt-md-0 text-white d-inline-flex align-items-center gap-2" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;">
+                Lihat Semua <i class="bi bi-arrow-right text-warning"></i>
+            </a>
+        </div>
+
+        <style>
+            .services-slider-container {
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-bottom: 1.5rem;
+                padding-top: 0.5rem;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.05);
+                -webkit-overflow-scrolling: touch;
+                margin-left: -0.75rem;
+                margin-right: -0.75rem;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            .services-slider-container::-webkit-scrollbar { height: 6px; }
+            .services-slider-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+            .services-slider-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 10px; }
+
+            .services-grid-slider {
+                display: grid;
+                grid-template-rows: 1fr;
+                grid-auto-flow: column;
+                grid-auto-columns: calc(33.333% - 1rem);
+                gap: 1.25rem;
+                scroll-snap-type: x mandatory;
+            }
+            .services-grid-slider > div { scroll-snap-align: start; height: 100%; }
+            @media (max-width: 991px) { .services-grid-slider { grid-auto-columns: calc(50% - 0.75rem); } }
+            @media (max-width: 767px) { .services-grid-slider { grid-auto-columns: 86%; } }
+
+            .svc-card {
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 16px;
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+                overflow: hidden;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            .svc-card:hover {
+                transform: translateY(-6px);
+                border-color: rgba(245,158,11,0.5);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,158,11,0.2);
+            }
+            .svc-card:hover .svc-arrow { transform: translateX(4px); }
+            .svc-arrow { transition: transform 0.3s ease; }
+            .svc-num {
+                font-size: 5rem;
+                font-weight: 900;
+                line-height: 1;
+                letter-spacing: -4px;
+                color: rgba(255,255,255,0.04);
+                position: absolute;
+                top: 12px;
+                right: 18px;
+                font-family: 'Arial Black', sans-serif;
+                user-select: none;
+            }
+        </style>
+
+        <div class="services-slider-container position-relative">
+            <div class="services-grid-slider">
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">01</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Teknis Medis</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-heart-pulse-fill" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Pelayanan Kesehatan &amp; Pengobatan Ternak (Puskeswan)</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Pemeriksaan kesehatan, pengobatan ternak sakit, dan konsultasi penyakit oleh Dokter Hewan dan Pengawas Kesehatan He...</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🩺 Dokter Hewan On-Call</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">💊 Rekam Medik Digital</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🚑 Puskeswan Keliling</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> 1 Hari Kerja / On-Call 24 Jam
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Gratis / Sesuai Perda Retribusi Medis Veteriner</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/pelayanan-kesehatan-pengobatan-ternak-puskeswan" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">02</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Reproduksi</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-lightning-charge-fill" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Layanan Inseminasi Buatan (IB / Kawin Suntik)</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Peningkatan mutu genetik ternak sapi dan kambing melalui pelayanan kawin suntik menggunakan semen beku unggul (Sime...</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🧬 Semen Beku Unggul</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">💉 Inseminator Resmi</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🐂 Simental &amp; Limosin</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> Maksimal 12 Jam setelah laporan birahi
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Gratis (Subsidi Program Pemkab)</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/layanan-inseminasi-buatan-ib" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">03</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Legalitas &amp; Sertifikasi</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-file-earmark-check-fill" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Penerbitan Surat Keterangan Kesehatan Hewan (SKKH)</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Dokumen resmi persyaratan lalu lintas dan pengeluaran/pemasukan ternak antar kabupaten atau pulau.</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">📜 Barcode Resmi SKKH</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🔍 Inspeksi Medis</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🚚 Syarat Lalu Lintas</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> 1 Hari Kerja
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Gratis / Non-Retribusi</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/penerbitan-surat-keterangan-kesehatan-hewan-skkh" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">04</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">PelayananPerizinanTeknis</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-building-check" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Rekomendasi Izin Usaha Peternakan &amp; Rumah Potong Hewan</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Verifikasi teknis kelayakan lokasi, kelayakan higiene sanitasi, dan AMDAL/UKL-UPL untuk peternakan komersial.</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🏢 Verifikasi RPH &amp; TPU</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🌿 Higiene Sanitasi</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">📋 Rekomendasi Teknis</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> 3-5 Hari Kerja
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Sesuai Perda Retribusi</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/rekomendasi-izin-usaha-peternakan-rumah-potong-hewan" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">05</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Laboratorium</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-shield-shaded" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Pelayanan Pengujian Laboratorium Kesehatan Masyarakat Veteriner (Kesmavet)</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Pengujian mutu susu segar, organoleptik daging, bebas residu antibiotik, dan pemeriksaan penyakit zoonosis.</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🧪 Uji Susu &amp; Daging</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🛡️ Residu Antibiotik</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">✅ Standar ASUH</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> 2-3 Hari Kerja
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Sesuai Ketentuan Retribusi Laboratorium</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/layanan-pengujian-laboratorium-kesmavet" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">06</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Pembinaan &amp; Penyuluhan</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-people-fill" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">Layanan Konsultasi &amp; Pembinaan Kelompok Tani Ternak (KTT)</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">Bimbingan teknis pakan berkualitas, silase, pencegahan penyakit, serta legalitas Kelompok Tani Ternak.</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">👥 Kelompok Tani Ternak</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🌾 Pakan &amp; Silase</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">🎓 Penyuluhan Rutin</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> Sesuai Jadwal Penugasan
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Gratis</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/konsultasi-pembinaan-kelompok-tani-ternak" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="h-100">
+                        <div class="svc-card position-relative">
+                            <!-- Watermark number -->
+                            <span class="svc-num">07</span>
+
+                            <!-- Top colored bar based on category index -->
+                            <div style="height: 3px; background: linear-gradient(90deg, #1e3e62, #f59e0b);"></div>
+
+                            <div class="p-4 d-flex flex-column" style="flex: 1;">
+                                <!-- Category label -->
+                                <p class="mb-3 text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 1.5px; color: #f59e0b;">Pelayanan Teknis Medis</p>
+
+                                <!-- Big icon -->
+                                <div class="mb-3 d-flex align-items-center gap-3">
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi bi-file-text" style="font-size: 1.6rem; color: #fbbf24;"></i>
+                                    </div>
+                                    <h5 style="font-size: 1rem; font-weight: 700; color: #f8fafc; line-height: 1.4; margin: 0;">surat</h5>
+                                </div>
+
+                                <!-- Description -->
+                                <p style="font-size: 0.82rem; line-height: 1.75; color: #8fa3bf; margin-bottom: 1rem; flex-grow: 1;">surat</p>
+
+                                <!-- Feature Pills (compact) -->
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">⚡ Layanan Cepat</span>
+                                                                            <span style="font-size: 0.7rem; padding: 3px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #94a3b8; white-space: nowrap;">✅ Resmi Disnakkeswan</span>
+                                                                    </div>
+
+                                <!-- Footer -->
+                                <div style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1rem; margin-top: auto;">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="font-size: 0.74rem; color: #4e6a85;">
+                                            <i class="bi bi-clock me-1" style="color: #f59e0b;"></i> 1-3 Hari Kerja
+                                            <span class="ms-2" style="color: #34d399;"><i class="bi bi-currency-dollar"></i>Gratis / Non-Retribusi</span>
+                                        </div>
+                                        <a href="http://127.0.0.1:8000/layanan/surat" style="width: 34px; height: 34px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fbbf24; text-decoration: none; flex-shrink: 0;" class="svc-arrow">
+                                            <i class="bi bi-arrow-right" style="font-size: 0.85rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            
+                        <div class="text-center mt-2 d-none d-lg-block">
+                <span class="badge bg-light rounded-pill px-3 py-2 text-secondary shadow-sm border" style="font-size: 0.75rem;">
+                    <i class="bi bi-arrows-collapse me-1"></i> Geser untuk melihat layanan lainnya
+                </span>
+            </div>
+                    </div>
+    </div>
+</section>
+
+
+
+<!-- BERITA TERKINI & ARTIKEL -->
+<section class="py-5 bg-white border-top">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+            <div>
+                <span class="badge-category">Berita Terbaru</span>
+                <h2 class="fw-extrabold text-dark mt-2" style="font-weight: 800;">Publikasi &amp; Agenda Terkini</h2>
+                <p class="text-muted m-0">Ikuti terus perkembangan, pengumuman, dan berita terbaru seputar kegiatan peternakan di Kabupaten Probolinggo.</p>
+            </div>
+            <a href="http://127.0.0.1:8000/berita" class="btn btn-outline-primary-custom fw-bold rounded-pill px-4 mt-3 mt-md-0">
+                Arsip Berita Lengkap <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="services-slider-container position-relative">
+            <div class="services-grid-slider">
+                                    <div>
+                        <a href="http://127.0.0.1:8000/berita/berita-1787885955" class="text-decoration-none">
+                            <div class="card card-custom h-100 border-0 p-0 overflow-hidden gallery-card shadow-sm">
+                                <div class="position-relative h-100" style="min-height: 350px;">
+                                    <img src="http://127.0.0.1:8000/storage/berita_images/7cZBCBhuY0GiHvolNkai2uwiWWiXhYiK5iLzaWRo.jpg" class="w-100 h-100 object-fit-cover gallery-img" alt="BERITA" onerror="this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.98) 0%, rgba(15, 37, 68, 0.5) 40%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Kategori Badge -->
+                                    <span class="position-absolute top-0 start-0 m-4 badge bg-primary text-white bg-opacity-90 rounded-pill px-3 py-2 shadow-sm" style="z-index: 2;">
+                                        Berita Utama
+                                    </span>
+
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center gap-3 text-light small mb-2 opacity-75">
+                                            <span><i class="bi bi-calendar3 me-1"></i> 28 Aug 2026</span>
+                                            <span><i class="bi bi-eye me-1"></i> 18x</span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white mb-2" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            BERITA
+                                        </h5>
+                                        <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top border-secondary border-opacity-50">
+                                            <span class="small fw-semibold text-warning"><i class="bi bi-person-circle me-1"></i> Super Admin</span>
+                                            <span class="text-white fw-bold small">Baca <i class="bi bi-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/berita/perkuat-kualitas-susu-segar-disnakkeswan-berikan-bantuan-milk-can" class="text-decoration-none">
+                            <div class="card card-custom h-100 border-0 p-0 overflow-hidden gallery-card shadow-sm">
+                                <div class="position-relative h-100" style="min-height: 350px;">
+                                    <img src="http://127.0.0.1:8000/storage/berita_images/CWigu799P8vK81eToHdYFOPJ1o5J0h9rJdXqoKBA.jpg" class="w-100 h-100 object-fit-cover gallery-img" alt="Perkuat Kualitas Susu Segar, Disnakkeswan Berikan Bantuan Milk Can Steril kepada Koperasi Peternak Sapi Perah" onerror="this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.98) 0%, rgba(15, 37, 68, 0.5) 40%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Kategori Badge -->
+                                    <span class="position-absolute top-0 start-0 m-4 badge bg-primary text-white bg-opacity-90 rounded-pill px-3 py-2 shadow-sm" style="z-index: 2;">
+                                        Peternakan
+                                    </span>
+
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center gap-3 text-light small mb-2 opacity-75">
+                                            <span><i class="bi bi-calendar3 me-1"></i> 31 Jul 2026</span>
+                                            <span><i class="bi bi-eye me-1"></i> 227x</span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white mb-2" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Perkuat Kualitas Susu Segar, Disnakkeswan Berikan Bantuan Milk Ca...
+                                        </h5>
+                                        <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top border-secondary border-opacity-50">
+                                            <span class="small fw-semibold text-warning"><i class="bi bi-person-circle me-1"></i> Bidang Budidaya Peternakan</span>
+                                            <span class="text-white fw-bold small">Baca <i class="bi bi-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/berita/pasar-hewan-kradenan-dipantau-ketat-jelang-musim-kurban" class="text-decoration-none">
+                            <div class="card card-custom h-100 border-0 p-0 overflow-hidden gallery-card shadow-sm">
+                                <div class="position-relative h-100" style="min-height: 350px;">
+                                    <img src="http://127.0.0.1:8000/storage/berita_images/ad5khRhhFcJ9gWt9FzKEKjg9rh2tfbfdmoAGFhBY.jpg" class="w-100 h-100 object-fit-cover gallery-img" alt="Pasar Hewan Kradenan Dipantau Ketat Jelang Musim Kurban: Kondisi Kesehatan Sapi Dijamin Bebas Penyakit" onerror="this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.98) 0%, rgba(15, 37, 68, 0.5) 40%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Kategori Badge -->
+                                    <span class="position-absolute top-0 start-0 m-4 badge bg-primary text-white bg-opacity-90 rounded-pill px-3 py-2 shadow-sm" style="z-index: 2;">
+                                        Kesehatan Hewan
+                                    </span>
+
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center gap-3 text-light small mb-2 opacity-75">
+                                            <span><i class="bi bi-calendar3 me-1"></i> 28 Jul 2026</span>
+                                            <span><i class="bi bi-eye me-1"></i> 491x</span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white mb-2" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Pasar Hewan Kradenan Dipantau Ketat Jelang Musim Kurban: Kondisi...
+                                        </h5>
+                                        <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top border-secondary border-opacity-50">
+                                            <span class="small fw-semibold text-warning"><i class="bi bi-person-circle me-1"></i> Bidang Kesmavet &amp; Pasar Hewan</span>
+                                            <span class="text-white fw-bold small">Baca <i class="bi bi-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                                    <div>
+                        <a href="http://127.0.0.1:8000/berita/inovasi-puskeswan-mobile-layanan-pengobatan-gratis-on-call" class="text-decoration-none">
+                            <div class="card card-custom h-100 border-0 p-0 overflow-hidden gallery-card shadow-sm">
+                                <div class="position-relative h-100" style="min-height: 350px;">
+                                    <img src="http://127.0.0.1:8000/storage/berita_images/QImq9UIY3IM45kQ0vHjUsBxmoTxLiOx1ibKCGe1b.jpg" class="w-100 h-100 object-fit-cover gallery-img" alt="Inovasi &quot;Puskeswan Mobile&quot;: Layanan Pengobatan Gratis On-Call Siap Hadir di Seluruh Kecamatan" onerror="this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.98) 0%, rgba(15, 37, 68, 0.5) 40%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Kategori Badge -->
+                                    <span class="position-absolute top-0 start-0 m-4 badge bg-primary text-white bg-opacity-90 rounded-pill px-3 py-2 shadow-sm" style="z-index: 2;">
+                                        Inovasi Pelayanan
+                                    </span>
+
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center gap-3 text-light small mb-2 opacity-75">
+                                            <span><i class="bi bi-calendar3 me-1"></i> 24 Jul 2026</span>
+                                            <span><i class="bi bi-eye me-1"></i> 615x</span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white mb-2" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Inovasi &quot;Puskeswan Mobile&quot;: Layanan Pengobatan Gratis On-Call Sia...
+                                        </h5>
+                                        <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top border-secondary border-opacity-50">
+                                            <span class="small fw-semibold text-warning"><i class="bi bi-person-circle me-1"></i> Sekretariat Disnakkeswan</span>
+                                            <span class="text-white fw-bold small">Baca <i class="bi bi-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                            </div>
+            
+                        <div class="text-center mt-2 d-none d-lg-block">
+                <span class="badge bg-light rounded-pill px-3 py-2 text-secondary shadow-sm border" style="font-size: 0.75rem;">
+                    <i class="bi bi-arrows-collapse me-1"></i> Geser untuk membaca berita lainnya
+                </span>
+            </div>
+                    </div>
+    </div>
+</section>
+
+<!-- GALERI MEDIA & VIDEO -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <span class="badge-category">Galeri Visual</span>
+            <h2 class="fw-extrabold text-dark mt-2" style="font-weight: 800;">Dokumentasi Kegiatan</h2>
+            <p class="text-muted">Potret aktivitas pelayanan lapangan, penyuluhan, dan program kerja Dinas Peternakan dan Kesehatan Hewan.</p>
+        </div>
+
+        <!-- Tabs Nav -->
+        <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="homeGaleriTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active rounded-pill px-4 fw-bold shadow-sm" id="home-foto-tab" data-bs-toggle="pill" data-bs-target="#home-foto-pane" type="button" role="tab" aria-controls="home-foto-pane" aria-selected="true" style="font-family: 'Inter', sans-serif;">
+                    <i class="bi bi-camera-fill me-2"></i> Galeri Foto
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-pill px-4 fw-bold shadow-sm" id="home-video-tab" data-bs-toggle="pill" data-bs-target="#home-video-pane" type="button" role="tab" aria-controls="home-video-pane" aria-selected="false" style="font-family: 'Inter', sans-serif;">
+                    <i class="bi bi-play-btn-fill me-2"></i> Galeri Video
+                </button>
+            </li>
+        </ul>
+
+        <style>
+            .gallery-scroll-wrapper {
+                display: flex;
+                overflow-x: auto;
+                gap: 1.5rem;
+                padding-bottom: 1.5rem;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .gallery-scroll-wrapper::-webkit-scrollbar {
+                display: none;
+            }
+            .gallery-scroll-item {
+                flex: 0 0 calc(33.333% - 1rem);
+                scroll-snap-align: start;
+            }
+            @media (max-width: 991px) {
+                .gallery-scroll-item { flex: 0 0 calc(50% - 0.75rem); }
+            }
+            @media (max-width: 575px) {
+                .gallery-scroll-item { flex: 0 0 100%; }
+            }
+        </style>
+        <div class="tab-content" id="homeGaleriTabContent">
+            <!-- TAB FOTO -->
+            <div class="tab-pane fade show active" id="home-foto-pane" role="tabpanel" aria-labelledby="home-foto-tab" tabindex="0">
+                <div class="gallery-scroll-wrapper">
+                                                                    <div class="gallery-scroll-item">
+                            <a data-fslightbox="gallery-tes" href="http://127.0.0.1:8000/storage/galeri_media/s3J5fuU6iSNV5UmpZuJCAwgfgx7wT5tLkPkAaypz.jpg" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="http://127.0.0.1:8000/storage/galeri_media/s3J5fuU6iSNV5UmpZuJCAwgfgx7wT5tLkPkAaypz.jpg" class="w-100 h-100 gallery-img" style="object-fit: cover;" alt="tes" onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-images me-1"></i> 1 FOTO
+                                            </span>
+                                            <span class="badge bg-light text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-zoom-in me-1"></i> Buka Album
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            tes
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Hidden Photos for Lightbox -->
+                                                    </div>
+                                                                    <div class="gallery-scroll-item">
+                            <a data-fslightbox="gallery-kunjungan-dokter-hewan" href="http://127.0.0.1:8000/storage/galeri_media/6Dr89dIbQBnB7EuYSUHF99jt8VqvVDs0TyNzK3Zb.jpg" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="http://127.0.0.1:8000/storage/galeri_media/6Dr89dIbQBnB7EuYSUHF99jt8VqvVDs0TyNzK3Zb.jpg" class="w-100 h-100 gallery-img" style="object-fit: cover;" alt="Kunjungan Dokter Hewan" onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-images me-1"></i> 1 FOTO
+                                            </span>
+                                            <span class="badge bg-light text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-zoom-in me-1"></i> Buka Album
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Kunjungan Dokter Hewan
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Hidden Photos for Lightbox -->
+                                                    </div>
+                                                                    <div class="gallery-scroll-item">
+                            <a data-fslightbox="gallery-pemeriksaan-hewan-ternak" href="http://127.0.0.1:8000/storage/galeri_media/BqF31ahvBK1xZHcHKbHxNx61RXWFhDMZa4gF5dit.jpg" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="http://127.0.0.1:8000/storage/galeri_media/BqF31ahvBK1xZHcHKbHxNx61RXWFhDMZa4gF5dit.jpg" class="w-100 h-100 gallery-img" style="object-fit: cover;" alt="Pemeriksaan Hewan Ternak" onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-images me-1"></i> 1 FOTO
+                                            </span>
+                                            <span class="badge bg-light text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-zoom-in me-1"></i> Buka Album
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Pemeriksaan Hewan Ternak
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Hidden Photos for Lightbox -->
+                                                    </div>
+                                                                    <div class="gallery-scroll-item">
+                            <a data-fslightbox="gallery-vaksinasi-door-to-door-pencegahan-penyakit-mulut-kuku-pmk" href="http://127.0.0.1:8000/storage/galeri_media/DUqgibU4XRtvPJvht3Ec0uLyFzpl4xeEGgm6Xh8T.jpg" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="http://127.0.0.1:8000/storage/galeri_media/DUqgibU4XRtvPJvht3Ec0uLyFzpl4xeEGgm6Xh8T.jpg" class="w-100 h-100 gallery-img" style="object-fit: cover;" alt="Vaksinasi Door-to-Door Pencegahan Penyakit Mulut &amp; Kuku (PMK)" onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-primary text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-images me-1"></i> 1 FOTO
+                                            </span>
+                                            <span class="badge bg-light text-dark fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-zoom-in me-1"></i> Buka Album
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Vaksinasi Door-to-Door Pencegahan Penyakit Mulut &amp; Kuku (PMK...
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Hidden Photos for Lightbox -->
+                                                    </div>
+                                    </div>
+            </div>
+
+            <!-- TAB VIDEO -->
+            <div class="tab-pane fade" id="home-video-pane" role="tabpanel" aria-labelledby="home-video-tab" tabindex="0">
+                <div class="gallery-scroll-wrapper">
+                                            <div class="gallery-scroll-item">
+                                                        <a data-fslightbox="gallery-video" href="https://www.youtube.com/watch?v=KhqSKoARRjQ?feature=share" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="https://img.youtube.com/vi/KhqSKoARRjQ/hqdefault.jpg" class="w-100 h-100 gallery-img opacity-75" style="object-fit: cover;" alt="ternak bebek" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-play-btn-fill me-1"></i> VIDEO
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            ternak bebek
+                                        </h5>
+                                    </div>
+                                    
+                                    <!-- Play Button Center -->
+                                    <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 2;">
+                                        <span class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center shadow-lg text-dark play-btn" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-play-fill fs-1 ms-1"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                                            <div class="gallery-scroll-item">
+                                                        <a data-fslightbox="gallery-video" href="https://www.youtube.com/watch?v=IW88C02ECkI&amp;pp=ygUIcGV0ZXJuYWs%3D" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="https://img.youtube.com/vi/IW88C02ECkI/hqdefault.jpg" class="w-100 h-100 gallery-img opacity-75" style="object-fit: cover;" alt="peternak" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-play-btn-fill me-1"></i> VIDEO
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            peternak
+                                        </h5>
+                                    </div>
+                                    
+                                    <!-- Play Button Center -->
+                                    <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 2;">
+                                        <span class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center shadow-lg text-dark play-btn" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-play-fill fs-1 ms-1"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                                            <div class="gallery-scroll-item">
+                                                        <a data-fslightbox="gallery-video" href="https://www.youtube.com/watch?v=qPLruJVGgnU?feature=share" class="card card-custom border-0 p-0 overflow-hidden gallery-card text-decoration-none shadow-sm" style="border-radius: 1rem;">
+                                <div class="position-relative w-100" style="height: 400px;">
+                                    <img src="https://img.youtube.com/vi/qPLruJVGgnU/hqdefault.jpg" class="w-100 h-100 gallery-img opacity-75" style="object-fit: cover;" alt="Video Profil Layanan Utama Disnakkeswan Kabupaten Probolinggo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=500&q=80'">
+                                    
+                                    <!-- Gradient Overlay -->
+                                    <div class="position-absolute w-100 h-100 top-0 start-0" style="background: linear-gradient(to top, rgba(15, 37, 68, 0.95) 0%, rgba(15, 37, 68, 0.4) 50%, transparent 100%); z-index: 1;"></div>
+                                    
+                                    <!-- Content overlay -->
+                                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white" style="z-index: 2;">
+                                        <div class="d-flex align-items-center mb-2 gap-2">
+                                            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                                                <i class="bi bi-play-btn-fill me-1"></i> VIDEO
+                                            </span>
+                                        </div>
+                                        <h5 class="fw-bold m-0 text-white" style="line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                            Video Profil Layanan Utama Disnakkeswan Kabupaten Probolingg...
+                                        </h5>
+                                    </div>
+                                    
+                                    <!-- Play Button Center -->
+                                    <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 2;">
+                                        <span class="btn btn-warning rounded-circle d-flex align-items-center justify-content-center shadow-lg text-dark play-btn" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-play-fill fs-1 ms-1"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .gallery-img {
+        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .gallery-card:hover .gallery-img {
+        transform: scale(1.1);
+    }
+    .play-btn {
+        transition: all 0.4s ease;
+    }
+    .gallery-card:hover .play-btn {
+        transform: scale(1.15);
+        box-shadow: 0 15px 30px rgba(232, 163, 23, 0.6) !important;
+        background-color: #fff;
+        color: var(--primary) !important;
+    }
+</style>
+
+<!-- TAUTAN TERKAIT / MITRA (ULTRA MODERN DESIGN) -->
+<section class="py-5 position-relative overflow-hidden" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%); border-top: 1px solid rgba(15, 37, 68, 0.06);">
+    
+    <!-- Dekorasi Latar Belakang Subtle Glow -->
+    <div class="position-absolute rounded-circle" style="background: radial-gradient(circle, rgba(232, 163, 23, 0.1) 0%, rgba(232, 163, 23, 0) 70%); width: 450px; height: 450px; filter: blur(60px); top: -150px; left: -100px; z-index: 0; pointer-events: none;"></div>
+    <div class="position-absolute rounded-circle" style="background: radial-gradient(circle, rgba(15, 37, 68, 0.05) 0%, rgba(15, 37, 68, 0) 70%); width: 450px; height: 450px; filter: blur(60px); bottom: -150px; right: -100px; z-index: 0; pointer-events: none;"></div>
+
+    <div class="container text-center position-relative z-1 py-3">
+        <!-- Section Header -->
+        <div class="mb-5">
+            <div class="d-inline-flex align-items-center gap-2 mb-3 px-4 py-2 rounded-pill shadow-sm bg-white border" style="border-color: rgba(15, 37, 68, 0.12) !important;">
+                <i class="bi bi-diagram-3-fill fs-5" style="color: #e8a317;"></i>
+                <span class="fw-bold text-uppercase" style="color: #0f2544; letter-spacing: 1.2px; font-size: 0.8rem;">JEJARING MITRA & INTEGRASI</span>
+            </div>
+            <h3 class="fw-extrabold mb-2" style="font-weight: 800; font-size: 2rem; color: #0f2544; letter-spacing: -0.5px;">Instansi & Mitra Kerja Terkoneksi</h3>
+            <p class="text-muted fs-6 mx-auto mb-0" style="max-width: 650px; line-height: 1.6;">Sinergi pelayanan publik dan koordinasi antar lembaga di Kabupaten Probolinggo.</p>
+        </div>
+        
+        <!-- Partner Cards Grid -->
+        <div class="d-flex flex-wrap justify-content-center align-items-stretch gap-3 gap-md-4">
+                            <a href="https://dinkes.probolinggokab.go.id/" target="_blank" class="partner-link-card text-decoration-none d-flex align-items-center justify-content-center bg-white rounded-4 shadow-sm position-relative overflow-hidden" title="Dinas Kesehatan ProbolinggoKab">
+                    <i class="bi bi-arrow-up-right partner-arrow-icon"></i>
+                                            <img src="http://127.0.0.1:8000/storage/links/oYViSEfwxlosc97rjd3rSsqaifroZv3mWQtLDsFb.png" alt="Dinas Kesehatan ProbolinggoKab" class="partner-img">
+                                    </a>
+                            <a href="https://probolinggokab.go.id/" target="_blank" class="partner-link-card text-decoration-none d-flex align-items-center justify-content-center bg-white rounded-4 shadow-sm position-relative overflow-hidden" title="Pemkab Probolinggo">
+                    <i class="bi bi-arrow-up-right partner-arrow-icon"></i>
+                                            <img src="http://127.0.0.1:8000/storage/links/6MnRhqG59U3ufxI6jhs2Tnwn9Pf8sym0oAO2gCvB.png" alt="Pemkab Probolinggo" class="partner-img">
+                                    </a>
+                            <a href="https://diskominfo.probolinggokab.go.id/" target="_blank" class="partner-link-card text-decoration-none d-flex align-items-center justify-content-center bg-white rounded-4 shadow-sm position-relative overflow-hidden" title="Diskominfo kab.probolinggo">
+                    <i class="bi bi-arrow-up-right partner-arrow-icon"></i>
+                                            <img src="http://127.0.0.1:8000/storage/links/ke81tjHafegXUyo1kjLfLY7HBGZtk9p2gSNIQG65.png" alt="Diskominfo kab.probolinggo" class="partner-img">
+                                    </a>
+                            <a href="https://dinkes.probolinggokab.go.id/" target="_blank" class="partner-link-card text-decoration-none d-flex align-items-center justify-content-center bg-white rounded-4 shadow-sm position-relative overflow-hidden" title="Dinas Peternakan">
+                    <i class="bi bi-arrow-up-right partner-arrow-icon"></i>
+                                            <img src="http://127.0.0.1:8000/storage/links/9wByDSGLoJ6JjeiJ3WBCMMywOKbw6gmdbSHF4bNN.png" alt="Dinas Peternakan" class="partner-img">
+                                    </a>
+                    </div>
+    </div>
+</section>
+
+<!-- BANNER SP4N LAPOR & HALLO SAE (SKEMA WARNA OBSIDIAN DARK FOOTER) -->
+<section class="py-5" style="background: #09121c;">
+    <div class="container py-2">
+        <div class="p-4 p-md-5 position-relative overflow-hidden" style="background: linear-gradient(145deg, #0f1923 0%, #162033 50%, #1a2740 100%); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);">
+            
+            <div class="row align-items-center g-4">
+                <!-- Left Side Text -->
+                <div class="col-lg-7 text-center text-lg-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-2 mb-2">
+                        <i class="bi bi-shield-check text-warning fs-5"></i>
+                        <span class="text-warning fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 1.2px;">
+                            Layanan Pengaduan
+                        </span>
+                    </div>
+
+                    <h2 class="fw-extrabold text-white mb-3" style="font-weight: 800; font-size: 2.1rem; line-height: 1.35; letter-spacing: -0.3px;">
+                        Layanan Pengaduan & Aspirasi <span class="text-warning">Masyarakat</span>
+                    </h2>
+
+                    <p class="fs-6 text-light opacity-90 mb-0" style="line-height: 1.75; font-size: 0.95rem;">
+                        Kami mendengarkan keluhan dan aspirasi Anda untuk meningkatkan mutu pelayanan publik yang lebih transparan dan responsif.
+                    </p>
+                </div>
+
+                <!-- Right Side Action Cards -->
+                <div class="col-lg-5">
+                    <div class="d-flex flex-column gap-3 justify-content-center align-items-stretch w-100">
+                        <!-- SP4N LAPOR! Button Card -->
+                        <a href="https://www.lapor.go.id/" target="_blank" class="btn p-3 px-4 rounded-4 text-white text-start position-relative overflow-hidden text-decoration-none btn-action-card-sp4n w-100 shadow-md">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white rounded-3 d-flex align-items-center justify-content-center flex-shrink-0 icon-box shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-megaphone-fill fs-4" style="color: #b91c1c;"></i>
+                                </div>
+                                <div class="text-start me-2">
+                                    <div class="d-flex align-items-center gap-2 mb-0.5">
+                                        <span class="fw-extrabold fs-5" style="letter-spacing: 0.5px; font-weight: 800;">SP4N LAPOR!</span>
+                                        <span class="badge bg-black bg-opacity-30 text-white rounded-1 px-2 py-0.5" style="font-size:0.62rem; letter-spacing:0.8px;">RESMI</span>
+                                    </div>
+                                    <small class="text-white opacity-90 d-block" style="font-size: 0.78rem; font-weight: 400;">Portal Pengaduan RI</small>
+                                </div>
+                                <i class="bi bi-arrow-right fs-3 ms-auto text-white opacity-90 arrow-icon" style="transition: transform 0.3s ease;"></i>
+                            </div>
+                        </a>
+
+                        <!-- HALLO SAE Button Card -->
+                        <a href="https://wa.me/6282131001001" target="_blank" class="btn p-3 px-4 rounded-4 text-white text-start position-relative overflow-hidden text-decoration-none btn-action-card-wa w-100 shadow-md">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white rounded-3 d-flex align-items-center justify-content-center flex-shrink-0 icon-box shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="bi bi-whatsapp fs-4" style="color: #047857;"></i>
+                                </div>
+                                <div class="text-start me-2">
+                                    <div class="d-flex align-items-center gap-2 mb-0.5">
+                                        <span class="fw-extrabold fs-5" style="letter-spacing: 0.5px; font-weight: 800;">HALLO SAE</span>
+                                        <span class="badge bg-black bg-opacity-30 text-white rounded-1 px-2 py-0.5" style="font-size:0.62rem; letter-spacing:0.8px;">WHATSAPP</span>
+                                    </div>
+                                    <small class="text-white opacity-90 d-block" style="font-size: 0.78rem; font-weight: 400;">Chat WhatsApp (0821-3100-1001)</small>
+                                </div>
+                                <i class="bi bi-arrow-right fs-3 ms-auto text-white opacity-90 arrow-icon" style="transition: transform 0.3s ease;"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Strip Divider -->
+            <div class="pt-4 mt-4 border-top border-white border-opacity-10 d-flex flex-column flex-md-row gap-3 justify-content-between align-items-center">
+                <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                    <span class="badge bg-white bg-opacity-10 text-light border border-white border-opacity-15 px-3 py-2 rounded-pill fw-medium" style="font-size: 0.78rem;">
+                        <i class="bi bi-lightning-charge-fill text-warning me-1.5"></i> Respon Cepat
+                    </span>
+                    <span class="badge bg-white bg-opacity-10 text-light border border-white border-opacity-15 px-3 py-2 rounded-pill fw-medium" style="font-size: 0.78rem;">
+                        <i class="bi bi-shield-lock-fill text-success me-1.5"></i> Kerahasiaan Terjamin
+                    </span>
+                    <span class="badge bg-white bg-opacity-10 text-light border border-white border-opacity-15 px-3 py-2 rounded-pill fw-medium" style="font-size: 0.78rem;">
+                        <i class="bi bi-headset text-info me-1.5"></i> Layanan Online 24/7
+                    </span>
+                </div>
+                <small class="text-light opacity-75 fw-normal text-center text-md-end" style="font-size: 0.78rem;">
+                    Dipantau langsung oleh Kementerian PANRB & Disnakkeswan
+                </small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .btn-action-card-sp4n {
+        background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        transition: all 0.3s ease !important;
+    }
+    .btn-action-card-sp4n:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 25px rgba(220, 38, 38, 0.45) !important;
+    }
+    .btn-action-card-sp4n:hover .arrow-icon {
+        transform: translateX(4px) !important;
+    }
+
+    .btn-action-card-wa {
+        background: linear-gradient(135deg, #047857 0%, #10b981 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        transition: all 0.3s ease !important;
+    }
+    .btn-action-card-wa:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45) !important;
+    }
+    .btn-action-card-wa:hover .arrow-icon {
+        transform: translateX(4px) !important;
+    }
+</style>
+        </div>
+    </div>
+</section>
+
+<style>
+    .partner-link-card {
+        padding: 16px 28px;
+        background: #ffffff;
+        border: 1px solid rgba(15, 37, 68, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        min-height: 85px;
+        min-width: 210px;
+        box-shadow: 0 4px 15px rgba(15, 37, 68, 0.04) !important;
+    }
+    .partner-link-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 15px 35px rgba(15, 37, 68, 0.12) !important;
+        border-color: rgba(232, 163, 23, 0.4);
+    }
+    .partner-img {
+        width: 160px;
+        height: 55px; 
+        object-fit: contain; 
+        filter: grayscale(0%) opacity(100%) drop-shadow(0 2px 4px rgba(0,0,0,0.06)); 
+        transition: all 0.4s ease;
+    }
+    .partner-link-card:hover .partner-img {
+        transform: scale(1.08);
+        filter: drop-shadow(0 4px 8px rgba(15, 37, 68, 0.15));
+    }
+    .partner-text {
+        transition: all 0.3s ease;
+    }
+    .partner-link-card:hover .partner-text {
+        color: #0f2544 !important;
+    }
+    .partner-link-card:hover .bi-globe {
+        color: #e8a317 !important;
+    }
+    .partner-arrow-icon {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        font-size: 0.85rem;
+        color: #e8a317;
+        opacity: 0;
+        transform: translate(-4px, 4px);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .partner-link-card:hover .partner-arrow-icon {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    
+    .quick-card {
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    }
+    .quick-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+    }
+    .quick-card:hover .quick-icon {
+        transform: scale(1.2) rotate(-5deg);
+        opacity: 0.4 !important;
+    }
+    .text-shadow-sm {
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.2; }
+        100% { transform: scale(1.1); opacity: 0.4; }
+    }
+    .hover-scale:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 15px 40px rgba(232, 163, 23, 0.6) !important;
+    }
+    .text-shadow {
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    /* Ultra Premium Service Cards */
+    .service-card-premium {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+    }
+    .service-card-premium:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(15, 37, 68, 0.1) !important;
+    }
+    .service-icon-box-premium {
+        transition: all 0.4s ease;
+    }
+    .service-card-premium:hover .service-icon-box-premium {
+        background: linear-gradient(135deg, #0f2544 0%, #1a3c6e 100%) !important;
+        transform: rotate(-10deg) scale(1.05);
+    }
+    .service-card-premium:hover .service-icon-box-premium i {
+        color: #ffffff !important;
+    }
+    .btn-premium-action {
+        background: #f8fafc;
+        color: #0f2544;
+        border: 1px solid #e2e8f0;
+        transition: all 0.4s ease;
+    }
+    .btn-premium-action:hover {
+        background: #0f2544;
+        color: #ffffff;
+        border-color: #0f2544;
+        box-shadow: 0 8px 25px rgba(15, 37, 68, 0.35) !important;
+    }
+    /* Click Effect & Active State for Partner Cards */
+    .partner-link-card:active {
+        transform: scale(0.94) translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(232, 163, 23, 0.4) !important;
+        border-color: #e8a317 !important;
+        transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.1s ease !important;
+    }
+    
+    .click-ripple-effect {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(232, 163, 23, 0.5) 0%, rgba(232, 163, 23, 0.15) 60%, transparent 100%);
+        transform: scale(0);
+        animation: cardRipple 0.65s cubic-bezier(0.25, 0.8, 0.25, 1);
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    @keyframes cardRipple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+</style>
+
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                    <div class="footer-info-card">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                                                            <div class="bg-white rounded-3 p-1 shadow-sm d-flex align-items-center justify-content-center">
+                                    <img src="http://127.0.0.1:8000/storage/settings/logo_user_transparent.png" alt="Logo" style="height: 45px; object-fit: contain;">
+                                </div>
+                                                        <h5 class="m-0 text-white fw-bold lh-sm border-0">Disnakkeswan Kab. Probolinggo</h5>
+                        </div>
+                        <p class="text-light opacity-75 small mb-4" style="line-height: 1.8;">
+                            Dinas Peternakan dan Kesehatan Hewan Kabupaten Probolinggo berkomitmen mewujudkan kemandirian pangan, ketahanan pakan, dan perlindungan kesehatan hewan ternak di Kabupaten Probolinggo.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                                                            <a href="https://www.facebook.com/p/Kantor-Dinas-Peternakan-Dan-Kesehatan-Hewan-Kabupaten-Probolinggo-100069353987081/" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-facebook"></i></a>
+                                                                                          <a href="https://www.instagram.com/dinkes_kabprob/" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-instagram"></i></a>
+                                                                                          <a href="https://www.youtube.com/@Kominfokabprobolinggo" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-youtube"></i></a>
+                                                                                          <a href="https://x.com/probolinggokab" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
+                                                                                          <a href="https://www.tiktok.com/@probolinggokab" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-tiktok"></i></a>
+                                                                                          <a href="https://wa.me/62335421369" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-whatsapp"></i></a>
+                                                            
+                                                      </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <div class="qr-card-footer h-100 d-flex flex-column justify-content-center">
+                        <div class="qr-card-title">SCAN KODE QR</div>
+                        <div>
+                            <div class="qr-card-image-wrap">
+                                <img src="http://127.0.0.1:8000/images/qr_skm.png" alt="QR Code Disnakkeswan" class="qr-card-img">
+                            </div>
+                        </div>
+                        <div class="qr-card-subtitle mt-auto">
+                            <i class="bi bi-hand-index-thumb me-1"></i>Scan QR Portal Pelayanan
+                        </div>
+                        <div class="qr-card-info">Disnakkeswan Kab. Probolinggo</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-info-card h-100">
+                        <h5 class="mb-4 fw-bold text-white">Alamat Kantor</h5>
+                        
+                        <div class="d-flex gap-3 mb-4 align-items-start">
+                            <div class="text-warning mt-1 fs-5"><i class="bi bi-geo-alt-fill"></i></div>
+                            <div class="text-light opacity-75 small" style="line-height: 1.6;">Jl. Panglima Sudirman No.124 lt. 3 -Kraksaan-Kabupaten Probolinggo</div>
+                        </div>
+                        
+                        <div class="d-flex gap-3 mb-4 align-items-start">
+                            <div class="text-warning mt-1 fs-5"><i class="bi bi-telephone-fill"></i></div>
+                            <div class="text-light opacity-75 small">Phone: 081249970228</div>
+                        </div>
+                        
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="text-warning mt-1 fs-5"><i class="bi bi-envelope-fill"></i></div>
+                            <div class="text-light opacity-75 small">Email: info@disnakkeswan.probolinggokab.go.id</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-secondary opacity-25">
+
+            <div class="d-flex justify-content-center align-items-center pt-3 pb-2 small text-light opacity-75 text-center">
+                <div>
+                    Disnakkeswan Kab. Probolinggo - Kabupaten Probolinggo &copy; 2026. All Rights Reserved
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Floating Button Keren -->
+    <a href="http://127.0.0.1:8000/admin/login" class="admin-floating-btn" title="Portal Admin">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span class="admin-floating-text">Portal Admin</span>
+    </a>
+
+    <style>
+        .admin-floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(15, 37, 68, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        .admin-floating-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-floating-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            max-width: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .admin-floating-btn:hover {
+            background: linear-gradient(135deg, #1a3c6e, #0f2544);
+            box-shadow: 0 15px 35px rgba(15, 37, 68, 0.4);
+            transform: translateY(-5px);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .admin-floating-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        .admin-floating-btn:hover .admin-floating-text {
+            max-width: 150px;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .admin-floating-btn {
+                bottom: 20px;
+                left: 20px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* ═══ FOOTER INFO CARD ═══ */
+        .footer-info-card {
+            background: linear-gradient(145deg, #0f1923 0%, #162033 50%, #1a2740 100%);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border-color: rgba(232, 163, 23, 0.15);
+        }
+        /* ═══ QR CARD FOOTER ═══ */
+        .qr-card-footer {
+            background: linear-gradient(145deg, #0f1923 0%, #162033 50%, #1a2740 100%);
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .qr-card-footer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(232, 163, 23, 0.05), transparent, rgba(26, 60, 110, 0.05), transparent);
+            animation: qr-rotate 10s linear infinite;
+        }
+        @keyframes qr-rotate {
+            to { transform: rotate(360deg); }
+        }
+        .qr-card-footer:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border-color: rgba(232, 163, 23, 0.15);
+        }
+        .qr-card-title {
+            position: relative;
+            z-index: 1;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .qr-card-image-wrap {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            padding: 10px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        .qr-card-footer:hover .qr-card-image-wrap {
+            box-shadow: 0 8px 30px rgba(232, 163, 23, 0.15), 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .qr-card-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 8px;
+            display: block;
+            object-fit: contain;
+        }
+        .qr-card-subtitle {
+            position: relative;
+            z-index: 1;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #e8a317;
+            margin-bottom: 4px;
+        }
+        .qr-card-info {
+            position: relative;
+            z-index: 1;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* QR Scan Line Animation */
+        .qr-card-image-wrap::after {
+            content: '';
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e8a317, transparent);
+            animation: qr-scan 3s ease-in-out infinite;
+            opacity: 0.6;
+            border-radius: 2px;
+        }
+        @keyframes qr-scan {
+            0%, 100% { top: 10px; opacity: 0; }
+            10% { opacity: 0.6; }
+            50% { top: calc(100% - 12px); opacity: 0.6; }
+            60% { opacity: 0; }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 🔊 Google Text-to-Speech: Membacakan nama menu saat diklik -->
+    <script>
+        (function () {
+            // ── Fungsi utama: Audio Google Translate TTS (Suara Google Cewek Asli) ─────────
+            let currentAudio = null;
+
+            function googleSpeak(text, callback) {
+                if (!text || text.trim() === '') {
+                    if(callback) callback();
+                    return;
+                }
+
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                
+                // Menggunakan proxy lokal agar tidak diblokir browser
+                const url = `/api/tts?text=${encodeURIComponent(text)}`;
+                currentAudio = new Audio(url);
+                currentAudio.volume = 1.0;
+
+                let callbackCalled = false;
+                const safeCallback = function() {
+                    if (!callbackCalled) {
+                        callbackCalled = true;
+                        if(callback) callback();
+                    }
+                };
+
+                if (callback) {
+                    currentAudio.onended = safeCallback;
+                    currentAudio.onerror = safeCallback;
+                    
+                    // Beri waktu lebih lama agar audio sempat loading (4 detik)
+                    let maxTimeout = setTimeout(safeCallback, 4000);
+                    
+                    currentAudio.onplay = function() {
+                        clearTimeout(maxTimeout);
+                        // Jika berhasil diputar, beri waktu ekstra hingga 6 detik agar selesai berbicara
+                        maxTimeout = setTimeout(safeCallback, 6000); 
+                    };
+                }
+
+                currentAudio.play().catch(function(err) {
+                    console.log("Audio play failed: ", err);
+                    safeCallback();
+                });
+            }
+
+            // ── Suara Sambutan Awal ──────────────────────────────────────────────
+            function greetUser() {
+                if (!sessionStorage.getItem('has_greeted')) {
+                    const text = 'Selamat datang di website resmi Disnakkeswan Kab. Probolinggo.';
+                    setTimeout(() => {
+                        googleSpeak(text);
+                        sessionStorage.setItem('has_greeted', 'true');
+                    }, 1000);
+                }
+            }
+            window.addEventListener('load', greetUser);
+
+            // ── Ambil teks bersih dari elemen yang diklik ────────────────────────
+            function getMenuText(el) {
+                let text = el.innerText || el.textContent || el.title || el.alt || '';
+                text = text.replace(/\s+/g, ' ').trim();
+                const words = text.split(' ');
+                return words.length > 5 ? words.slice(0, 5).join(' ') : text;
+            }
+
+            // ── Event delegation: tangkap klik ──────────────────────────────────
+            document.addEventListener('click', function (e) {
+                const target = e.target.closest('a, button');
+                if (!target) return;
+
+                const isNavLink = target.closest('.navbar-main');
+                const isTopbar  = target.closest('.topbar');
+                const isFooter  = target.closest('footer');
+                const isCard    = target.closest('.card');
+                const isBtn     = target.classList.contains('btn') || target.closest('.btn');
+
+                if (isNavLink || isTopbar || isFooter || isCard || isBtn) {
+                    const teks = getMenuText(target);
+                    const href = target.getAttribute('href');
+                    const isDropdownToggle = target.classList.contains('dropdown-toggle') || target.getAttribute('data-bs-toggle') === 'dropdown' || target.hasAttribute('data-bs-toggle');
+                    
+                    if (teks) {
+                        const isFsLightbox = target.hasAttribute('data-fslightbox');
+                        
+                        if (href && href !== '#' && !href.startsWith('javascript') && !isDropdownToggle && !isFsLightbox && target.tagName === 'A' && target.target !== '_blank') {
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            
+                            // Tambahkan indikator loading pada kursor agar user tahu sistem merespon
+                            document.body.style.cursor = 'wait';
+                            target.style.opacity = '0.5';
+                            
+                            const doNavigate = function() {
+                                document.body.style.cursor = 'default';
+                                window.location.href = href;
+                            };
+                            
+                            googleSpeak(teks, doNavigate);
+                        } else {
+                            googleSpeak(teks);
+                        }
+                    }
+                }
+            }, true); // Menggunakan event capturing (true)
+        })();
+    </script>
+    <script src="http://127.0.0.1:8000/js/fslightbox.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.partner-link-card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.className = 'click-ripple-effect';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                const diameter = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = diameter + 'px';
+                ripple.style.marginLeft = -diameter/2 + 'px';
+                ripple.style.marginTop = -diameter/2 + 'px';
+                
+                card.appendChild(ripple);
+                
+                setTimeout(function() {
+                    ripple.remove();
+                }, 650);
+            });
+        });
+    });
+</script>
+</body>
+</html>
