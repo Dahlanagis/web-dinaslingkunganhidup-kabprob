@@ -6,6 +6,16 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        @php
+            $siteSetting = \App\Models\Setting::first();
+            $favPath = $siteSetting?->favicon_path ?: $siteSetting?->logo_path;
+            $faviconUrl = $favPath ? asset('storage/' . $favPath) : null;
+        @endphp
+        @if($faviconUrl)
+            <link rel="icon" type="image/x-icon" href="{{ $faviconUrl }}">
+            <link rel="shortcut icon" href="{{ $faviconUrl }}">
+            <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

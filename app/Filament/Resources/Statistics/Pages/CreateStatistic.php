@@ -18,4 +18,9 @@ class CreateStatistic extends CreateRecord
     {
         return 'Tambahkan indikator capaian kinerja dan data strategis lingkungan baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

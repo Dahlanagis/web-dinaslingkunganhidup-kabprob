@@ -19,24 +19,48 @@ class ServiceForm
                     ->description('Kelola daftar program dan layanan publik yang disediakan Dinas Lingkungan Hidup.')
                     ->icon('heroicon-o-arrow-left')
                     ->schema([
-                        Grid::make(2)->schema([
+                        Grid::make(3)->schema([
                             TextInput::make('name')
                                 ->label('NAMA LAYANAN')
                                 ->placeholder('Contoh: Pengangkutan Sampah, Pengujian Air Limbah')
                                 ->required()
                                 ->maxLength(255),
 
-                            TextInput::make('tag')
-                                ->label('TAG / KATEGORI LAYANAN')
-                                ->placeholder('Contoh: Kebersihan, Perizinan, Pengaduan')
+                            TextInput::make('slug')
+                                ->label('SLUG SUB-MENU')
+                                ->placeholder('persampahan / lab / pengaduan')
+                                ->helperText('Untuk URL sub-menu (misal: persampahan, lab, pengaduan).')
                                 ->maxLength(100),
+
+                            \Filament\Forms\Components\Select::make('tag')
+                                ->label('TAG / KATEGORI')
+                                ->options(fn () => \App\Models\Category::whereIn('type', ['layanan', 'master'])->where('is_active', true)->pluck('name', 'name')->toArray() ?: [
+                                    'Kebersihan' => 'Kebersihan',
+                                    'Laboratorium' => 'Laboratorium',
+                                    'Pengaduan' => 'Pengaduan',
+                                    'Perizinan' => 'Perizinan',
+                                    'Ruang Hijau' => 'Ruang Hijau',
+                                ])
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('Nama Kategori Layanan')
+                                        ->placeholder('Contoh: Edukasi Lingkungan')
+                                        ->required(),
+                                ])
+                                ->createOptionUsing(function (array $data) {
+                                    $cat = \App\Models\Category::create([
+                                        'name' => $data['name'],
+                                        'slug' => \Illuminate\Support\Str::slug($data['name']),
+                                        'type' => 'layanan',
+                                        'is_active' => true,
+                                    ]);
+                                    return $cat->name;
+                                })
+                                ->helperText('Pilih kategori atau klik + untuk menambah.')
+                                ->searchable(),
                         ]),
 
-                        TextInput::make('icon')
-                            ->label('IKON BOOTSTRAP (OPSIONAL)')
-                            ->placeholder('Contoh: bi-trash, bi-droplet, bi-tree, bi-recycle')
-                            ->maxLength(100)
-                            ->helperText('Gunakan kode class Bootstrap Icons (misal: bi-recycle, bi-truck).')
+                        \App\Filament\Support\BootstrapIconSelect::make('icon')
                             ->columnSpanFull(),
 
                         Summernote::make('description')

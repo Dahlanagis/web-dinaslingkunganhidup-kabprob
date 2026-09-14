@@ -53,7 +53,36 @@ class PostForm
                             ->required()
                             ->columnSpanFull(),
 
-                        Grid::make(2)->schema([
+                        Grid::make(3)->schema([
+                            Select::make('category')
+                                ->label('KATEGORI KONTEN')
+                                ->options(fn () => \App\Models\Category::whereIn('type', ['konten', 'master'])->where('is_active', true)->pluck('name', 'slug')->toArray() ?: [
+                                    'berita' => 'Berita Kegiatan / Terkini',
+                                    'artikel' => 'Artikel Edukasi Lingkungan',
+                                ])
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('Nama Kategori Baru')
+                                        ->required()
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn ($set, $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                                    TextInput::make('slug')
+                                        ->label('Slug / Kode')
+                                        ->required(),
+                                ])
+                                ->createOptionUsing(function (array $data) {
+                                    $cat = \App\Models\Category::create([
+                                        'name' => $data['name'],
+                                        'slug' => $data['slug'],
+                                        'type' => 'konten',
+                                        'is_active' => true,
+                                    ]);
+                                    return $cat->slug;
+                                })
+                                ->helperText('Pilih kategori atau klik tombol + untuk menambah baru.')
+                                ->default('berita')
+                                ->required(),
+
                             Select::make('status')
                                 ->label('STATUS PUBLIKASI')
                                 ->options([

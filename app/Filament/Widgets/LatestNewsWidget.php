@@ -10,6 +10,11 @@ class LatestNewsWidget extends Widget
     protected static ?int $sort = 1;
     protected int | string | array $columnSpan = 1;
 
+    public static function canView(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin']);
+    }
+
     protected function getViewData(): array
     {
         return [

@@ -116,10 +116,18 @@ class NavigationSeeder extends Seeder
             'is_active' => true,
         ]);
         Navigation::create([
+            'title' => 'Semua Dokumen',
+            'url' => '/dokumen',
+            'parent_id' => $dokumen->id,
+            'order' => 1,
+            'is_active' => true,
+            'icon' => 'bi-folder2-open',
+        ]);
+        Navigation::create([
             'title' => 'Dokumen Kinerja',
             'url' => '/dokumen/kinerja',
             'parent_id' => $dokumen->id,
-            'order' => 1,
+            'order' => 2,
             'is_active' => true,
             'icon' => 'bi-journal-check',
         ]);
@@ -127,7 +135,7 @@ class NavigationSeeder extends Seeder
             'title' => 'Regulasi & SOP',
             'url' => '/dokumen/regulasi',
             'parent_id' => $dokumen->id,
-            'order' => 2,
+            'order' => 3,
             'is_active' => true,
             'icon' => 'bi-file-earmark-ruled',
         ]);
@@ -140,7 +148,7 @@ class NavigationSeeder extends Seeder
             'is_active' => true,
         ]);
         Navigation::create([
-            'title' => 'Berita Terbaru',
+            'title' => 'Berita',
             'url' => '/informasi/berita',
             'parent_id' => $informasi->id,
             'order' => 1,

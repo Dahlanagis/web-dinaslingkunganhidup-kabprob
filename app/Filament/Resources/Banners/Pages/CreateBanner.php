@@ -18,4 +18,9 @@ class CreateBanner extends CreateRecord
     {
         return 'Unggah banner pengumuman atau spanduk promosi baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

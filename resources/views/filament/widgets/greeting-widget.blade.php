@@ -2,37 +2,31 @@
     <style>
         .dlh-hero {
             position: relative;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
-            padding: 2rem 2.25rem;
+            padding: 1.75rem 2rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 1.5rem;
-            background: linear-gradient(135deg, #052e16 0%, #14532d 40%, #166534 70%, #15803d 100%);
-            box-shadow: 0 16px 40px -8px rgba(5,46,22,0.5), 0 4px 12px rgba(5,46,22,0.25);
-            border: 1px solid rgba(74,222,128,0.2);
+            background: linear-gradient(135deg, #092612 0%, #0e351b 50%, #124022 100%);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 4px 10px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* ── Animated mesh gradient backdrop ── */
+        /* ── Subtle background lighting ── */
         .dlh-hero::before {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 600px 300px at 110% -20%, rgba(74,222,128,0.22) 0%, transparent 60%),
-                radial-gradient(ellipse 400px 400px at -10% 120%, rgba(16,185,129,0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 300px 200px at 60% 120%, rgba(52,211,153,0.12) 0%, transparent 60%);
+                radial-gradient(ellipse 500px 250px at 100% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 300px at 0% 100%, rgba(22, 101, 52, 0.2) 0%, transparent 70%);
             pointer-events: none;
-            animation: dlhMeshShift 8s ease-in-out infinite alternate;
-        }
-        @keyframes dlhMeshShift {
-            0%   { opacity: 0.85; }
-            100% { opacity: 1; }
         }
 
-        /* ── Decorative ring ── */
+        /* ── Subtle decorative rings ── */
         .dlh-hero-ring {
             position: absolute;
             right: -90px;
@@ -40,7 +34,7 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            border: 50px solid rgba(74,222,128,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             pointer-events: none;
         }
         .dlh-hero-ring2 {
@@ -50,7 +44,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: 30px solid rgba(74,222,128,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             pointer-events: none;
         }
 
@@ -59,49 +53,41 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px 14px;
             border-radius: 9999px;
-            backdrop-filter: blur(12px);
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
         }
         .dlh-hero-pill span.live-dot {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: #4ade80;
-            box-shadow: 0 0 8px #4ade80;
-            animation: dlhHeroPulse 2s ease-in-out infinite;
-        }
-        @keyframes dlhHeroPulse {
-            0%, 100% { box-shadow: 0 0 6px #4ade80; opacity: 0.85; }
-            50%       { box-shadow: 0 0 14px #4ade80; opacity: 1; }
+            background: #22c55e;
         }
         .dlh-hero-pill span.pill-text {
             font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            font-weight: 600;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: #bbf7d0;
+            color: #cbd5e1;
         }
 
         /* ── Heading ── */
         .dlh-hero h1 {
-            font-size: 1.75rem;
-            font-weight: 900;
+            font-size: 1.65rem;
+            font-weight: 800;
             color: #ffffff;
             margin: 0;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            text-shadow: 0 2px 16px rgba(0,0,0,0.2);
+            line-height: 1.25;
+            letter-spacing: -0.01em;
         }
         .dlh-hero p.sub {
             font-size: 0.88rem;
-            color: rgba(203,213,225,0.9);
-            margin: 0.5rem 0 0;
-            line-height: 1.6;
+            color: rgba(226, 232, 240, 0.82);
+            margin: 0.45rem 0 0;
+            line-height: 1.55;
             max-width: 580px;
         }
 
@@ -118,44 +104,45 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 9px 18px;
+            border-radius: 10px;
             font-size: 0.84rem;
-            font-weight: 700;
+            font-weight: 600;
             text-decoration: none !important;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
         .dlh-hero-btn.primary {
-            background: #22c55e;
-            color: #052e16;
-            box-shadow: 0 4px 16px rgba(34,197,94,0.4);
+            background: #166534;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
         .dlh-hero-btn.primary:hover {
-            background: #16a34a;
+            background: #15803d;
             color: #ffffff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(22,163,74,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
         .dlh-hero-btn.ghost {
-            background: rgba(255,255,255,0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
         .dlh-hero-btn.ghost:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            transform: translateY(-2px);
         }
         .dlh-hero-btn.link {
-            background: rgba(134,239,172,0.12);
-            color: #86efac;
-            border: 1px solid rgba(134,239,172,0.22);
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .dlh-hero-btn.link:hover {
-            background: rgba(134,239,172,0.22);
-            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transform: translateY(-2px);
         }
     </style>
 

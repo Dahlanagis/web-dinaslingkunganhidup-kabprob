@@ -19,10 +19,27 @@ class GalleriesTable
             ->columns([
                 ImageColumn::make('images')
                     ->label('Preview Media')
+                    ->disk('public')
                     ->square()
                     ->size(80)
                     ->stacked()
-                    ->limit(3),
+                    ->limit(3)
+                    ->getStateUsing(function ($record) {
+                        // Jika ada gambar yang diupload, gunakan gambar tersebut
+                        if (!empty($record->images)) {
+                            return $record->images;
+                        }
+                        
+                        // Jika tipe video dan ada link youtube, ambil thumbnail youtube
+                        if ($record->type === 'video' && !empty($record->video_url)) {
+                            preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $record->video_url, $match);
+                            if (isset($match[1])) {
+                                return ['https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg'];
+                            }
+                        }
+                        
+                        return null;
+                    }),
                 TextColumn::make('title')
                     ->label('Judul Galeri')
                     ->searchable()
@@ -49,10 +66,20 @@ class GalleriesTable
             ->filters([
                 //
             ])
+            ->heading(fn () => view('filament.components.gallery-tabs'))
             ->headerActions([
-                \Filament\Actions\CreateAction::make()
-                    ->label('Tambah Item Galeri')
-                    ->icon('heroicon-o-plus'),
+                \Filament\Actions\Action::make('create_photo')
+                    ->label('Tambah Foto')
+                    ->icon('heroicon-o-camera')
+                    ->color('success')
+                    ->visible(fn ($livewire) => $livewire->activeTab === 'foto' || $livewire->activeTab === null)
+                    ->url(fn () => \App\Filament\Resources\Galleries\GalleryResource::getUrl('create')),
+                \Filament\Actions\Action::make('create_video')
+                    ->label('Tambah Video')
+                    ->icon('heroicon-o-video-camera')
+                    ->color('success')
+                    ->visible(fn ($livewire) => $livewire->activeTab === 'video')
+                    ->url(fn () => \App\Filament\Resources\Galleries\GalleryResource::getUrl('create') . '?type=video'),
             ])
             ->recordActions([
                 EditAction::make(),

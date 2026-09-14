@@ -17,33 +17,39 @@ class RelatedLinkForm
             ->components([
                 Section::make('Form Tautan Terkait')
                     ->description('Kelola tautan instansi terkait, kemitraan, atau portal eksternal pemerintah.')
-                    ->icon('heroicon-o-arrow-left')
+                    ->icon('heroicon-o-link')
                     ->columnSpanFull()
                     ->schema([
                         Grid::make(2)->schema([
                             TextInput::make('title')
                                 ->label('NAMA INSTANSI / TAUTAN')
                                 ->placeholder('Contoh: Kementerian LHK, Pemkab Probolinggo')
+                                ->prefixIcon('heroicon-m-building-library')
                                 ->required()
                                 ->maxLength(255),
 
                             TextInput::make('url')
                                 ->label('URL TAUTAN')
                                 ->placeholder('Contoh: https://menlhk.go.id')
+                                ->prefixIcon('heroicon-m-globe-alt')
                                 ->url()
                                 ->required()
                                 ->maxLength(255),
                         ]),
 
                         Grid::make(2)->schema([
-                            TextInput::make('logo')
-                                ->label('URL LOGO ATAU IKON (OPSIONAL)')
-                                ->placeholder('Contoh: https://... atau bi-link')
-                                ->maxLength(255),
+                            \Filament\Forms\Components\FileUpload::make('logo')
+                                ->label('UPLOAD LOGO / IKON (OPSIONAL)')
+                                ->image()
+                                ->directory('links-logo')
+                                ->maxSize(2048)
+                                ->helperText('Maksimal ukuran file 2MB. Boleh dikosongkan jika menggunakan teks/ikon bawaan.')
+                                ->view('filament.forms.components.native-file-upload'),
 
                             Toggle::make('is_active')
                                 ->label('AKTIFKAN TAUTAN')
                                 ->helperText('Tampilkan link ini di footer / halaman publik')
+                                ->onColor('success')
                                 ->default(true),
                         ]),
                     ]),

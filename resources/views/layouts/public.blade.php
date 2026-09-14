@@ -10,6 +10,7 @@
     $heroTitle = $siteSetting->hero_title ?: 'DLH Kab. Probolinggo';
     $heroDesc = $siteSetting->hero_description ?: 'Dinas Lingkungan Hidup Kabupaten Probolinggo hadir untuk menjaga kelestarian alam, mengelola tata ruang hijau, dan menangani kebersihan secara profesional.';
     $logoUrl = $siteSetting->logo_path ? asset('storage/' . $siteSetting->logo_path) : asset('storage/settings/01M1MHT13FMWTSSC5JFSMJ4JY0.png');
+    $faviconUrl = $siteSetting->favicon_path ? asset('storage/' . $siteSetting->favicon_path) : $logoUrl;
     $phone = $siteSetting->phone ?: '(0335) 421234';
     $email = $siteSetting->email ?: 'dlh@probolinggokab.go.id';
     $address = $siteSetting->address ?: 'Jl. Panglima Sudirman No.123, Kraksaan, Kabupaten Probolinggo';
@@ -22,6 +23,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $siteName }} — {{ $siteShortName }}</title>
     <meta name="description" content="{{ $siteTagline }}">
+    @if($faviconUrl)
+        <link rel="icon" type="image/x-icon" href="{{ $faviconUrl }}">
+        <link rel="shortcut icon" href="{{ $faviconUrl }}">
+        <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -74,41 +80,87 @@
 
         /* Brand Logo */
         .brand-logo-wrap {
-            display: flex; align-items: center; gap: 12px;
+            display: flex; align-items: center; gap: 14px;
             text-decoration: none;
         }
         .brand-logo-box {
-            width: 46px; height: 46px;
-            border-radius: 12px;
+            position: relative;
+            width: 54px; height: 54px;
+            border-radius: 14px;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--g700), var(--g950));
+            background: #ffffff;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 14px rgba(21,128,61,.3);
             flex-shrink: 0;
-            transition: transform .3s, box-shadow .3s;
+            transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+            /* Double ring: inner white + outer green glow */
+            box-shadow:
+                0 0 0 2px #ffffff,
+                0 0 0 4px var(--g600),
+                0 6px 18px rgba(21,128,61,.3);
+        }
+        /* Shine overlay on hover */
+        .brand-logo-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,.55) 0%, transparent 55%);
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
+            border-radius: 14px;
         }
         .brand-logo-wrap:hover .brand-logo-box {
-            transform: scale(1.06) rotate(-2deg);
-            box-shadow: 0 6px 20px rgba(21,128,61,.45);
+            transform: scale(1.08) rotate(-4deg);
+            box-shadow:
+                0 0 0 2px #ffffff,
+                0 0 0 4px var(--g500),
+                0 10px 28px rgba(21,128,61,.45);
         }
-        .brand-logo-box img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
-        .brand-logo-box .bi { font-size: 1.5rem; color: #fff; }
+        .brand-logo-wrap:hover .brand-logo-box::after { opacity: 1; }
+        .brand-logo-box img { width: 92%; height: 92%; object-fit: contain; border-radius: 10px; }
+        .brand-logo-box .bi { font-size: 1.5rem; color: var(--g700); }
         .brand-text { display: flex; flex-direction: column; justify-content: center; }
         .brand-name {
-            font-size: 1rem; font-weight: 800;
-            color: var(--g900); line-height: 1.15;
-            letter-spacing: -.4px;
+            font-size: .98rem; font-weight: 800;
+            color: var(--g900); line-height: 1.2;
+            letter-spacing: -.3px;
         }
         .brand-divider {
-            display: block; width: 100%; height: 1.5px;
-            background: linear-gradient(90deg, var(--g500), transparent);
-            margin: 2px 0;
+            display: block; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--g500), var(--g400), transparent);
+            margin: 3px 0;
             border-radius: 2px;
         }
         .brand-sub {
-            font-size: .68rem; font-weight: 700;
-            color: var(--g600); letter-spacing: .8px;
+            font-size: .66rem; font-weight: 700;
+            color: var(--g600); letter-spacing: 1px;
             text-transform: uppercase;
+        }
+
+        /* Footer variant of brand logo */
+        .brand-logo-wrap.brand-footer .brand-name {
+            color: #ffffff;
+            font-size: 1.05rem;
+        }
+        .brand-logo-wrap.brand-footer .brand-sub {
+            color: #4ade80;
+            font-size: .72rem;
+            letter-spacing: 1.2px;
+        }
+        .brand-logo-wrap.brand-footer .brand-divider {
+            background: linear-gradient(90deg, #4ade80, #22c55e, transparent);
+        }
+        .brand-logo-wrap.brand-footer .brand-logo-box {
+            box-shadow:
+                0 0 0 2px #ffffff,
+                0 0 0 4px var(--g500),
+                0 8px 24px rgba(0,0,0,.35);
+        }
+        .brand-logo-wrap.brand-footer:hover .brand-logo-box {
+            box-shadow:
+                0 0 0 2px #ffffff,
+                0 0 0 4px #4ade80,
+                0 12px 30px rgba(74,222,128,.4);
         }
 
         /* Nav Links */
@@ -150,16 +202,40 @@
             color: #fff !important;
         }
 
-        /* Dropdown Premium Redesign (Minimalist) */
+        /* Dropdown Submenu Scrollable & Premium Styling */
         .dropdown-menu-dlh {
-            border: 1px solid rgba(0,0,0,0.06); 
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.01);
-            padding: 8px; 
-            min-width: 240px;
+            border: 1px solid rgba(0,0,0,0.08); 
+            border-radius: 14px;
+            box-shadow: 0 12px 32px -4px rgba(0,0,0,0.14), 0 4px 12px -2px rgba(0,0,0,0.06);
+            padding: 8px 6px; 
+            min-width: 250px;
+            max-height: 280px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
             animation: popIn .2s cubic-bezier(0.16, 1, 0.3, 1);
             background: #ffffff;
             margin-top: 8px;
+        }
+        .dropdown-menu-dlh::-webkit-scrollbar {
+            width: 5px;
+        }
+        .dropdown-menu-dlh::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 6px 0;
+            border-radius: 10px;
+        }
+        .dropdown-menu-dlh::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.4);
+            border-radius: 10px;
+            transition: background 0.2s ease;
+        }
+        .dropdown-menu-dlh::-webkit-scrollbar-thumb:hover {
+            background: #16a34a;
         }
         .dropdown-item-dlh {
             font-size: 0.95rem; 
@@ -329,6 +405,181 @@
             color: #14532d; transform: translateX(5px) scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,.3);
         }
 
+        /* ELITE QUICK ACCESS CARDS */
+        .quick-card-elite {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 250px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 22px;
+            padding: 24px 22px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+            z-index: 1;
+        }
+        .quick-card-elite::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #16a34a, #15803d);
+            opacity: 0;
+            transition: opacity 0.3s ease, height 0.3s ease;
+        }
+        .quick-card-elite::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 85% 15%, rgba(22, 163, 74, 0.04), transparent 65%);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        .quick-card-elite:hover {
+            transform: translateY(-8px);
+            border-color: rgba(22, 163, 74, 0.28);
+            box-shadow: 0 20px 38px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(22, 163, 74, 0.12);
+        }
+        .quick-card-elite:hover::before {
+            opacity: 1;
+            height: 4px;
+        }
+        .quick-card-elite:hover::after {
+            opacity: 1;
+        }
+        .qc-watermark {
+            position: absolute;
+            right: -12px;
+            bottom: -16px;
+            font-size: 6.2rem;
+            color: #15803d;
+            opacity: 0.035;
+            pointer-events: none;
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+        .quick-card-elite:hover .qc-watermark {
+            transform: scale(1.15) rotate(8deg);
+            opacity: 0.09;
+        }
+        .qc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .qc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: #15803d;
+            background: #f0fdf4;
+            border: 1px solid rgba(22, 163, 74, 0.2);
+            padding: 5px 11px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .qc-pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+            background: #16a34a;
+            box-shadow: 0 0 6px rgba(22, 163, 74, 0.6);
+            animation: qcPulseAnim 2s infinite;
+        }
+        @keyframes qcPulseAnim {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .qc-icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #15803d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .quick-card-elite:hover .qc-icon-box {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: #ffffff;
+            transform: scale(1.1) rotate(6deg);
+            box-shadow: 0 8px 18px rgba(22, 163, 74, 0.25);
+            border-color: transparent;
+        }
+        .qc-body {
+            flex: 1;
+            margin-bottom: 18px;
+        }
+        .qc-title {
+            font-size: 1.06rem;
+            font-weight: 800;
+            color: var(--slate900, #0f172a);
+            margin: 0 0 8px 0;
+            line-height: 1.35;
+            letter-spacing: -0.2px;
+            transition: color 0.3s ease;
+        }
+        .quick-card-elite:hover .qc-title {
+            color: #15803d;
+        }
+        .qc-desc {
+            font-size: 0.82rem;
+            color: #64748b;
+            line-height: 1.55;
+            margin: 0;
+        }
+        .qc-footer {
+            padding-top: 14px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+        }
+        .qc-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--slate700, #334155);
+            transition: all 0.3s ease;
+        }
+        .qc-action-btn i {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .quick-card-elite:hover .qc-action-btn {
+            color: #15803d;
+        }
+        .quick-card-elite:hover .qc-action-btn i {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: #ffffff;
+            transform: translateX(4px);
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+        }
+
         @media (max-width: 767px) {
             .portal-featured { flex-direction: column; padding: 28px 22px; }
             .portal-featured-right { width: 100%; flex-direction: row; justify-content: center; flex-wrap: wrap; }
@@ -458,42 +709,34 @@
             background: radial-gradient(circle, rgba(74,222,128,.07) 0%, transparent 70%); pointer-events: none;
         }
         .stat-card-p {
-            background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(0,0,0,.25) 100%);
-            border: 1px solid rgba(255,255,255,.06);
-            border-radius: 28px; padding: 36px 28px;
-            display: flex; flex-direction: column; align-items: flex-start; gap: 20px;
-            box-shadow: inset 0 2px 20px rgba(255,255,255,.02), 0 10px 30px rgba(0,0,0,.3);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; padding: 24px 20px;
+            display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             position: relative; overflow: hidden; height: 100%;
-            transition: all .5s cubic-bezier(.175,.885,.32,1.275);
+            transition: all 0.25s ease;
         }
-        .stat-card-p::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at 50% 0%, var(--stat-color), transparent 70%);
-            opacity: 0.1; transition: opacity .5s; pointer-events: none;
+        .stat-card-p:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(74, 222, 128, 0.35);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
-        .stat-card-p:hover { transform: translateY(-10px); border-color: rgba(255,255,255,.15); box-shadow: 0 30px 60px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.05); }
-        .stat-card-p:hover::before { opacity: 0.25; }
-        .stat-card-top { position:absolute; top:0; left:0; right:0; height:4px; background:var(--stat-color); opacity:0.3; transition: opacity .5s; z-index:2; }
-        .stat-card-p:hover .stat-card-top { opacity:1; box-shadow: 0 0 20px var(--stat-color); }
-        .stat-bg-icon { position: absolute; right: -15px; bottom: -20px; font-size: 8rem; color: rgba(255,255,255,.02); z-index: 0; transform: rotate(-15deg); transition: all .6s cubic-bezier(.175,.885,.32,1.275); pointer-events: none; }
-        .stat-card-p:hover .stat-bg-icon { color: rgba(255,255,255,.06); transform: rotate(0deg) scale(1.1); }
-        
         .stat-icon-box {
-            width: 64px; height: 64px; border-radius: 20px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            background: rgba(255,255,255,.05); color: #fff;
-            border: 1px solid rgba(255,255,255,.1);
-            backdrop-filter: blur(10px); position: relative; z-index: 1;
-            transition: all .5s cubic-bezier(.175,.885,.32,1.275);
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+            background: rgba(22, 163, 74, 0.16); color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            position: relative; z-index: 1;
+            transition: all 0.25s ease;
         }
-        .stat-card-p:hover .stat-icon-box { transform: scale(1.15) rotate(8deg); background: var(--stat-color); border-color: transparent; color: #000; box-shadow: 0 10px 25px rgba(0,0,0,.5); }
+        .stat-card-p:hover .stat-icon-box {
+            background: #166534; border-color: #22c55e; color: #fff;
+        }
         
-        .stat-value { font-size: 2.8rem; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -1.5px; margin-bottom: 6px; position:relative; z-index:1; }
-        .stat-name { font-size: .95rem; color: rgba(255,255,255,.65); font-weight: 500; line-height: 1.4; position:relative; z-index:1; transition: color .4s; }
-        .stat-card-p:hover .stat-name { color: #fff; }
-        
-        .stat-tag { font-size: .7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-top: auto; position:relative; z-index:1; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.8); transition: all .4s; }
-        .stat-card-p:hover .stat-tag { background: var(--stat-color); color: #000; border-color: transparent; }
+        .stat-value { font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 4px; position:relative; z-index:1; }
+        .stat-name { font-size: .9rem; color: #cbd5e1; font-weight: 500; line-height: 1.35; position:relative; z-index:1; }
 
         /* LAYANAN */
         .layanan-section { background: linear-gradient(180deg, #0b2e13 0%, #051609 100%); position: relative; }
@@ -508,32 +751,32 @@
             box-shadow: inset 0 2px 20px rgba(255,255,255,.02), 0 10px 30px rgba(0,0,0,.3);
             position: relative; z-index: 1;
         }
-        .svc-card:hover { transform: translateY(-10px); border-color: rgba(251,191,36,.4); box-shadow: 0 30px 60px rgba(0,0,0,.6), inset 0 0 0 1px rgba(251,191,36,.15); }
+        .svc-card:hover { transform: translateY(-6px); border-color: rgba(74, 222, 128, 0.4); box-shadow: 0 20px 45px rgba(0,0,0,.5), 0 0 20px rgba(34, 197, 94, 0.15); }
         .svc-card-top { height: 4px; background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.02)); transition: all .4s; }
-        .svc-card:hover .svc-card-top { background: linear-gradient(90deg, var(--g500), var(--amber)); }
+        .svc-card:hover .svc-card-top { background: linear-gradient(90deg, #16a34a, #4ade80); }
         .svc-num { font-size: 7rem; font-weight: 900; color: rgba(255,255,255,.015); position: absolute; top: -10px; right: 0px; line-height: 1; user-select: none; pointer-events: none; letter-spacing: -6px; z-index: -1; transition: all .5s; }
-        .svc-card:hover .svc-num { color: rgba(251,191,36,.04); transform: scale(1.1) translate(-10px, 10px); }
+        .svc-card:hover .svc-num { color: rgba(255,255,255,.03); transform: scale(1.05) translate(-6px, 6px); }
         .svc-icon-ring {
             width: 62px; height: 62px; border-radius: 18px;
             background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.01)); border: 1px solid rgba(255,255,255,.05);
             display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 10px rgba(255,255,255,.05);
-            font-size: 1.6rem; color: #fff; flex-shrink: 0; transition: all .5s cubic-bezier(.175,.885,.32,1.275);
+            font-size: 1.6rem; color: #fff; flex-shrink: 0; transition: all .4s cubic-bezier(.165,.84,.44,1);
         }
-        .svc-card:hover .svc-icon-ring { transform: scale(1.15) rotate(-8deg); background: linear-gradient(135deg, var(--amber), #d97706); color: #000; box-shadow: 0 10px 25px rgba(251,191,36,.4); border-color: transparent; }
+        .svc-card:hover .svc-icon-ring { transform: scale(1.08); background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; box-shadow: 0 8px 22px rgba(22, 163, 74, 0.35); border-color: rgba(74, 222, 128, 0.4); }
         .svc-tag { font-size: .68rem; font-weight: 800; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; transition: color .4s; }
-        .svc-card:hover .svc-tag { color: var(--amber); }
+        .svc-card:hover .svc-tag { color: #86efac; }
         .svc-title { font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.4; margin: 0; letter-spacing: -.3px; }
         .svc-desc { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.7; flex-grow: 1; transition: color .4s; }
-        .svc-card:hover .svc-desc { color: rgba(255,255,255,.75); }
+        .svc-card:hover .svc-desc { color: rgba(255,255,255,.8); }
         .svc-chip { font-size: .68rem; padding: 4px 12px; background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.05); border-radius: 100px; color: rgba(255,255,255,.6); white-space: nowrap; font-weight: 600; transition: all .4s; }
-        .svc-card:hover .svc-chip { border-color: rgba(251,191,36,.2); color: rgba(255,255,255,.9); background: rgba(251,191,36,.05); }
+        .svc-card:hover .svc-chip { border-color: rgba(74, 222, 128, 0.3); color: rgba(255,255,255,.95); background: rgba(34, 197, 94, 0.1); }
         .svc-arrow-btn {
             width: 44px; height: 44px; border-radius: 50%;
             background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
             display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,.6); text-decoration: none; flex-shrink: 0; transition: all .5s cubic-bezier(.175,.885,.32,1.275);
+            color: rgba(255,255,255,.6); text-decoration: none; flex-shrink: 0; transition: all .4s cubic-bezier(.165,.84,.44,1);
         }
-        .svc-card:hover .svc-arrow-btn { background: var(--amber); color: #000; transform: translateX(8px); border-color: transparent; box-shadow: 0 8px 20px rgba(251,191,36,.3); }
+        .svc-card:hover .svc-arrow-btn { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; transform: translateX(6px); border-color: #4ade80; box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35); }
 
         /* BERITA */
         .news-card {
@@ -591,17 +834,34 @@
         /* MITRA */
         .mitra-section { background: linear-gradient(180deg, #f0fdf4 0%, var(--slate50) 100%); border-top: 1px solid rgba(22,163,74,.08); }
         .mitra-card {
-            background: #fff; border: 1px solid rgba(22,163,74,.1); border-radius: 18px;
-            width: 170px; height: 130px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 10px; text-decoration: none;
-            transition: all .3s cubic-bezier(.165,.84,.44,1);
-            box-shadow: 0 1px 3px rgba(0,0,0,.05); flex-shrink: 0;
+            background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0; border-radius: 20px;
+            width: 300px; min-height: 110px;
+            display: flex; align-items: stretch; justify-content: stretch;
+            text-decoration: none; padding: 12px;
+            transition: all .4s cubic-bezier(.165,.84,.44,1);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), 0 2px 10px rgba(0,0,0,.02); flex-shrink: 0;
+            position: relative; overflow: hidden;
         }
-        .mitra-card:hover { transform: translateY(-8px); box-shadow: 0 10px 32px rgba(0,0,0,.1); border-color: var(--g600); }
-        .mitra-icon { width: 48px; height: 48px; border-radius: 12px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--g700); transition: all .3s; }
-        .mitra-card:hover .mitra-icon { background: var(--g700); color: #fff; transform: scale(1.1); }
-        .mitra-name { font-size: .78rem; font-weight: 700; color: var(--slate800); text-align: center; line-height: 1.3; }
+        .mitra-card:hover { transform: translateY(-4px); border-color: rgba(22,163,74,.4); box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 12px 30px rgba(22,163,74,.15); background: linear-gradient(145deg, #f0fdf4 0%, #e6f6ec 100%); }
+        
+        .mitra-inner-card {
+            background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,.04); border-radius: 12px;
+            display: flex; flex-direction: row; align-items: center; justify-content: flex-start;
+            gap: 16px; padding: 14px 18px; width: 100%; transition: transform .4s cubic-bezier(.165,.84,.44,1);
+            position: relative; z-index: 1; border: 1px solid rgba(0,0,0,.02);
+        }
+        .mitra-card:hover .mitra-inner-card { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,.08); }
+
+        .mitra-img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,.08)); flex-shrink: 0; }
+        .mitra-icon-fallback { width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--g700); flex-shrink: 0; }
+        
+        .mitra-text-wrap { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; text-align: left; }
+        .mitra-name { font-size: .88rem; font-weight: 800; color: #1e293b; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-align: left; }
+        .mitra-sub { font-size: .65rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
+
+        .mitra-arrow { position: absolute; top: 12px; right: 14px; font-size: 1.1rem; color: var(--g600); opacity: 0; transform: translate(-8px, 8px); transition: all .4s cubic-bezier(.165,.84,.44,1); z-index: 0; }
+        .mitra-card:hover .mitra-arrow { opacity: 1; transform: translate(0, 0); }
 
         /* CTA */
         .cta-section { background: linear-gradient(180deg, var(--g950) 0%, #030f07 100%); position: relative; }
@@ -699,6 +959,69 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+
+        /* VOICE ASSISTANT WIDGET & TOAST */
+        .dlh-voice-ctrl {
+            position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+            background: linear-gradient(135deg, #166534 0%, #14532d 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.25); border-radius: 50px;
+            padding: 10px 18px; display: flex; align-items: center; gap: 8px;
+            color: #ffffff; font-weight: 700; font-size: .84rem;
+            box-shadow: 0 8px 24px rgba(20, 83, 45, 0.35);
+            cursor: pointer; transition: all .35s cubic-bezier(.175,.885,.32,1.275);
+            user-select: none;
+        }
+        .dlh-voice-ctrl:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(20, 83, 45, 0.5);
+            border-color: rgba(251, 191, 36, 0.7);
+            color: #fff;
+        }
+        .dlh-voice-ctrl.speaking {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border-color: #34d399;
+            box-shadow: 0 0 24px rgba(52, 211, 153, 0.65);
+            animation: dlhPulseGlow 1.8s infinite;
+        }
+        @keyframes dlhPulseGlow {
+            0%, 100% { box-shadow: 0 0 14px rgba(52, 211, 153, 0.5); }
+            50% { box-shadow: 0 0 28px rgba(52, 211, 153, 0.85); }
+        }
+        .dlh-voice-toast {
+            position: fixed; bottom: 84px; right: 28px; z-index: 9998;
+            background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(14px);
+            border: 1px solid rgba(52, 211, 153, 0.35); border-radius: 16px;
+            padding: 12px 18px; max-width: 330px; color: #ffffff;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+            opacity: 0; visibility: hidden; transform: translateY(12px);
+            transition: all .35s ease; pointer-events: none;
+        }
+        .dlh-voice-toast.show {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        .dlh-voice-speaker {
+            font-size: .7rem; font-weight: 800; color: #34d399;
+            letter-spacing: .8px; text-transform: uppercase;
+        }
+        .dlh-voice-text {
+            font-size: .82rem; color: rgba(255, 255, 255, 0.92);
+            line-height: 1.45; margin-top: 3px; font-weight: 500;
+        }
+        .dlh-voice-wave {
+            display: inline-flex; align-items: center; gap: 3px; height: 16px;
+        }
+        .dlh-voice-wave span {
+            width: 3px; height: 100%; background: #34d399; border-radius: 2px;
+            animation: dlhWaveBar 1.2s ease-in-out infinite;
+        }
+        .dlh-voice-wave span:nth-child(1) { animation-delay: 0.0s; height: 35%; }
+        .dlh-voice-wave span:nth-child(2) { animation-delay: 0.2s; height: 85%; }
+        .dlh-voice-wave span:nth-child(3) { animation-delay: 0.4s; height: 60%; }
+        .dlh-voice-wave span:nth-child(4) { animation-delay: 0.1s; height: 95%; }
+        @keyframes dlhWaveBar {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
     </style>
 </head>
 <body>
@@ -777,15 +1100,20 @@
             <div class="row g-4 mb-5">
                 <div class="col-lg-5 col-md-6">
                     <div class="footer-brand-box">
-                        <div class="d-flex align-items-center gap-3 mb-4">
-                            <div style="width:50px;height:50px;background:linear-gradient(135deg,var(--g700),var(--g900));border-radius:12px;display:flex;align-items:center;justify-content:center;">
-                                <i class="bi bi-tree-fill text-white fs-4"></i>
+                        <a class="brand-logo-wrap brand-footer mb-4" href="{{ url('/') }}">
+                            <div class="brand-logo-box">
+                                @if($logoUrl)
+                                    <img src="{{ $logoUrl }}" alt="Logo {{ $siteName }}" onerror="this.parentElement.innerHTML='<i class=\'bi bi-tree-fill\'></i>'">
+                                @else
+                                    <i class="bi bi-tree-fill"></i>
+                                @endif
                             </div>
-                            <div>
-                                <div style="font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">{{ $siteName }}</div>
-                                <div style="font-size:.78rem;color:rgba(255,255,255,.45);">{{ $siteShortName }}</div>
+                            <div class="brand-text">
+                                <span class="brand-name">{{ $siteName }}</span>
+                                <span class="brand-divider"></span>
+                                <span class="brand-sub">{{ $siteShortName }}</span>
                             </div>
-                        </div>
+                        </a>
                         <p style="color:rgba(255,255,255,.5);font-size:.875rem;line-height:1.8;margin-bottom:20px;">{{ $siteName }} {{ $siteShortName }} berkomitmen mewujudkan kelestarian lingkungan, pengelolaan sampah terpadu, dan ruang terbuka hijau yang asri.</p>
                         <div class="footer-social d-flex gap-2">
                             <a href="https://facebook.com/dlhkabprobolinggo" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -800,7 +1128,7 @@
                     <div class="qr-card h-100 d-flex flex-column align-items-center justify-content-center">
                         <div class="qr-label">Scan Kode QR</div>
                         <div class="qr-img-wrap">
-                            <img src="http://127.0.0.1:8000/images/qr_skm.png" alt="QR DLH" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=DLH+Kab+Probolinggo'">
+                            <img src="{{ asset('images/qr_skm.png') }}" alt="QR DLH" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=DLH+Kab+Probolinggo'">
                         </div>
                         <div class="qr-sub"><i class="bi bi-hand-index-thumb me-1"></i>Scan QR Portal Pelayanan</div>
                         <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;">DLH Kab. Probolinggo</div>
@@ -838,6 +1166,222 @@
             el.style.transition='opacity .55s ease, transform .55s ease';
             obs.observe(el);
         });
+
+        /* ============================================================
+           SISTEM SUARA GOOGLE CEWEK LEMBUT (AUDIO TTS DLH PROBOLINGGO)
+           - Suara Google cewek asli yang lembut dan jernih
+           - Anti-berantakan, bebas tabrakan/tumpuk suara
+           - Sambutan awal masuk lembut dan ramah
+           - Pengucapan menu & sub-menu yang rapi dan elegan
+           ============================================================ */
+        (function() {
+            const toast = document.getElementById('dlhVoiceToast');
+            const toastText = document.getElementById('dlhVoiceText');
+            const voiceBtn = document.getElementById('dlhVoiceBtn');
+            let currentAudio = null;
+            let toastTimer = null;
+            let lastSpeechTime = 0;
+
+            function showToast(text) {
+                if (!toast || !toastText) return;
+                toastText.textContent = text;
+                toast.classList.add('show');
+                if (voiceBtn) voiceBtn.classList.add('speaking');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    if (voiceBtn) voiceBtn.classList.remove('speaking');
+                }, 3800);
+            }
+
+            function stopAllVoice() {
+                if (currentAudio) {
+                    try {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    } catch (e) {}
+                    currentAudio = null;
+                }
+                if ('speechSynthesis' in window) {
+                    try { window.speechSynthesis.cancel(); } catch (e) {}
+                }
+                if (toast) toast.classList.remove('show');
+                if (voiceBtn) voiceBtn.classList.remove('speaking');
+            }
+
+            // Pemutar Suara Google Cewek yang Lembut & Natural (Studio Audio MP3 via Server Cache /audio-tts)
+            function playGoogleVoice(text, onEnd) {
+                if (!text) {
+                    if (onEnd) onEnd();
+                    return;
+                }
+
+                const now = Date.now();
+                if (now - lastSpeechTime < 250) return; // Debounce anti-dobel klik
+                lastSpeechTime = now;
+
+                stopAllVoice();
+                showToast(text);
+
+                try {
+                    const encoded = encodeURIComponent(text);
+                    const audio = new Audio('/audio-tts?text=' + encoded);
+                    currentAudio = audio;
+
+                    let doneCalled = false;
+                    const done = () => {
+                        if (doneCalled) return;
+                        doneCalled = true;
+                        if (toast) toast.classList.remove('show');
+                        if (voiceBtn) voiceBtn.classList.remove('speaking');
+                        currentAudio = null;
+                        if (onEnd) onEnd();
+                    };
+
+                    audio.onplay = () => {
+                        if (voiceBtn) voiceBtn.classList.add('speaking');
+                    };
+
+                    audio.onended = done;
+                    audio.onerror = done;
+
+                    const promise = audio.play();
+                    if (promise !== undefined) {
+                        promise.catch(() => done());
+                    }
+                } catch (err) {
+                    if (onEnd) onEnd();
+                }
+            }
+
+            // Suara Sambutan Awal Masuk (Lembut & Hangat)
+            const welcomeText = "Selamat datang di website resmi Dinas Lingkungan Hidup Kabupaten Probolinggo.";
+
+            function playWelcomeOnce() {
+                if (!sessionStorage.getItem('dlh_welcome_heard')) {
+                    sessionStorage.setItem('dlh_welcome_heard', 'true');
+                    playGoogleVoice(welcomeText);
+                }
+            }
+
+            // Kebijakan Autoplay: Coba langsung, atau aktifkan pada interaksi pertama pengguna
+            let interacted = false;
+            function triggerFirstInteraction() {
+                if (!interacted) {
+                    interacted = true;
+                    playWelcomeOnce();
+                }
+                window.removeEventListener('click', triggerFirstInteraction);
+                window.removeEventListener('keydown', triggerFirstInteraction);
+                window.removeEventListener('touchstart', triggerFirstInteraction);
+            }
+
+            // Upayakan play otomatis jika browser mengizinkan
+            setTimeout(() => {
+                playWelcomeOnce();
+            }, 500);
+
+            window.addEventListener('click', triggerFirstInteraction, { once: true });
+            window.addEventListener('keydown', triggerFirstInteraction, { once: true });
+            window.addEventListener('touchstart', triggerFirstInteraction, { once: true });
+
+            // Tombol Floating: Putar ulang sambutan kapan saja
+            if (voiceBtn) {
+                voiceBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playGoogleVoice(welcomeText);
+                });
+            }
+
+            // Helper ekstraksi teks bersih dari elemen (tanpa ikon dan karakter liar)
+            function getCleanText(el) {
+                const clone = el.cloneNode(true);
+                clone.querySelectorAll('i, svg, .dropdown-menu, .badge, .navbar-toggler-icon').forEach(n => n.remove());
+                let txt = clone.textContent.replace(/[\n\r\t]+/g, ' ').replace(/\s+/g, ' ').trim();
+                txt = txt.replace(/&/g, ' dan ');
+                txt = txt.replace(/\bHOME\b/gi, 'Beranda');
+                txt = txt.replace(/\(Tupoksi\)/gi, '');
+                txt = txt.replace(/[\(\)\[\]\/\\_]/g, ' ');
+                txt = txt.replace(/\s+/g, ' ').trim();
+                return txt;
+            }
+
+            // Helper navigasi dengan suara Google yang jelas & merdu
+            function navigateWithVoice(title, href, target) {
+                if (href && href !== '#' && !href.startsWith('javascript:')) {
+                    if (target === '_blank') {
+                        playGoogleVoice(title);
+                        return;
+                    }
+                    let navigated = false;
+                    const proceed = () => {
+                        if (!navigated) {
+                            navigated = true;
+                            window.location.href = href;
+                        }
+                    };
+                    playGoogleVoice(title, proceed);
+                    setTimeout(proceed, 650); // Jeda pengaman agar suara sempat berkumandang sebelum transisi halaman
+                } else {
+                    playGoogleVoice(title);
+                }
+            }
+
+            // ==========================================
+            // SUARA MENCET MENU DAN SUB MENU
+            // ==========================================
+            document.addEventListener('DOMContentLoaded', () => {
+                // 1. Menu Utama Langsung (Beranda, Kontak)
+                document.querySelectorAll('.navbar-main .nav-link:not(.dropdown-toggle), .navbar-main .nav-cta').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const title = getCleanText(this);
+                        if (!title) return;
+
+                        const href = this.getAttribute('href');
+                        const target = this.getAttribute('target');
+                        if (href && href !== '#' && !href.startsWith('javascript:')) {
+                            e.preventDefault();
+                            navigateWithVoice(title, href, target);
+                        } else {
+                            playGoogleVoice(title);
+                        }
+                    });
+                });
+
+                // 2. Menu Utama yang Membuka Dropdown Sub-Menu (Profil, Layanan, Dokumen, Informasi)
+                document.querySelectorAll('.navbar-main .dropdown-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', function() {
+                        const title = getCleanText(this);
+                        if (title) {
+                            playGoogleVoice(title);
+                        }
+                    });
+                });
+
+                // 3. Sub-Menu (Item di dalam Dropdown)
+                document.querySelectorAll('.dropdown-item-dlh, .navbar-main .dropdown-item').forEach(subItem => {
+                    subItem.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const title = getCleanText(this);
+                        if (!title) return;
+
+                        const href = this.getAttribute('href');
+                        const target = this.getAttribute('target');
+
+                        if (href && href !== '#' && !href.startsWith('javascript:')) {
+                            if (target === '_blank') {
+                                playGoogleVoice(title);
+                            } else {
+                                e.preventDefault();
+                                navigateWithVoice(title, href, target);
+                            }
+                        } else {
+                            playGoogleVoice(title);
+                        }
+                    });
+                });
+            });
+        })();
     </script>
 </body>
 </html>

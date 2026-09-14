@@ -18,4 +18,9 @@ class CreateProfile extends CreateRecord
     {
         return 'Tambahkan bagian atau section profil instansi baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

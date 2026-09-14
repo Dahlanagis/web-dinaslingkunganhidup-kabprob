@@ -16,6 +16,17 @@ class CreatePost extends CreateRecord
 
     public function getSubheading(): ?string
     {
-        return 'Tulis dan publikasikan berita atau artikel baru untuk masyarakat';
+        return 'Tulis dan publikasikan rilis berita dan liputan kegiatan resmi DLH';
+    }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['category'] = 'berita';
+        return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

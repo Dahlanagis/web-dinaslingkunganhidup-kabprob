@@ -16,12 +16,18 @@ use Filament\Tables\Table;
 
 class UserResource extends Resource
 {
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->role === 'super_admin';
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'MENU UTAMA';
     }
 
     protected static ?string $navigationLabel = 'Users & Roles';
+    protected static ?int $navigationSort = 4;
     protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';

@@ -21,6 +21,11 @@ class ServicesTable
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
+                TextColumn::make('slug')
+                    ->label('Slug Sub-Menu')
+                    ->badge()
+                    ->color('info')
+                    ->searchable(),
                 TextColumn::make('tag')
                     ->label('Kategori')
                     ->searchable()
@@ -28,8 +33,7 @@ class ServicesTable
                     ->color('success'),
                 TextColumn::make('icon')
                     ->label('Ikon')
-                    ->badge()
-                    ->color('gray'),
+                    ->formatStateUsing(fn ($state) => \App\Filament\Support\BootstrapIconSelect::formatTableColumn($state)),
                 TextColumn::make('description')
                     ->label('Deskripsi Layanan')
                     ->limit(60)

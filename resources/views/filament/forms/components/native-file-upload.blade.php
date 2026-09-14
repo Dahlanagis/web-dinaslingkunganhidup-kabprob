@@ -32,13 +32,35 @@
                     this.previews = [];
                     return;
                 }
-                const files = Array.isArray(this.state) ? this.state : (typeof this.state === 'object' ? Object.values(this.state) : [this.state]);
-                this.previews = files.filter(f => typeof f === 'string' && f.trim() !== '').map(f => ({
-                    url: f.startsWith('http') || f.startsWith('data:') ? f : '/storage/' + f,
-                    name: f.split('/').pop(),
-                    isExisting: true,
-                    raw: f
-                }));
+                let raw = this.state;
+                if (typeof raw === 'string') {
+                    try {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed) || (typeof parsed === 'object' && parsed !== null)) {
+                            raw = parsed;
+                        }
+                    } catch(e) {}
+                }
+                const files = Array.isArray(raw) ? raw : (typeof raw === 'object' && raw !== null ? Object.values(raw) : [raw]);
+                this.previews = files.filter(f => typeof f === 'string' && f.trim() !== '').map(f => {
+                    let clean = f.trim();
+                    let url;
+                    if (clean.startsWith('http://') || clean.startsWith('https://') || clean.startsWith('data:')) {
+                        url = clean;
+                    } else if (clean.startsWith('/storage/')) {
+                        url = clean;
+                    } else if (clean.startsWith('storage/')) {
+                        url = '/' + clean;
+                    } else {
+                        url = '/storage/' + clean.replace(/^\/+/, '');
+                    }
+                    return {
+                        url: url,
+                        name: clean.split('/').pop(),
+                        isExisting: true,
+                        raw: clean
+                    };
+                });
             },
             handleFiles(e) {
                 const inputFiles = Array.from(e.target.files);
@@ -119,7 +141,7 @@
         }"
         class="w-full"
     >
-        <div class="native-file-upload-box" style="border: 1.5px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; padding: 18px 22px; transition: all 0.2s ease;">
+        <div class="native-file-upload-box" style="border: 1.5px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; padding: 10px; transition: all 0.2s ease;">
             <input
                 type="file"
                 x-ref="fileInput"
@@ -130,7 +152,7 @@
                 style="display: block; width: 100%; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px 6px; font-size: 14px; color: #334155; box-sizing: border-box; cursor: pointer; outline: none;"
             />
 
-            <p class="native-file-helper-text" style="margin-top: 10px; margin-bottom: 0; font-size: 0.85rem; color: #64748b; font-weight: 500; line-height: 1.5;">
+            <p class="native-file-helper-text" style="margin-top: 5px; margin-bottom: 0; font-size: 0.85rem; color: #64748b; font-weight: 500; line-height: 1.5;">
                 {{ $helperText }}
             </p>
 
@@ -146,7 +168,7 @@
 
             <!-- Preview Daftar Foto / Berkas -->
             <template x-if="previews.length > 0">
-                <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid #e2e8f0;">
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
                     <p style="font-size: 0.78rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">
                         Berkas Terpilih (<span x-text="previews.length"></span>):
                     </p>

@@ -16,12 +16,18 @@ use Filament\Tables\Table;
 
 class SettingResource extends Resource
 {
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->role === 'super_admin';
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'MENU UTAMA';
     }
 
     protected static ?string $navigationLabel = 'Pengaturan Website';
+    protected static ?int $navigationSort = 3;
     protected static ?string $model = Setting::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';

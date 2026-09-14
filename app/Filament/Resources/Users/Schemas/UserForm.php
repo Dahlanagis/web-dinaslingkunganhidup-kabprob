@@ -49,7 +49,6 @@ class UserForm
                                 ->placeholder('Masukkan kata sandi baru...')
                                 ->password()
                                 ->revealable()
-                                ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
                                 ->dehydrated(fn ($state) => filled($state))
                                 ->required(fn (string $context): bool => $context === 'create')
                                 ->helperText('Kosongkan jika tidak ingin mengubah password saat edit.'),

@@ -30,8 +30,7 @@ class StatisticsTable
                     ->color('success'),
                 TextColumn::make('icon')
                     ->label('Ikon')
-                    ->badge()
-                    ->color('gray'),
+                    ->formatStateUsing(fn ($state) => \App\Filament\Support\BootstrapIconSelect::formatTableColumn($state)),
                 IconColumn::make('is_active')
                     ->label('Status Aktif')
                     ->boolean(),

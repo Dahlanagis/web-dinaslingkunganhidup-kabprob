@@ -47,11 +47,10 @@ class NavigationForm
                                 ->default(0)
                                 ->required(),
                         ]),
+                        \App\Filament\Support\BootstrapIconSelect::make('icon')
+                            ->columnSpanFull(),
+
                         Grid::make(2)->schema([
-                            TextInput::make('icon')
-                                ->label('IKON BOOTSTRAP (OPSIONAL)')
-                                ->placeholder('Contoh: bi-house-door, bi-newspaper')
-                                ->maxLength(100),
                             Select::make('target')
                                 ->label('TARGET BUKA TAUTAN')
                                 ->options([
@@ -60,11 +59,12 @@ class NavigationForm
                                 ])
                                 ->default('_self')
                                 ->required(),
+
+                            Toggle::make('is_active')
+                                ->label('AKTIFKAN MENU DI WEBSITE')
+                                ->helperText('Tampilkan menu ini pada bar navigasi atas')
+                                ->default(true),
                         ]),
-                        Toggle::make('is_active')
-                            ->label('AKTIFKAN MENU DI WEBSITE')
-                            ->helperText('Tampilkan menu ini pada bar navigasi atas')
-                            ->default(true),
                     ]),
             ]);
     }

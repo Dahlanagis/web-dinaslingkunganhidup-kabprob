@@ -26,6 +26,17 @@ class PostsTable
                     ->sortable()
                     ->limit(50)
                     ->description(fn (\App\Models\Post $record): string => \Illuminate\Support\Str::limit($record->slug, 30)),
+                TextColumn::make('category')
+                    ->label('Kategori')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'artikel' => 'warning',
+                        default => 'success',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'artikel' => 'Artikel Edukasi',
+                        default => 'Berita Terkini',
+                    }),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()

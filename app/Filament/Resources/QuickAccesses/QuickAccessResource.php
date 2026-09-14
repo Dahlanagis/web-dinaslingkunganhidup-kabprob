@@ -18,9 +18,14 @@ class QuickAccessResource extends Resource
 {
     protected static ?string $model = QuickAccess::class;
 
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'operator']);
+    }
+
     public static function getNavigationGroup(): ?string
     {
-        return 'KELOLA KONTEN';
+        return 'DATA PELAYANAN';
     }
     protected static string|BackedEnum|null $navigationIcon = \Filament\Support\Icons\Heroicon::OutlinedCursorArrowRays;
 

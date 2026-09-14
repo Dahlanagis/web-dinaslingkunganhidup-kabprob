@@ -16,16 +16,32 @@ use Filament\Tables\Table;
 
 class PostResource extends Resource
 {
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin', 'operator']);
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'KELOLA KONTEN';
     }
 
     protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Berita & Artikel';
+    protected static ?string $navigationLabel = 'Berita';
+    protected static ?string $modelLabel = 'Berita';
+    protected static ?string $pluralModelLabel = 'Berita';
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->where(function ($q) {
+            $q->where('category', 'berita')
+              ->orWhereNull('category')
+              ->orWhere('category', '');
+        });
+    }
 
     public static function form(Schema $schema): Schema
     {

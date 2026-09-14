@@ -27,6 +27,9 @@ class NavigationsTable
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
+                TextColumn::make('icon')
+                    ->label('Ikon')
+                    ->formatStateUsing(fn ($state) => \App\Filament\Support\BootstrapIconSelect::formatTableColumn($state)),
                 TextColumn::make('parent.title')
                     ->label('Induk Menu')
                     ->default('Menu Utama (Root)')

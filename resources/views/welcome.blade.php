@@ -19,62 +19,409 @@
 
     <!-- HERO -->
     <section class="hero-section">
-        <div class="hero-bg"></div>
+        <style>
+            .hero-bg-slide {
+                position: absolute;
+                inset: 0;
+                background-size: cover;
+                background-position: center;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s ease, transform 8s ease;
+                transform: scale(1.05);
+                z-index: 0;
+            }
+            .hero-bg-slide.active {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1);
+                z-index: 1;
+            }
+            .hero-text-container {
+                position: relative;
+                min-height: 380px;
+            }
+            .hero-text-slide {
+                opacity: 0;
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s ease;
+                transform: translateY(12px);
+                pointer-events: none;
+            }
+            .hero-text-slide.active {
+                opacity: 1;
+                visibility: visible;
+                position: relative;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            .hero-nav-controls {
+                z-index: 10;
+                position: relative;
+            }
+            .hero-indicator-pill {
+                height: 6px;
+                width: 18px;
+                border-radius: 4px;
+                background: rgba(255, 255, 255, 0.3);
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .hero-indicator-pill.active {
+                width: 38px;
+                background: #4ade80;
+                box-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+            }
+            .hero-arrow-ctrl {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: #ffffff;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.82rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .hero-arrow-ctrl:hover {
+                background: #4ade80;
+                color: #052e16;
+                border-color: #4ade80;
+                transform: scale(1.08);
+            }
+            .hero-slide-counter {
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                color: rgba(255, 255, 255, 0.7);
+                background: rgba(0, 0, 0, 0.25);
+                padding: 3px 10px;
+                border-radius: 100px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+            }
+        </style>
+
+        @php
+            $activeBanners = \App\Models\Banner::where('is_active', true)->get();
+            if ($activeBanners->isEmpty()) {
+                $activeBanners = collect([
+                    (object)[
+                        'title' => $siteSetting->hero_title ?: 'DLH Kab. Probolinggo',
+                        'description' => $heroDesc,
+                        'image' => $siteSetting->hero_banner_path,
+                    ]
+                ]);
+            }
+            $defaultHeroBg = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1474&q=80';
+        @endphp
+
+        <!-- Background Layers for All Active Banners -->
+        @foreach($activeBanners as $idx => $b)
+            @php
+                $bBg = !empty($b->image) ? asset('storage/' . $b->image) : $defaultHeroBg;
+            @endphp
+            <div class="hero-bg hero-bg-slide {{ $idx === 0 ? 'active' : '' }}" 
+                 id="heroBgSlide{{ $idx }}"
+                 style="background-image: url('{{ $bBg }}');"></div>
+        @endforeach
+
         <div class="hero-overlay"></div>
         <div class="hero-particles"></div>
         <div class="hero-content w-100">
             <div class="container py-5">
                 <div class="row">
-                    <div class="col-lg-7 col-xl-6 py-5">
-                        <div class="hero-badge anim-fadeup">
-                            <span class="hero-dot"></span>
-                            Resmi · Terpercaya · Profesional
-                        </div>
-                        <h1 class="hero-title anim-fadeup d1">
-                            {{ $heroTitle }}<br>
-                            <span class="hero-highlight">Kabupaten Probolinggo</span>
-                        </h1>
-                        <p class="hero-desc anim-fadeup d2">{{ $heroDesc }}</p>
-                        <div class="d-flex gap-3 flex-wrap anim-fadeup d3">
-                            <a href="#layanan" class="btn-hero-primary"><i class="bi bi-grid-3x3-gap-fill"></i> Lihat Layanan</a>
-                            <a href="#berita" class="btn-hero-outline"><i class="bi bi-newspaper"></i> Berita Terbaru</a>
-                        </div>
+                    <div class="col-lg-7 col-xl-6 py-5 position-relative hero-text-container">
+                        @foreach($activeBanners as $idx => $b)
+                            @php
+                                $bTitle = $b->title ?: ($siteSetting->hero_title ?: 'DLH Kab. Probolinggo');
+                                $bDesc = $b->description ?: $heroDesc;
+                            @endphp
+                            <div class="hero-text-slide {{ $idx === 0 ? 'active' : '' }}" id="heroTextSlide{{ $idx }}">
+                                <div class="hero-badge anim-fadeup">
+                                    <span class="hero-dot"></span>
+                                    Resmi · Terpercaya · Profesional
+                                </div>
+                                <h1 class="hero-title anim-fadeup d1">
+                                    {{ $bTitle }}<br>
+                                    <span class="hero-highlight">Kabupaten Probolinggo</span>
+                                </h1>
+                                <p class="hero-desc anim-fadeup d2">{{ $bDesc }}</p>
+                                <div class="d-flex gap-3 flex-wrap anim-fadeup d3">
+                                    <a href="#layanan" class="btn-hero-primary"><i class="bi bi-grid-3x3-gap-fill"></i> Lihat Layanan</a>
+                                    <a href="#berita" class="btn-hero-outline"><i class="bi bi-newspaper"></i> Berita</a>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @if($activeBanners->count() > 1)
+                            <!-- Slider Nav Controls -->
+                            <div class="hero-nav-controls anim-fadeup d3 d-flex align-items-center gap-2 mt-4 pt-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    @foreach($activeBanners as $idx => $b)
+                                        <button type="button" 
+                                                class="hero-indicator-pill {{ $idx === 0 ? 'active' : '' }}" 
+                                                id="heroDot{{ $idx }}" 
+                                                onclick="switchHeroSlide({{ $idx }})" 
+                                                aria-label="Banner {{ $idx + 1 }}"
+                                                title="Lihat Banner {{ $idx + 1 }}"></button>
+                                    @endforeach
+                                </div>
+                                <div class="d-flex align-items-center gap-1 ms-2">
+                                    <button type="button" class="hero-arrow-ctrl" onclick="stepHeroSlide(-1)" aria-label="Banner Sebelumnya" title="Sebelumnya">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="hero-arrow-ctrl" onclick="stepHeroSlide(1)" aria-label="Banner Berikutnya" title="Berikutnya">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <span class="hero-slide-counter ms-1" id="heroSlideCounter">1 / {{ $activeBanners->count() }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
+
+        @if($activeBanners->count() > 1)
+            <script>
+                (function() {
+                    let currentIdx = 0;
+                    const totalBanners = {{ $activeBanners->count() }};
+                    let heroAutoTimer = null;
+
+                    window.switchHeroSlide = function(idx) {
+                        if (idx < 0) idx = totalBanners - 1;
+                        if (idx >= totalBanners) idx = 0;
+                        currentIdx = idx;
+
+                        for (let i = 0; i < totalBanners; i++) {
+                            const bg = document.getElementById('heroBgSlide' + i);
+                            const text = document.getElementById('heroTextSlide' + i);
+                            const dot = document.getElementById('heroDot' + i);
+
+                            if (i === currentIdx) {
+                                if (bg) bg.classList.add('active');
+                                if (text) text.classList.add('active');
+                                if (dot) dot.classList.add('active');
+                            } else {
+                                if (bg) bg.classList.remove('active');
+                                if (text) text.classList.remove('active');
+                                if (dot) dot.classList.remove('active');
+                            }
+                        }
+
+                        const counter = document.getElementById('heroSlideCounter');
+                        if (counter) {
+                            counter.textContent = (currentIdx + 1) + ' / ' + totalBanners;
+                        }
+
+                        restartHeroTimer();
+                    };
+
+                    window.stepHeroSlide = function(direction) {
+                        switchHeroSlide(currentIdx + direction);
+                    };
+
+                    function restartHeroTimer() {
+                        if (heroAutoTimer) clearInterval(heroAutoTimer);
+                        heroAutoTimer = setInterval(function() {
+                            switchHeroSlide(currentIdx + 1);
+                        }, 6000);
+                    }
+
+                    restartHeroTimer();
+                })();
+            </script>
+        @endif
         <div class="hero-stats-strip">
-            <div class="container">
-                <div class="row g-0">
-                    @php
-                        $heroStats = \App\Models\Statistic::where('is_active', true)->latest()->take(4)->get();
-                    @endphp
-                    @forelse($heroStats as $stat)
-                    <div class="col-6 col-md-3">
+            <div class="container position-relative">
+                <style>
+                    .hero-stats-carousel-wrap {
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        width: 100%;
+                    }
+                    .hero-stats-track {
+                        display: flex;
+                        align-items: center;
+                        overflow-x: auto;
+                        scroll-behavior: smooth;
+                        scroll-snap-type: x mandatory;
+                        -webkit-overflow-scrolling: touch;
+                        scrollbar-width: none;
+                        -ms-overflow-style: none;
+                        width: 100%;
+                        cursor: grab;
+                        user-select: none;
+                        padding: 4px 0;
+                    }
+                    .hero-stats-track:active {
+                        cursor: grabbing;
+                    }
+                    .hero-stats-track::-webkit-scrollbar {
+                        display: none;
+                    }
+                    .hero-stat-item {
+                        text-align: center;
+                        padding: 0 32px;
+                        flex: 0 0 25%;
+                        min-width: 220px;
+                        scroll-snap-align: start;
+                        box-sizing: border-box;
+                    }
+                    @media (max-width: 1199px) {
+                        .hero-stat-item {
+                            flex: 0 0 33.333%;
+                            min-width: 200px;
+                            padding: 0 24px;
+                        }
+                    }
+                    @media (max-width: 768px) {
+                        .hero-stat-item {
+                            flex: 0 0 50%;
+                            min-width: 170px;
+                            padding: 0 16px;
+                        }
+                    }
+                    @media (max-width: 480px) {
+                        .hero-stat-item {
+                            flex: 0 0 75%;
+                            min-width: 160px;
+                            padding: 0 12px;
+                        }
+                    }
+                    .hero-stat-item + .hero-stat-item {
+                        border-left: 1px solid rgba(255, 255, 255, 0.15);
+                    }
+                    .hero-stat-num {
+                        font-size: 1.85rem;
+                        font-weight: 800;
+                        color: var(--amber);
+                        line-height: 1.1;
+                        letter-spacing: -0.5px;
+                    }
+                    .hero-stat-label {
+                        font-size: 0.8rem;
+                        color: rgba(255, 255, 255, 0.7);
+                        margin-top: 4px;
+                        font-weight: 500;
+                        white-space: nowrap;
+                    }
+                    .hero-stats-arrow {
+                        width: 36px;
+                        height: 36px;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.12);
+                        border: 1px solid rgba(255, 255, 255, 0.22);
+                        color: #ffffff;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        font-size: 0.95rem;
+                        flex-shrink: 0;
+                        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                        backdrop-filter: blur(8px);
+                        z-index: 5;
+                    }
+                    .hero-stats-arrow:hover {
+                        background: var(--amber);
+                        color: #0f172a;
+                        border-color: var(--amber);
+                        transform: scale(1.1);
+                        box-shadow: 0 0 14px rgba(251, 191, 36, 0.5);
+                    }
+                    .hero-stats-prev {
+                        margin-right: 14px;
+                    }
+                    .hero-stats-next {
+                        margin-left: 14px;
+                    }
+                </style>
+                @php
+                    $heroStats = \App\Models\Statistic::where('is_active', true)->latest()->get();
+                @endphp
+                <div class="hero-stats-carousel-wrap">
+                    @if(count($heroStats) > 4)
+                    <button type="button" class="hero-stats-arrow hero-stats-prev" onclick="slideHeroStats(-1)" aria-label="Geser ke kiri" title="Geser ke kiri">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    @endif
+
+                    <div class="hero-stats-track" id="heroStatsTrack">
+                        @forelse($heroStats as $stat)
                         <div class="hero-stat-item">
                             <div class="hero-stat-num">{{ $stat->value }}</div>
                             <div class="hero-stat-label">{{ $stat->title }}</div>
                         </div>
+                        @empty
+                        <div class="hero-stat-item"><div class="hero-stat-num">45K+</div><div class="hero-stat-label">Ton Sampah Dikelola</div></div>
+                        <div class="hero-stat-item"><div class="hero-stat-num">124</div><div class="hero-stat-label">Titik RTH Terkelola</div></div>
+                        <div class="hero-stat-item"><div class="hero-stat-num">45</div><div class="hero-stat-label">Bank Sampah Aktif</div></div>
+                        <div class="hero-stat-item"><div class="hero-stat-num">85%</div><div class="hero-stat-label">Indeks Kualitas Udara</div></div>
+                        @endforelse
                     </div>
-                    @empty
-                    <div class="col-6 col-md-3"><div class="hero-stat-item"><div class="hero-stat-num">45K+</div><div class="hero-stat-label">Ton Sampah Dikelola</div></div></div>
-                    <div class="col-6 col-md-3"><div class="hero-stat-item"><div class="hero-stat-num">124</div><div class="hero-stat-label">Titik RTH Terkelola</div></div></div>
-                    <div class="col-6 col-md-3"><div class="hero-stat-item"><div class="hero-stat-num">45</div><div class="hero-stat-label">Bank Sampah Aktif</div></div></div>
-                    <div class="col-6 col-md-3"><div class="hero-stat-item"><div class="hero-stat-num">85%</div><div class="hero-stat-label">Indeks Kualitas Udara</div></div></div>
-                    @endforelse
+
+                    @if(count($heroStats) > 4)
+                    <button type="button" class="hero-stats-arrow hero-stats-next" onclick="slideHeroStats(1)" aria-label="Geser ke kanan" title="Geser ke kanan">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                    @endif
                 </div>
+
+                <script>
+                    function slideHeroStats(dir) {
+                        const track = document.getElementById('heroStatsTrack');
+                        if (!track) return;
+                        const item = track.querySelector('.hero-stat-item');
+                        const scrollAmount = item ? (item.offsetWidth * 2) * dir : 300 * dir;
+                        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const track = document.getElementById('heroStatsTrack');
+                        if (!track) return;
+                        let isDown = false;
+                        let startX, scrollLeft;
+
+                        track.addEventListener('mousedown', (e) => {
+                            isDown = true;
+                            startX = e.pageX - track.offsetLeft;
+                            scrollLeft = track.scrollLeft;
+                        });
+                        track.addEventListener('mouseleave', () => { isDown = false; });
+                        track.addEventListener('mouseup', () => { isDown = false; });
+                        track.addEventListener('mousemove', (e) => {
+                            if (!isDown) return;
+                            e.preventDefault();
+                            const x = e.pageX - track.offsetLeft;
+                            const walk = (x - startX) * 1.5;
+                            track.scrollLeft = scrollLeft - walk;
+                        });
+                    });
+                </script>
             </div>
         </div>
     </section>
 
-    <!-- PORTAL LAYANAN -->
-    <section id="layanan" class="portal-section py-5">
+    <!-- AKSES CEPAT -->
+    <section id="akses-cepat" class="portal-section py-5">
         <div class="container py-3">
             <div class="text-center mb-5">
                 <div class="section-label">Akses Cepat</div>
-                <h2 class="section-title">Portal Layanan DLH</h2>
-                <p class="text-muted mt-3" style="max-width:520px;margin:0 auto;font-size:.95rem;line-height:1.7;">
-                    Temukan informasi dan layanan unggulan DLH Kabupaten Probolinggo secara mudah dan cepat.
+                <h2 class="section-title">Pintasan Akses Cepat</h2>
+                <p class="text-muted mt-3" style="max-width:540px;margin:0 auto;font-size:.95rem;line-height:1.7;">
+                    Pintasan praktis untuk mengakses kanal pengaduan masyarakat, pemantauan mutu lingkungan, dan layanan digital DLH.
                 </p>
             </div>
 
@@ -89,8 +436,8 @@
                         <h3 class="portal-featured-title">Dinas Lingkungan Hidup<br>Kab. Probolinggo</h3>
                         <p class="portal-featured-desc">Lembaga pemerintah daerah yang bertugas merumuskan dan melaksanakan kebijakan di bidang lingkungan hidup, kebersihan, dan ruang terbuka hijau untuk mewujudkan kabupaten yang bersih, hijau, dan berkelanjutan.</p>
                         <div class="d-flex gap-3 flex-wrap mt-4">
-                            <a href="#" class="portal-featured-btn-primary"><i class="bi bi-eye-fill"></i> Lihat Profil</a>
-                            <a href="#" class="portal-featured-btn-outline"><i class="bi bi-file-earmark-text"></i> Visi &amp; Misi</a>
+                            <a href="{{ url('/profil/profil-instansi') }}" class="portal-featured-btn-primary"><i class="bi bi-building"></i> Lihat Profil</a>
+                            <a href="{{ url('/profil/visi-misi') }}" class="portal-featured-btn-outline"><i class="bi bi-compass"></i> Visi &amp; Misi</a>
                         </div>
                     </div>
                 </div>
@@ -106,38 +453,95 @@
                 </div>
             </div>
 
-            {{-- SERVICE ICON GRID --}}
-            <div class="row g-3">
+            {{-- QUICK ACCESS GRID --}}
+            <div class="row g-4">
                 @php
-                $portalItems = \App\Models\Service::all()->map(function ($service) {
-                    return [
-                        'icon' => $service->icon ?? 'bi-star',
-                        'tag' => $service->tag ?? 'Layanan',
-                        'color' => '#14532d',
-                        'bg' => 'rgba(20,83,45,.08)',
-                        'border' => 'rgba(20,83,45,.18)',
-                        'title' => $service->name,
-                        'desc' => $service->description,
-                    ];
-                });
+                $quickAccessItems = \App\Models\QuickAccess::where('is_active', true)->get();
+
+                $metaByTitle = [
+                    'Pengaduan Masyarakat' => [
+                        'badge' => 'SP4N LAPOR!',
+                        'desc' => 'Kanal aspirasi & aduan pencemaran lingkungan online cepat dan transparan.',
+                        'icon' => 'bi-megaphone-fill',
+                        'btn_text' => 'Buat Aduan',
+                    ],
+                    'Indeks Kualitas Udara' => [
+                        'badge' => 'REAL-TIME ISPU',
+                        'desc' => 'Pantau status baku mutu & indeks standar pencemar udara terkini di Probolinggo.',
+                        'icon' => 'bi-cloud-sun-fill',
+                        'btn_text' => 'Pantau ISPU',
+                    ],
+                    'Layanan Persampahan' => [
+                        'badge' => 'TPS3R & BANK SAMPAH',
+                        'desc' => 'Informasi retribusi, jadwal pengangkutan armada, serta daur ulang sampah terpadu.',
+                        'icon' => 'bi-trash3-fill',
+                        'btn_text' => 'Info Persampahan',
+                    ],
+                    'Perizinan Lingkungan' => [
+                        'badge' => 'AMDAL & PERIZINAN',
+                        'desc' => 'Panduan pengurusan dokumen AMDAL, UKL-UPL, dan persetujuan lingkungan resmi.',
+                        'icon' => 'bi-file-earmark-check-fill',
+                        'btn_text' => 'Cek Perizinan',
+                    ],
+                ];
+
+                $iconFallback = [
+                    'heroicon-o-megaphone' => 'bi-megaphone-fill',
+                    'heroicon-o-cloud' => 'bi-cloud-sun-fill',
+                    'heroicon-o-trash' => 'bi-trash3-fill',
+                    'heroicon-o-document-check' => 'bi-file-earmark-check-fill',
+                    'heroicon-o-bolt' => 'bi-lightning-charge-fill',
+                ];
                 @endphp
-                @foreach($portalItems as $item)
-                <div class="col-lg-4 col-md-6">
-                    <a href="{{ url('/layanan/' . \Illuminate\Support\Str::slug($item['title'])) }}" class="svc-icon-card" style="--svc-color:{{ $item['color'] }};--svc-bg:{{ $item['bg'] }};--svc-border:{{ $item['border'] }};">
-                        <div class="svc-icon-box">
-                            <i class="bi {{ $item['icon'] }}"></i>
+
+                @forelse($quickAccessItems as $item)
+                @php
+                    $cleanIcon = str_replace(['heroicon-o-', 'heroicon-m-', 'heroicon-s-'], '', $item->icon ?? '');
+                    $resolvedIcon = $iconFallback[$item->icon] ?? (str_starts_with($item->icon ?? '', 'bi-') ? $item->icon : 'bi-' . ($cleanIcon ?: 'lightning-charge-fill'));
+                    
+                    $meta = $metaByTitle[$item->title] ?? [
+                        'badge' => 'AKSES CEPAT',
+                        'desc' => 'Tautan langsung ke sistem dan portal layanan digital Dinas Lingkungan Hidup.',
+                        'icon' => $resolvedIcon,
+                        'btn_text' => 'Buka Tautan',
+                    ];
+
+                    $isExternal = str_starts_with($item->url ?? '', 'http');
+                @endphp
+                <div class="col-lg-3 col-md-6">
+                    <a href="{{ $item->url ?: '#' }}" target="{{ $isExternal ? '_blank' : '_self' }}" class="quick-card-elite">
+                        {{-- Ambient Watermark Icon --}}
+                        <i class="bi {{ $meta['icon'] }} qc-watermark"></i>
+
+                        {{-- Card Header --}}
+                        <div class="qc-header">
+                            <span class="qc-badge">
+                                <span class="qc-pulse"></span>
+                                {{ $meta['badge'] }}
+                            </span>
+                            <div class="qc-icon-box">
+                                <i class="bi {{ $meta['icon'] }}"></i>
+                            </div>
                         </div>
-                        <div class="svc-icon-content">
-                            <span class="svc-icon-tag">{{ $item['tag'] }}</span>
-                            <h5 class="svc-icon-title">{!! $item['title'] !!}</h5>
-                            <p class="svc-icon-desc">{{ $item['desc'] }}</p>
+
+                        {{-- Card Body --}}
+                        <div class="qc-body">
+                            <h4 class="qc-title">{{ $item->title }}</h4>
+                            <p class="qc-desc">{{ $meta['desc'] }}</p>
                         </div>
-                        <div class="svc-icon-arrow">
-                            <i class="bi bi-arrow-right"></i>
+
+                        {{-- Card Footer --}}
+                        <div class="qc-footer">
+                            <span class="qc-action-btn">
+                                <span>{{ $meta['btn_text'] }}</span>
+                                <i class="bi {{ $isExternal ? 'bi-box-arrow-up-right' : 'bi-arrow-right' }}"></i>
+                            </span>
                         </div>
                     </a>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-12 text-center text-muted py-4">Belum ada pintasan akses cepat.</div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -145,20 +549,240 @@
 <!-- STATISTIK -->
     <section class="stats-section py-5">
         <div class="container py-3">
-            <div class="text-center mb-5">
-                <div class="section-label" style="color:var(--amber);"><span style="background:var(--amber);"></span>Capaian Kinerja<span style="background:var(--amber);"></span></div>
-                <h2 class="section-title section-title-light">Data & Statistik Terkini</h2>
-                <p class="mt-3" style="color:rgba(255,255,255,.5);max-width:520px;margin:12px auto 0;font-size:.95rem;line-height:1.7;">
-                    Gambaran pencapaian kinerja dan data strategis lingkungan di wilayah Kabupaten Probolinggo.
-                </p>
+            <style>
+                .stats-slider-track {
+                    display: flex;
+                    gap: 20px;
+                    overflow-x: auto;
+                    scroll-behavior: smooth;
+                    scroll-snap-type: x mandatory;
+                    padding: 8px 2px 20px 2px;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
+                    cursor: grab;
+                }
+                .stats-slider-track:active {
+                    cursor: grabbing;
+                }
+                .stats-slider-track::-webkit-scrollbar {
+                    display: none;
+                }
+                .stat-slider-item {
+                    flex: 0 0 calc(25% - 15px);
+                    min-width: 260px;
+                    scroll-snap-align: start;
+                    display: flex;
+                }
+                @media (max-width: 1200px) {
+                    .stat-slider-item {
+                        flex: 0 0 calc(33.333% - 14px);
+                        min-width: 240px;
+                    }
+                }
+                @media (max-width: 768px) {
+                    .stat-slider-item {
+                        flex: 0 0 calc(50% - 10px);
+                        min-width: 210px;
+                    }
+                }
+                @media (max-width: 520px) {
+                    .stat-slider-item {
+                        flex: 0 0 85%;
+                        min-width: 200px;
+                    }
+                }
+
+                /* KARTU STATISTIK KEREN, MODERN & ELEGAN */
+                .stat-card-p {
+                    background: linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(16, 185, 129, 0.06) 100%);
+                    border: 1px solid rgba(255, 255, 255, 0.12);
+                    border-radius: 20px;
+                    padding: 22px 20px 18px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    gap: 16px;
+                    position: relative;
+                    height: 100%;
+                    width: 100%;
+                    overflow: hidden;
+                    backdrop-filter: blur(16px);
+                    -webkit-backdrop-filter: blur(16px);
+                    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .stat-card-p:hover {
+                    transform: translateY(-6px);
+                    border-color: rgba(74, 222, 128, 0.5);
+                    background: linear-gradient(165deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(16, 185, 129, 0.1) 100%);
+                    box-shadow: 0 18px 36px -8px rgba(0, 0, 0, 0.45), 0 0 24px rgba(34, 197, 94, 0.18);
+                }
+
+                /* TOP ACCENT LINE */
+                .stat-card-glow-bar {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 3px;
+                    background: linear-gradient(90deg, #22c55e 0%, #4ade80 60%, transparent 100%);
+                    opacity: 0.7;
+                    transition: opacity 0.3s;
+                }
+                .stat-card-p:hover .stat-card-glow-bar {
+                    opacity: 1;
+                    box-shadow: 0 0 12px #22c55e;
+                }
+
+                /* KOTAK IKON DENGAN KEDALAMAN & SHINE */
+                .stat-icon-box {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.45rem;
+                    background: linear-gradient(135deg, rgba(34, 197, 94, 0.22) 0%, rgba(21, 128, 61, 0.38) 100%);
+                    border: 1px solid rgba(74, 222, 128, 0.38);
+                    color: #86efac;
+                    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+                    transition: all 0.3s ease;
+                    flex-shrink: 0;
+                }
+                .stat-card-p:hover .stat-icon-box {
+                    transform: scale(1.06);
+                    color: #ffffff;
+                    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+                    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
+                }
+
+                /* CHIP INDIKATOR AKTIF */
+                .stat-live-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 3px 9px;
+                    border-radius: 9999px;
+                    background: rgba(34, 197, 94, 0.12);
+                    border: 1px solid rgba(74, 222, 128, 0.25);
+                    font-size: 0.68rem;
+                    font-weight: 700;
+                    color: #86efac;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                }
+                .stat-pulse {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #22c55e;
+                    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+                    animation: statPulse 2s infinite;
+                }
+                @keyframes statPulse {
+                    0% {
+                        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+                    }
+                    70% {
+                        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+                    }
+                    100% {
+                        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+                    }
+                }
+
+                /* ANGKA & JUDUL STATISTIK */
+                .stat-body {
+                    margin-top: 2px;
+                }
+                .stat-value {
+                    font-size: 2.35rem;
+                    font-weight: 900;
+                    color: #ffffff;
+                    line-height: 1.1;
+                    letter-spacing: -0.7px;
+                    margin-bottom: 5px;
+                    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                }
+                .stat-name {
+                    font-size: 0.92rem;
+                    color: rgba(255, 255, 255, 0.82);
+                    font-weight: 600;
+                    line-height: 1.38;
+                }
+
+                /* FOOTER KARTU */
+                .stat-card-footer {
+                    padding-top: 10px;
+                    border-top: 1px solid rgba(255, 255, 255, 0.08);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .stat-footer-badge {
+                    font-size: 0.72rem;
+                    color: rgba(255, 255, 255, 0.6);
+                    font-weight: 500;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                /* TOMBOL NAVIGASI BERSIH & MODERN */
+                .stats-nav-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1.5px solid rgba(255, 255, 255, 0.18);
+                    color: #ffffff;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+                    backdrop-filter: blur(8px);
+                }
+                .stats-nav-btn:hover {
+                    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+                    border-color: #4ade80;
+                    color: #ffffff;
+                    transform: scale(1.08);
+                    box-shadow: 0 4px 16px rgba(22, 163, 74, 0.4);
+                }
+            </style>
+
+            @php
+                $statistics = \App\Models\Statistic::where('is_active', true)->latest()->get();
+            @endphp
+
+            <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+                <div>
+                    <div class="section-label" style="color:var(--amber);"><span style="background:var(--amber);"></span>Capaian Kinerja<span style="background:var(--amber);"></span></div>
+                    <h2 class="section-title section-title-light">Data & Statistik Terkini</h2>
+                    <p class="mt-2" style="color:rgba(255,255,255,.65);max-width:520px;margin:0;font-size:.92rem;line-height:1.6;">
+                        Gambaran pencapaian kinerja dan data strategis lingkungan di wilayah Kabupaten Probolinggo.
+                    </p>
+                </div>
+                @if(count($statistics) > 4)
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="stats-nav-btn" onclick="slideStats(-1)" aria-label="Sebelumnya" title="Sebelumnya">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button type="button" class="stats-nav-btn" onclick="slideStats(1)" aria-label="Berikutnya" title="Berikutnya">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+                @endif
             </div>
-            <div class="row g-4">
-                @php
-                    $statistics = \App\Models\Statistic::where('is_active', true)->latest()->take(4)->get();
-                @endphp
+
+            <!-- SLIDER TRACK KESAMPING BISA DIGESER -->
+            <div class="stats-slider-track" id="statsTrack">
                 @forelse($statistics as $stat)
                 @php
-                    // Map heroicons to bootstrap icons to ensure compatibility with our custom CSS
                     $iconMap = [
                         'heroicon-o-trash' => 'bi-trash3',
                         'heroicon-o-tree' => 'bi-tree',
@@ -168,35 +792,144 @@
                         'heroicon-o-megaphone' => 'bi-megaphone',
                         'heroicon-o-document-check' => 'bi-file-earmark-check',
                     ];
-                    $cleanIcon = str_replace(['heroicon-o-', 'heroicon-m-', 'heroicon-s-'], '', $stat->icon);
-                    $iconClass = $iconMap[$stat->icon] ?? (str_starts_with($stat->icon ?? '', 'bi-') ? $stat->icon : 'bi-' . $cleanIcon);
-                    // fallback if still not found
-                    if(!str_starts_with($iconClass, 'bi-')) $iconClass = 'bi-star';
+                    $cleanIcon = str_replace(['heroicon-o-', 'heroicon-m-', 'heroicon-s-'], '', $stat->icon ?? '');
+                    $iconClass = $iconMap[$stat->icon ?? ''] ?? (str_starts_with($stat->icon ?? '', 'bi-') ? $stat->icon : 'bi-' . $cleanIcon);
+                    if(!str_starts_with($iconClass, 'bi-') || $iconClass === 'bi-') $iconClass = 'bi-bar-chart';
                 @endphp
-                <div class="col-md-6 col-xl-3">
-                    <div class="stat-card-p" style="--stat-color:var(--amber);">
-                        <div class="stat-card-top"></div>
-                        <i class="bi {{ $iconClass }} stat-bg-icon"></i>
-                        <div class="stat-icon-box"><i class="bi {{ $iconClass }}"></i></div>
-                        <div style="position:relative;z-index:1;">
+                <div class="stat-slider-item">
+                    <div class="stat-card-p">
+                        <div class="stat-card-glow-bar"></div>
+
+                        <!-- Header Kartu: Ikon & Chip Status -->
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="stat-icon-box">
+                                <i class="bi {{ $iconClass }}"></i>
+                            </div>
+                            <span class="stat-live-chip">
+                                <span class="stat-pulse"></span> Terdata
+                            </span>
+                        </div>
+
+                        <!-- Body: Nilai & Label -->
+                        <div class="stat-body">
                             <div class="stat-value">{{ $stat->value }}</div>
                             <div class="stat-name">{{ $stat->title }}</div>
+                        </div>
+
+                        <!-- Footer: Keterangan Resmi -->
+                        <div class="stat-card-footer">
+                            <span class="stat-footer-badge">
+                                <i class="bi bi-patch-check-fill text-success"></i> DLH Kab. Probolinggo
+                            </span>
                         </div>
                     </div>
                 </div>
                 @empty
                 <!-- Fallback jika database kosong -->
-                <div class="col-md-6 col-xl-3"><div class="stat-card-p" style="--stat-color:var(--amber);"><div class="stat-card-top"></div><i class="bi bi-trash3 stat-bg-icon"></i><div class="stat-icon-box"><i class="bi bi-trash3"></i></div><div style="position:relative;z-index:1;"><div class="stat-value">45.280</div><div class="stat-name">Ton Sampah Terkelola</div></div><div class="stat-tag">Tahun 2025</div></div></div>
-                <div class="col-md-6 col-xl-3"><div class="stat-card-p" style="--stat-color:var(--amber);"><div class="stat-card-top"></div><i class="bi bi-tree stat-bg-icon"></i><div class="stat-icon-box"><i class="bi bi-tree"></i></div><div style="position:relative;z-index:1;"><div class="stat-value">124</div><div class="stat-name">Titik Ruang Terbuka Hijau</div></div><div class="stat-tag">Taman & Hutan Kota</div></div></div>
-                <div class="col-md-6 col-xl-3"><div class="stat-card-p" style="--stat-color:var(--amber);"><div class="stat-card-top"></div><i class="bi bi-wind stat-bg-icon"></i><div class="stat-icon-box"><i class="bi bi-wind"></i></div><div style="position:relative;z-index:1;"><div class="stat-value">85%</div><div class="stat-name">Indeks Kualitas Udara</div></div><div class="stat-tag">Kategori Baik</div></div></div>
-                <div class="col-md-6 col-xl-3"><div class="stat-card-p" style="--stat-color:var(--amber);"><div class="stat-card-top"></div><i class="bi bi-recycle stat-bg-icon"></i><div class="stat-icon-box"><i class="bi bi-recycle"></i></div><div style="position:relative;z-index:1;"><div class="stat-value">45</div><div class="stat-name">Bank Sampah Aktif</div></div><div class="stat-tag">24 Kecamatan</div></div></div>
+                <div class="stat-slider-item">
+                    <div class="stat-card-p">
+                        <div class="stat-card-glow-bar"></div>
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="stat-icon-box"><i class="bi bi-trash3"></i></div>
+                            <span class="stat-live-chip"><span class="stat-pulse"></span> Terdata</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-value">45.280</div>
+                            <div class="stat-name">Ton Sampah Terkelola</div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span class="stat-footer-badge"><i class="bi bi-patch-check-fill text-success"></i> DLH Kab. Probolinggo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-slider-item">
+                    <div class="stat-card-p">
+                        <div class="stat-card-glow-bar"></div>
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="stat-icon-box"><i class="bi bi-tree"></i></div>
+                            <span class="stat-live-chip"><span class="stat-pulse"></span> Terdata</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-value">124</div>
+                            <div class="stat-name">Titik Ruang Terbuka Hijau</div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span class="stat-footer-badge"><i class="bi bi-patch-check-fill text-success"></i> DLH Kab. Probolinggo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-slider-item">
+                    <div class="stat-card-p">
+                        <div class="stat-card-glow-bar"></div>
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="stat-icon-box"><i class="bi bi-wind"></i></div>
+                            <span class="stat-live-chip"><span class="stat-pulse"></span> Terdata</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-name">Indeks Kualitas Udara</div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span class="stat-footer-badge"><i class="bi bi-patch-check-fill text-success"></i> DLH Kab. Probolinggo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-slider-item">
+                    <div class="stat-card-p">
+                        <div class="stat-card-glow-bar"></div>
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="stat-icon-box"><i class="bi bi-recycle"></i></div>
+                            <span class="stat-live-chip"><span class="stat-pulse"></span> Terdata</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-value">45</div>
+                            <div class="stat-name">Bank Sampah Aktif</div>
+                        </div>
+                        <div class="stat-card-footer">
+                            <span class="stat-footer-badge"><i class="bi bi-patch-check-fill text-success"></i> DLH Kab. Probolinggo</span>
+                        </div>
+                    </div>
+                </div>
                 @endforelse
             </div>
         </div>
+
+        <script>
+            function slideStats(dir) {
+                const track = document.getElementById('statsTrack');
+                if (!track) return;
+                const card = track.querySelector('.stat-slider-item');
+                const scrollAmount = card ? (card.offsetWidth + 20) * dir : 280 * dir;
+                track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+
+            // Drag to scroll
+            document.addEventListener('DOMContentLoaded', function() {
+                const track = document.getElementById('statsTrack');
+                if (!track) return;
+                let isDown = false;
+                let startX, scrollLeft;
+
+                track.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - track.offsetLeft;
+                    scrollLeft = track.scrollLeft;
+                });
+                track.addEventListener('mouseleave', () => { isDown = false; });
+                track.addEventListener('mouseup', () => { isDown = false; });
+                track.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    track.scrollLeft = scrollLeft - walk;
+                });
+            });
+        </script>
     </section>
 
     <!-- LAYANAN UNGGULAN -->
-    <section class="layanan-section py-5">
+    <section id="layanan" class="layanan-section py-5">
         <div class="container py-3">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 gap-3">
                 <div>
@@ -205,7 +938,7 @@
                     <p style="color:rgba(255,255,255,.55);font-size:.92rem;line-height:1.7;max-width:480px;margin-top:8px;">Pelayanan publik di bidang pelestarian alam, pengelolaan sampah, dan tata lingkungan yang profesional.</p>
                 </div>
                 <a href="{{ url('/layanan') }}" class="btn fw-semibold px-4 py-2 text-white" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;white-space:nowrap;transition:all .3s;">
-                    Semua Layanan <i class="bi bi-arrow-right text-warning ms-1"></i>
+                    Semua Layanan <i class="bi bi-arrow-right text-success ms-1"></i>
                 </a>
             </div>
             <div style="overflow-x:auto;padding:10px 4px 24px 4px;" class="hide-scrollbar">
@@ -240,7 +973,7 @@
                             <p class="svc-desc mb-3">{{ $s->description }}</p>
                             
                             <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;margin-top:auto;display:flex;align-items:center;justify-content:space-between;">
-                                <span style="font-size:.74rem;color:rgba(255,255,255,.5);font-weight:500;"><i class="bi bi-clock me-1" style="color:var(--amber);"></i> Tersedia</span>
+                                <span style="font-size:.74rem;color:rgba(255,255,255,.6);font-weight:500;"><i class="bi bi-clock me-1 text-success"></i> Tersedia</span>
                                 <a href="{{ url('/layanan/' . \Illuminate\Support\Str::slug($s->name)) }}" class="svc-arrow-btn"><i class="bi bi-arrow-right" style="font-size:.8rem;"></i></a>
                             </div>
                         </div>
@@ -248,7 +981,7 @@
                     @empty
                         <p class="text-white">Belum ada layanan tersedia.</p>
                     @endforelse
-</div>
+                </div>
             </div>
         </div>
     </section>
@@ -339,23 +1072,42 @@
                 <div class="tab-pane fade" id="galVideo">
                     <div class="gallery-scroll">
                         @php
-                        $videos = [
-                            ['img'=>'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&h=400&fit=crop', 'title'=>'Profil Bank Sampah Probolinggo', 'vid'=>'https://www.youtube.com/embed/dQw4w9WgXcQ'],
-                            ['img'=>'https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&h=400&fit=crop', 'title'=>'Edukasi Pemilahan Sampah Rumah Tangga', 'vid'=>'https://www.youtube.com/embed/dQw4w9WgXcQ'],
-                            ['img'=>'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop', 'title'=>'Program Hutan Kota Hijau 2025', 'vid'=>'https://www.youtube.com/embed/dQw4w9WgXcQ']
-                        ];
+                            $videoGalleries = \App\Models\Gallery::where('type', 'video')->latest()->take(10)->get();
+                            $allVideos = [];
+                            foreach($videoGalleries as $g) {
+                                $thumbnail = !empty($g->images) && is_array($g->images) && count($g->images) > 0 ? asset('storage/' . $g->images[0]) : null;
+                                
+                                $embedUrl = $g->video_url ?? '';
+                                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $embedUrl, $match);
+                                
+                                if (isset($match[1])) {
+                                    $embedUrl = 'https://www.youtube.com/embed/' . $match[1];
+                                    if (!$thumbnail) {
+                                        $thumbnail = 'https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg';
+                                    }
+                                }
+                                
+                                $allVideos[] = [
+                                    'title' => $g->title,
+                                    'img' => $thumbnail ?: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop',
+                                    'vid' => $embedUrl,
+                                    'cat' => $g->category
+                                ];
+                            }
                         @endphp
-                        @foreach($videos as $v)
+                        @forelse($allVideos as $v)
                         <div class="gallery-item" style="cursor:pointer;" onclick="openLightbox('{{ $v['vid'] }}', '{{ addslashes($v['title']) }}', 'video')">
                             <img src="{{ $v['img'] }}" alt="{{ $v['title'] }}">
                             <div class="gallery-item-overlay"></div>
                             <div class="gallery-play-btn"><i class="bi bi-play-fill"></i></div>
                             <div class="gallery-item-content">
-                                <span class="badge mb-2" style="background:rgba(220,38,38,.9);color:#fff;font-size:.7rem;padding:4px 10px;border-radius:100px;backdrop-filter:blur(4px);"><i class="bi bi-play-btn-fill me-1"></i>VIDEO</span>
+                                <span class="badge mb-2" style="background:rgba(220,38,38,.9);color:#fff;font-size:.7rem;padding:4px 10px;border-radius:100px;backdrop-filter:blur(4px);"><i class="bi bi-play-btn-fill me-1"></i>{{ $v['cat'] ?? 'VIDEO' }}</span>
                                 <h6>{{ $v['title'] }}</h6>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                            <p class="text-muted w-100 text-center py-4">Belum ada video galeri.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -401,12 +1153,28 @@
             <h2 class="section-title mb-2">Instansi & Mitra Terkoneksi</h2>
             <p class="text-muted mb-5" style="max-width:560px;margin:12px auto 0;font-size:.92rem;line-height:1.7;">Sinergi pelayanan publik lingkungan dan koordinasi antar lembaga di Kabupaten Probolinggo.</p>
             <div class="d-flex flex-wrap justify-content-center gap-4">
-                @foreach([['icon'=>'bi-tree-fill','name'=>'KEMEN LHK','sub'=>'Pusat Data Nasional'],['icon'=>'bi-buildings-fill','name'=>'Pemkab Probolinggo','sub'=>'Pemerintah Daerah'],['icon'=>'bi-hdd-network-fill','name'=>'Diskominfo','sub'=>'Sistem Informasi'],['icon'=>'bi-bank2','name'=>'BAPPEDA','sub'=>'Perencanaan Daerah'],['icon'=>'bi-shield-shaded','name'=>'KLHK Jatim','sub'=>'Regional Jawa Timur']] as $m)
-                <a href="#" class="mitra-card">
-                    <div class="mitra-icon"><i class="bi {{ $m['icon'] }}"></i></div>
-                    <div><div class="mitra-name">{{ $m['name'] }}</div><div style="font-size:.68rem;color:#94a3b8;margin-top:2px;">{{ $m['sub'] }}</div></div>
+                @php
+                    $mitras = \App\Models\RelatedLink::where('is_active', true)->latest()->get();
+                @endphp
+                @forelse($mitras as $m)
+                <a href="{{ $m->url }}" target="_blank" class="mitra-card">
+                    <div class="mitra-inner-card">
+                        @if($m->logo && !str_starts_with($m->logo, 'bi-'))
+                            <img src="{{ filter_var($m->logo, FILTER_VALIDATE_URL) ? $m->logo : asset('storage/' . $m->logo) }}" alt="{{ $m->title }}" class="mitra-img">
+                        @else
+                            <div class="mitra-icon-fallback">
+                                <i class="bi {{ $m->logo ?: 'bi-link-45deg' }}"></i>
+                            </div>
+                        @endif
+                        <div class="mitra-text-wrap" style="justify-content: center;">
+                            <div class="mitra-name">{{ $m->title }}</div>
+                        </div>
+                    </div>
+                    <i class="bi bi-arrow-up-right mitra-arrow"></i>
                 </a>
-                @endforeach
+                @empty
+                    <p class="text-muted">Belum ada tautan terkait.</p>
+                @endforelse
             </div>
         </div>
     </section>
@@ -435,9 +1203,9 @@
                                 <div class="flex-grow-1"><div style="font-size:1rem;font-weight:800;">SP4N LAPOR!</div><div style="font-size:.78rem;opacity:.85;font-weight:400;">Portal Pengaduan Resmi RI</div></div>
                                 <i class="bi bi-arrow-right fs-4 opacity-75"></i>
                             </a>
-                            <a href="https://wa.me/6282131001001?text=Halo%20sae" target="_blank" class="cta-btn cta-btn-green">
+                            <a href="https://wa.me/6282131001001?text=Hallo%20sae" target="_blank" class="cta-btn cta-btn-green">
                                 <div class="cta-btn-icon" style="background:rgba(255,255,255,.1);"><i class="bi bi-whatsapp text-white fs-4"></i></div>
-                                <div class="flex-grow-1"><div style="font-size:1rem;font-weight:800;">CALL CENTER</div><div style="font-size:.78rem;opacity:.85;font-weight:400;">Hubungi Tim Reaksi Cepat</div></div>
+                                <div class="flex-grow-1"><div style="font-size:1rem;font-weight:800;">HALLO SAE</div><div style="font-size:.78rem;opacity:.85;font-weight:400;">Hubungi Tim Reaksi Cepat</div></div>
                                 <i class="bi bi-arrow-right fs-4 opacity-75"></i>
                             </a>
                         </div>

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Profiles\Schemas;
 
 use App\Filament\Forms\Components\Summernote;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
@@ -17,19 +18,26 @@ class ProfileForm
             ->columns(1)
             ->components([
                 Section::make('Form Profil Instansi')
-                    ->description('Kelola bagian profil, visi misi, tugas pokok, dan informasi kedinasan.')
+                    ->description('Kelola bagian profil, visi misi, tugas pokok, struktur, dan informasi kedinasan.')
                     ->icon('heroicon-o-arrow-left')
                     ->schema([
                         Grid::make(2)->schema([
-                            TextInput::make('section')
-                                ->label('BAGIAN / SECTION PROFIL')
-                                ->placeholder('Contoh: visi_misi, tupoksi, struktur_organisasi')
+                            Select::make('section')
+                                ->label('HALAMAN SUB-MENU PROFIL')
+                                ->options([
+                                    'sejarah' => 'Profil Instansi & Sejarah Singkat (/profil/sejarah)',
+                                    'visi-misi' => 'Visi & Misi DLH (/profil/visi-misi)',
+                                    'struktur' => 'Bagan Struktur Organisasi (/profil/struktur)',
+                                    'tupoksi' => 'Tugas Pokok & Fungsi / Tupoksi (/profil/tupoksi)',
+                                    'pejabat' => 'Daftar Pejabat Pengelola (/profil/pejabat)',
+                                    'maklumat' => 'Maklumat Pelayanan (/profil/maklumat)',
+                                ])
                                 ->required()
-                                ->maxLength(100),
+                                ->helperText('Pilih submenu profil yang ingin ditampilkan di website.'),
 
                             TextInput::make('title')
-                                ->label('JUDUL BAGIAN')
-                                ->placeholder('Contoh: Visi dan Misi DLH')
+                                ->label('JUDUL HALAMAN')
+                                ->placeholder('Contoh: Profil & Sejarah Singkat DLH')
                                 ->required()
                                 ->maxLength(255),
                         ]),

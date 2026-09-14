@@ -34,17 +34,13 @@ class StatisticForm
                                 ->maxLength(100),
                         ]),
 
-                        Grid::make(2)->schema([
-                            TextInput::make('icon')
-                                ->label('IKON BOOTSTRAP (OPSIONAL)')
-                                ->placeholder('Contoh: bi-trash, bi-tree, bi-wind, bi-recycle')
-                                ->maxLength(100),
+                        \App\Filament\Support\BootstrapIconSelect::make('icon')
+                            ->columnSpanFull(),
 
-                            Toggle::make('is_active')
-                                ->label('TAMPILKAN DI WEBSITE')
-                                ->helperText('Tampilkan counter angka ini di halaman beranda')
-                                ->default(true),
-                        ]),
+                        Toggle::make('is_active')
+                            ->label('TAMPILKAN DI WEBSITE')
+                            ->helperText('Tampilkan counter angka ini di halaman beranda')
+                            ->default(true),
                     ]),
             ]);
     }

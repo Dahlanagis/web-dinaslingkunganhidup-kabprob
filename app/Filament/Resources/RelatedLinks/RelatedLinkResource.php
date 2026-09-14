@@ -18,6 +18,11 @@ class RelatedLinkResource extends Resource
 {
     protected static ?string $model = RelatedLink::class;
 
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin']);
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'KELOLA KONTEN';

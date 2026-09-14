@@ -18,4 +18,9 @@ class CreateUser extends CreateRecord
     {
         return 'Daftarkan akun administrator baru untuk pengelolaan website';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

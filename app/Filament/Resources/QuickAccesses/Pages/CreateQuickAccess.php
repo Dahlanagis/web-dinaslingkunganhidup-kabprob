@@ -18,4 +18,9 @@ class CreateQuickAccess extends CreateRecord
     {
         return 'Tambahkan tombol pintasan baru di beranda website publik';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

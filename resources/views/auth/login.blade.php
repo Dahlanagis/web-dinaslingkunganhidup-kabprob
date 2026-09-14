@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Dinas Lingkungan Hidup</title>
+    @php
+        $siteSetting = \App\Models\Setting::first();
+        $favPath = $siteSetting?->favicon_path ?: $siteSetting?->logo_path;
+        $faviconUrl = $favPath ? asset('storage/' . $favPath) : null;
+    @endphp
+    @if($faviconUrl)
+        <link rel="icon" type="image/x-icon" href="{{ $faviconUrl }}">
+        <link rel="shortcut icon" href="{{ $faviconUrl }}">
+        <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
+    @endif
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
@@ -385,7 +395,11 @@
         <!-- LEFT PANEL -->
         <div class="left-panel">
             <div class="brand-logo-container">
-                <img src="http://127.0.0.1:8000/storage/settings/logo_user_transparent.png" alt="Logo DLH" onerror="this.outerHTML='<i class=\'bi bi-tree-fill\' style=\'font-size: 3rem; color: #fff;\'></i>'">
+                @php
+                    $loginSetting = \App\Models\Setting::first();
+                    $loginLogoUrl = $loginSetting?->logo_path ? asset('storage/' . $loginSetting->logo_path) : asset('storage/settings/01M1YY8BN5S1Z5WMQT4BQF44Q0.jpg');
+                @endphp
+                <img src="{{ $loginLogoUrl }}" alt="Logo DLH" onerror="this.outerHTML='<i class=\'bi bi-tree-fill\' style=\'font-size: 3rem; color: #fff;\'></i>'">
             </div>
             
             <h1 class="left-title">Dinas Lingkungan Hidup<br>Kab. Probolinggo</h1>
@@ -423,6 +437,12 @@
                     </div>
                 @endif
 
+                <div class="mb-3 p-3 rounded-3" style="background: #f0fdf4; border: 1px solid #bbf7d0; font-size: 0.82rem; color: #166534;">
+                    <div class="fw-bold mb-1"><i class="bi bi-shield-lock-fill me-1 text-success"></i> Kredensial Administrator:</div>
+                    <div style="line-height: 1.5;">Email: <strong>superadminDLH@gmail.com</strong> (atau: <strong>superadminDLH</strong>)</div>
+                    <div style="line-height: 1.5;">Password: <strong>password</strong></div>
+                </div>
+
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
@@ -431,10 +451,13 @@
                         <label for="email" class="form-label">Email / Username</label>
                         <div class="input-group-custom">
                             <i class="bi bi-person-fill"></i>
-                            <input id="email" type="email" class="form-control-custom" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="Masukkan email anda...">
+                            <input id="email" type="text" class="form-control-custom" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="Masukkan email atau username anda...">
                         </div>
                         @error('email')
-                            <div class="error-message">{{ $message }}</div>
+                            <div class="error-message" style="color: #dc2626; font-size: 0.82rem; margin-top: 5px;">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i>
+                                {{ $message === 'auth.failed' ? 'Email/Username atau password yang dimasukkan salah.' : $message }}
+                            </div>
                         @enderror
                     </div>
 
@@ -443,13 +466,16 @@
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock-fill"></i>
-                            <input id="password" type="password" class="form-control-custom" name="password" required autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+                            <input id="password" type="password" class="form-control-custom" name="password" required autocomplete="current-password" placeholder="Masukkan password...">
                             <button type="button" class="eye-toggle" onclick="togglePassword()">
                                 <i class="bi bi-eye-slash-fill" id="eyeIcon"></i>
                             </button>
                         </div>
                         @error('password')
-                            <div class="error-message">{{ $message }}</div>
+                            <div class="error-message" style="color: #dc2626; font-size: 0.82rem; margin-top: 5px;">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i>
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
 

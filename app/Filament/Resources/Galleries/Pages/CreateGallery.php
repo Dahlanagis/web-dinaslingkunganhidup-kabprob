@@ -39,4 +39,9 @@ class CreateGallery extends CreateRecord
             ->label('Batal / Kembali')
             ->icon('heroicon-m-arrow-left');
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

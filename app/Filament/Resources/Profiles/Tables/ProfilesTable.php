@@ -18,7 +18,16 @@ class ProfilesTable
         return $table
             ->columns([
                 TextColumn::make('section')
-                    ->label('Bagian / Tipe')
+                    ->label('Sub-Menu Profil')
+                    ->formatStateUsing(fn ($state) => match($state) {
+                        'sejarah' => 'Profil & Sejarah',
+                        'visi-misi' => 'Visi & Misi',
+                        'struktur' => 'Struktur Organisasi',
+                        'tupoksi' => 'Tupoksi',
+                        'pejabat' => 'Pejabat Pengelola',
+                        'maklumat' => 'Maklumat Pelayanan',
+                        default => ucwords(str_replace('-', ' ', (string) $state))
+                    })
                     ->badge()
                     ->color('success')
                     ->searchable()

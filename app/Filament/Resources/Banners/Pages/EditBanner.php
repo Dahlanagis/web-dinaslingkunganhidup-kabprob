@@ -28,4 +28,9 @@ class EditBanner extends EditRecord
                 ->icon('heroicon-m-trash'),
         ];
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

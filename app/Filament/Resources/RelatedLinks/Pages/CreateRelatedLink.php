@@ -18,4 +18,9 @@ class CreateRelatedLink extends CreateRecord
     {
         return 'Tambahkan tautan portal instansi mitra atau kemitraan baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

@@ -35,17 +35,13 @@ class QuickAccessForm
                                 ->maxLength(255),
                         ]),
 
-                        Grid::make(2)->schema([
-                            TextInput::make('icon')
-                                ->label('IKON BOOTSTRAP (OPSIONAL)')
-                                ->placeholder('Contoh: bi-megaphone, bi-whatsapp, bi-file-earmark')
-                                ->maxLength(100),
+                        \App\Filament\Support\BootstrapIconSelect::make('icon')
+                            ->columnSpanFull(),
 
-                            Toggle::make('is_active')
-                                ->label('AKTIFKAN DI WEBSITE')
-                                ->helperText('Tampilkan tombol pintasan ini di beranda')
-                                ->default(true),
-                        ]),
+                        Toggle::make('is_active')
+                            ->label('AKTIFKAN DI WEBSITE')
+                            ->helperText('Tampilkan tombol pintasan ini di beranda')
+                            ->default(true),
                     ]),
             ]);
     }

@@ -17,6 +17,10 @@ class OverviewStatsWidget extends Widget
             'postsCount' => \App\Models\Post::count(),
             'galleriesCount' => \App\Models\Gallery::count(),
             'reportsCount' => \App\Models\Report::count(),
+            'servicesCount' => \App\Models\Service::count(),
+            'quickAccessCount' => \App\Models\QuickAccess::count(),
+            'statisticsCount' => \App\Models\Statistic::count(),
+            'role' => auth()->user()?->role ?? 'super_admin',
         ];
     }
 }

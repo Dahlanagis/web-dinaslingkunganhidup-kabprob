@@ -18,4 +18,9 @@ class CreateDocument extends CreateRecord
     {
         return 'Unggah berkas dokumen publik, regulasi, atau laporan kinerja baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

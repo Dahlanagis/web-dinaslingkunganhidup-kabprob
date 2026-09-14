@@ -9,6 +9,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use App\Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
@@ -30,9 +31,15 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             // ->login() // Dinonaktifkan untuk menggunakan halaman login kustom Laravel
             ->brandName('Portal Admin DLH')
+            ->favicon(function () {
+                $setting = \App\Models\Setting::first();
+                $fav = $setting?->favicon_path ?: $setting?->logo_path;
+                return $fav ? asset('storage/' . $fav) : null;
+            })
             ->renderHook(
                 'panels::styles.after',
                 fn (): string => new \Illuminate\Support\HtmlString('
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
                     <link rel="stylesheet" href="/vendor/summernote/summernote-lite.min.css">
                     <script src="/vendor/summernote/jquery.min.js"></script>
                     <script src="/vendor/summernote/summernote-lite.min.js"></script>
@@ -215,7 +222,8 @@ class AdminPanelProvider extends PanelProvider
                             padding: 0.75rem 1rem !important;
                             color: #cbd5e1 !important; /* Slate 300 - Natural text */
                             font-weight: 500 !important;
-                            border-left: 3px solid transparent !important;
+                            border-left: none !important;
+                            border: none !important;
                             transition: all 0.2s ease-in-out !important;
                             border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
                         }
@@ -241,7 +249,9 @@ class AdminPanelProvider extends PanelProvider
                         /* ACTIVE STATE */
                         .fi-sidebar-item-active > a,
                         .fi-sidebar-item-active > button {
-                            border-left: 3px solid #10b981 !important; /* Garis kecil di kiri */
+                            border-left: none !important;
+                            border: none !important;
+                            outline: none !important;
                             color: #ffffff !important;
                             background-color: rgba(255, 255, 255, 0.02) !important; /* Sangat subtle */
                         }
@@ -527,12 +537,20 @@ class AdminPanelProvider extends PanelProvider
 
                         /* Selection Indicator Bar ("X data dipilih | Hapus semua pilihan | Batalkan semua pilihan") */
                         .fi-ta-selection-indicator {
-                            display: flex !important;
                             align-items: center !important;
                             justify-content: space-between !important;
                             padding: 10px 18px !important;
                             background-color: #f8fafc !important;
                             border-bottom: 1px solid #e2e8f0 !important;
+                        }
+                        .fi-ta-selection-indicator:not([hidden]):not([style*="display: none"]):not([x-cloak]) {
+                            display: flex !important;
+                        }
+                        .fi-ta-selection-indicator[hidden],
+                        .fi-ta-selection-indicator[style*="display: none"],
+                        [hidden].fi-ta-selection-indicator,
+                        [x-cloak].fi-ta-selection-indicator {
+                            display: none !important;
                         }
                         .fi-ta-selection-indicator > div:last-child {
                             display: inline-flex !important;
@@ -782,6 +800,102 @@ class AdminPanelProvider extends PanelProvider
                             border-color: #94a3b8 !important;
                             transform: translateY(-2px) !important;
                         }
+
+                        /* =========================================
+                           TABS STYLING
+                           ========================================= */
+                        .fi-tabs {
+                            display: none !important; /* Disembunyikan karena sudah dipindah ke dalam header tabel */
+                        }
+
+                        /* Pastikan area kiri table header tetap normal */
+                        .fi-ta-header {
+                            min-height: auto !important;
+                            display: flex !important;
+                            justify-content: space-between !important;
+                            align-items: center !important;
+                            padding-top: 1rem !important;
+                            padding-bottom: 1rem !important;
+                        }
+                        
+                        /* Munculkan kembali heading tabel jika ada */
+                        .fi-ta-header .fi-ta-header-heading,
+                        .fi-ta-header .fi-ta-header-description {
+                            display: block !important;
+                        }
+                        /* =========================================
+                           MODAL CUSTOMIZATION (Premium UI)
+                           ========================================= */
+                        /* Efek blur pada latar belakang (Mac/iOS style) */
+                        .fi-modal-backdrop {
+                            background-color: rgba(15, 23, 42, 0.4) !important;
+                            backdrop-filter: blur(8px) !important;
+                            -webkit-backdrop-filter: blur(8px) !important;
+                        }
+
+                        /* Kotak Utama Pop-up */
+                        .fi-modal-window {
+                            border-radius: 32px !important;
+                            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3) !important;
+                            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+                            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+                            overflow: hidden !important;
+                            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+                        }
+                        
+                        /* Area Icon Header */
+                        .fi-modal-header {
+                            padding-top: 2.5rem !important;
+                            padding-bottom: 0.5rem !important;
+                        }
+                        
+                        /* Delete/Danger Icon di tengah (diperbesar dan menyala) */
+                        .fi-modal-header div[class*="bg-danger-"] {
+                            border-radius: 50% !important;
+                            padding: 1.2rem !important;
+                            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.25) !important;
+                            transform: scale(1.15) !important;
+                            margin-bottom: 1rem !important;
+                        }
+                        
+                        /* Teks Judul dan Deskripsi */
+                        .fi-modal-heading {
+                            font-size: 1.35rem !important;
+                            font-weight: 800 !important;
+                            color: #0f172a !important;
+                            letter-spacing: -0.02em !important;
+                        }
+                        .fi-modal-description {
+                            font-size: 1rem !important;
+                            color: #64748b !important;
+                            margin-top: 0.5rem !important;
+                        }
+
+                        /* Footer (Area Tombol) */
+                        .fi-modal-footer {
+                            padding: 1.75rem 2rem !important;
+                            background: rgba(248, 250, 252, 0.6) !important;
+                            border-top: 1px solid rgba(0, 0, 0, 0.04) !important;
+                        }
+                        
+                        /* Modal Footer Buttons */
+                        .fi-modal-footer .fi-btn {
+                            border-radius: 16px !important;
+                            font-weight: 700 !important;
+                            padding-top: 0.8rem !important;
+                            padding-bottom: 0.8rem !important;
+                            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                            text-transform: uppercase !important;
+                            letter-spacing: 0.5px !important;
+                            font-size: 0.85rem !important;
+                        }
+                        
+                        /* Hover Effect for Buttons */
+                        .fi-modal-footer .fi-btn:hover {
+                            transform: translateY(-3px) !important;
+                            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+                        }
+
                     </style>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
@@ -806,7 +920,20 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 \Filament\Navigation\NavigationGroup::make()->label('KELOLA KONTEN'),
                 \Filament\Navigation\NavigationGroup::make()->label('MENU UTAMA'),
-                \Filament\Navigation\NavigationGroup::make()->label('PUBLIC PORTAL'),
+            ])
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('Lihat Website Utama')
+                    ->url('/', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->group('MENU UTAMA')
+                    ->sort(5)
+                    ->extraAttributes(['class' => 'sidebar-nav-website-link']),
+                \Filament\Navigation\NavigationItem::make('Log Out')
+                    ->url('/logout')
+                    ->icon('heroicon-o-arrow-left-on-rectangle')
+                    ->group('MENU UTAMA')
+                    ->sort(6)
+                    ->extraAttributes(['class' => 'sidebar-nav-logout-link']),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

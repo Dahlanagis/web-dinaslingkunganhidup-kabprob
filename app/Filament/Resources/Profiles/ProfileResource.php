@@ -18,11 +18,19 @@ class ProfileResource extends Resource
 {
     protected static ?string $model = Profile::class;
 
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin', 'operator']);
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'KELOLA KONTEN';
     }
     protected static string|BackedEnum|null $navigationIcon = \Filament\Support\Icons\Heroicon::OutlinedIdentification;
+
+    protected static ?string $navigationLabel = 'Profil Instansi';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $modelLabel = 'Halaman Profil';
     protected static ?string $pluralModelLabel = 'Halaman Profil';

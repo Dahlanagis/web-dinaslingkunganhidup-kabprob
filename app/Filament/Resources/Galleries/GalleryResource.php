@@ -18,6 +18,11 @@ class GalleryResource extends Resource
 {
     protected static ?string $navigationLabel = 'Galeri Foto/Video';
 
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin', 'operator']);
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'KELOLA KONTEN';

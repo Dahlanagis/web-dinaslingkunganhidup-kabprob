@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,11 +42,31 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $loginInput = trim((string) $this->input('email'));
+        $password = (string) $this->input('password');
+
+        // Case-insensitive search by email or name/username
+        $user = \App\Models\User::whereRaw('LOWER(email) = ?', [strtolower($loginInput)])
+            ->orWhereRaw('LOWER(name) = ?', [strtolower($loginInput)])
+            ->first();
+
+        // If not found and input doesn't have @, check email prefix (e.g. 'superadminDLH')
+        if (! $user && ! str_contains($loginInput, '@')) {
+            $user = \App\Models\User::whereRaw('LOWER(email) LIKE ?', [strtolower($loginInput) . '@%'])->first();
+        }
+
+        $email = $user ? $user->email : $loginInput;
+
+        if (! Auth::attempt(['email' => $email, 'password' => $password], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            $failMessage = trans('auth.failed');
+            if ($failMessage === 'auth.failed') {
+                $failMessage = 'Email/Username atau password yang Anda masukkan salah.';
+            }
+
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => $failMessage,
             ]);
         }
 
@@ -81,6 +101,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
     }
 }

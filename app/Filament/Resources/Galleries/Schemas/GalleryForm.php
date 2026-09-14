@@ -36,27 +36,48 @@ class GalleryForm
                                     'foto' => '📸 Foto (Upload Gambar)',
                                     'video' => '🎥 Video (Link)',
                                 ])
-                                ->default('foto')
+                                ->default(request()->query('type', 'foto'))
                                 ->required()
-                                ->reactive(),
+                                ->live(),
                                 
-                            TextInput::make('category')
+                            Select::make('category')
                                 ->label('KATEGORI MEDIA')
-                                ->datalist([
-                                    'Kegiatan Lapangan',
-                                    'Sosialisasi & Edukasi',
-                                    'Penghargaan',
-                                    'Kerja Bakti & Kebersihan',
-                                    'Penghijauan Lingkungan',
-                                    'Pengelolaan Sampah',
-                                    'Lainnya',
+                                ->options(fn () => \App\Models\Category::whereIn('type', ['galeri', 'master'])->where('is_active', true)->pluck('name', 'name')->toArray() ?: [
+                                    'Kegiatan Lapangan' => 'Kegiatan Lapangan',
+                                    'Sosialisasi & Edukasi' => 'Sosialisasi & Edukasi',
+                                    'Penghargaan Lingkungan' => 'Penghargaan Lingkungan',
+                                    'Kerja Bakti & Kebersihan' => 'Kerja Bakti & Kebersihan',
+                                    'Penghijauan & RTH' => 'Penghijauan & RTH',
                                 ])
-                                ->placeholder('Kegiatan Lapangan')
-                                ->helperText('ℹ️ Pilih dari Master Kategori atau ketikkan nama kategori baru.'),
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('Nama Kategori Galeri')
+                                        ->placeholder('Contoh: Kegiatan Pameran Lingkungan')
+                                        ->required(),
+                                ])
+                                ->createOptionUsing(function (array $data) {
+                                    $cat = \App\Models\Category::create([
+                                        'name' => $data['name'],
+                                        'slug' => \Illuminate\Support\Str::slug($data['name']),
+                                        'type' => 'galeri',
+                                        'is_active' => true,
+                                    ]);
+                                    return $cat->name;
+                                })
+                                ->helperText('Pilih kategori atau klik tombol + untuk menambah baru.')
+                                ->searchable(),
+
+                            TextInput::make('video_url')
+                                ->label('LINK VIDEO YOUTUBE')
+                                ->placeholder('https://www.youtube.com/watch?v=...')
+                                ->url()
+                                ->visible(fn ($get, $record) => $get('type') === 'video' || ($record && $record->type === 'video'))
+                                ->required(fn ($get, $record) => $get('type') === 'video' || ($record && $record->type === 'video'))
+                                ->columnSpanFull(),
                         ]),
                             
                         FileUpload::make('images')
-                            ->label(fn ($get) => $get('type') === 'video' ? 'UPLOAD THUMBNAIL / COVER VIDEO (OPSIONAL)' : 'UPLOAD FOTO BARU (BISA LEBIH DARI SATU)')
+                            ->label(fn ($get, $record) => ($get('type') === 'video' || ($record && $record->type === 'video')) ? 'UPLOAD THUMBNAIL / COVER VIDEO (OPSIONAL)' : 'UPLOAD FOTO BARU (BISA LEBIH DARI SATU)')
                             ->image()
                             ->multiple()
                             ->directory('galleries')

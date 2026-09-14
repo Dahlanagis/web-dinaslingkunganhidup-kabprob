@@ -18,4 +18,9 @@ class CreateService extends CreateRecord
     {
         return 'Tambahkan program atau jenis layanan publik dinas baru';
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

@@ -108,13 +108,13 @@ class ContentSeeder extends Seeder
 
         // 5. Banners
         Banner::create([
-            'title' => 'Gerakan Bersih dan Hijau Kabupaten Probolinggo',
-            'image' => 'galleries/01M1K2G15AX919GAPJ2KMHR4EP.jpeg',
+            'title' => 'Selamat Datang di Portal Resmi DLH Kabupaten Probolinggo',
+            'image' => 'banners/banner-hero-dlh.jpg',
             'is_active' => true,
         ]);
         Banner::create([
-            'title' => 'Sosialisasi Pemilahan Sampah Mandiri Rumah Tangga',
-            'image' => 'galleries/01M1K2GS09BX9DE116AK2PYZB8.jpg',
+            'title' => 'Gerakan Lingkungan Bersih, Hijau & Lestari',
+            'image' => 'banners/banner-lingkungan-lestari.jpg',
             'is_active' => true,
         ]);
     }

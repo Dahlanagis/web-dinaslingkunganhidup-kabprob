@@ -16,7 +16,12 @@ use Filament\Tables\Table;
 
 class DocumentResource extends Resource
 {
-    protected static ?string $navigationLabel = 'Dokumen Kinerja';
+    protected static ?string $navigationLabel = 'Dokumen & Regulasi';
+
+    public static function canViewAny(): bool
+    {
+        return in_array(auth()->user()?->role, ['super_admin', 'admin', 'operator']);
+    }
 
     public static function getNavigationGroup(): ?string
     {

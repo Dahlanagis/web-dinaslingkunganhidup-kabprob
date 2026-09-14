@@ -29,14 +29,29 @@ class DocumentForm
                         \Filament\Schemas\Components\Grid::make(2)->schema([
                             Select::make('category')
                                 ->label('KATEGORI DOKUMEN')
-                                ->options([
+                                ->options(fn () => \App\Models\Category::whereIn('type', ['dokumen', 'master'])->where('is_active', true)->pluck('name', 'name')->toArray() ?: [
                                     'Perencanaan Kinerja' => 'Perencanaan Kinerja',
                                     'Evaluasi Kinerja' => 'Evaluasi Kinerja',
-                                    'Regulasi' => 'Regulasi & Hukum',
+                                    'Regulasi & Hukum' => 'Regulasi & Hukum',
                                     'Laporan Tahunan' => 'Laporan Tahunan',
                                     'SOP Pelayanan' => 'SOP Pelayanan',
-                                    'Lainnya' => 'Lainnya',
                                 ])
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('Nama Kategori Dokumen')
+                                        ->placeholder('Contoh: Dokumen Lingkungan')
+                                        ->required(),
+                                ])
+                                ->createOptionUsing(function (array $data) {
+                                    $cat = \App\Models\Category::create([
+                                        'name' => $data['name'],
+                                        'slug' => \Illuminate\Support\Str::slug($data['name']),
+                                        'type' => 'dokumen',
+                                        'is_active' => true,
+                                    ]);
+                                    return $cat->name;
+                                })
+                                ->helperText('Pilih kategori atau klik tombol + untuk menambah baru.')
                                 ->required(),
 
                             TextInput::make('downloads')
