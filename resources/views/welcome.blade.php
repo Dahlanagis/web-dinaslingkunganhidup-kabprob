@@ -1029,12 +1029,18 @@
 <!-- GALERI -->
     <section class="py-5" style="background:#fff;">
         <div class="container py-3">
-            <div class="text-center mb-5">
-                <div class="section-label">Visual</div>
-                <h2 class="section-title">Galeri Dokumentasi</h2>
-                <p class="text-muted mt-3" style="max-width:500px;margin:12px auto 0;font-size:.93rem;line-height:1.7;">Potret aktivitas pelayanan lapangan, pengangkutan sampah, dan program kerja DLH.</p>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+                <div>
+                    <div class="section-label">Visual</div>
+                    <h2 class="section-title">Galeri Dokumentasi</h2>
+                    <p class="text-muted mt-2" style="max-width:500px;margin-bottom:0;font-size:.93rem;line-height:1.7;">Potret aktivitas pelayanan lapangan, pengangkutan sampah, dan program kerja DLH.</p>
+                </div>
+                <a href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
+                    Semua Foto <i class="bi bi-arrow-right ms-1"></i>
+                </a>
             </div>
-            <ul class="nav gallery-tabs gap-2 justify-content-center mb-5" id="galTab" role="tablist">
+            
+            <ul class="nav gallery-tabs gap-2 justify-content-center justify-content-md-start mb-4" id="galTab" role="tablist">
                 <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#galFoto"><i class="bi bi-camera-fill me-2"></i>Galeri Foto</button></li>
                 <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#galVideo"><i class="bi bi-play-btn-fill me-2"></i>Galeri Video</button></li>
             </ul>
@@ -1095,6 +1101,18 @@
                         @empty
                             <p class="text-muted w-100 text-center py-4">Belum ada foto galeri.</p>
                         @endforelse
+
+                        <!-- KARTU LIHAT SEMUA FOTO KETIKA DIGESER KE SAMPING -->
+                        <a href="{{ url('/informasi/galeri') }}" class="gallery-item d-flex flex-column align-items-center justify-content-center text-decoration-none p-4 text-center" style="background: linear-gradient(145deg, #022c22 0%, #064e3b 50%, #047857 100%); border: 2px dashed rgba(74, 222, 128, 0.4); border-radius: 1.25rem; min-width: 260px; flex: 0 0 280px; transition: all .35s ease;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 text-white shadow-lg" style="width: 64px; height: 64px; background: rgba(255,255,255,0.15); font-size: 1.8rem; border: 1px solid rgba(255,255,255,0.25);">
+                                <i class="bi bi-images"></i>
+                            </div>
+                            <h5 class="text-white fw-bold mb-1.5" style="font-size: 1.1rem;">Lihat Semua Foto</h5>
+                            <p class="text-white-50 small mb-3" style="line-height: 1.5; font-size: 0.82rem;">Jelajahi seluruh album dokumentasi resmi kegiatan DLH</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3 py-1.5 fw-bold text-success shadow-xs d-inline-flex align-items-center gap-1.5" style="font-size: 0.82rem;">
+                                Buka Semua Foto <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </a>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="galVideo">
@@ -1317,6 +1335,35 @@
         
         showLbModal();
     }
+
+    // Drag to scroll for .gallery-scroll containers
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.gallery-scroll').forEach(track => {
+            let isDown = false;
+            let startX, scrollLeft;
+            let isDragging = false;
+
+            track.addEventListener('mousedown', (e) => {
+                isDown = true;
+                isDragging = false;
+                startX = e.pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            });
+            track.addEventListener('mouseleave', () => { isDown = false; });
+            track.addEventListener('mouseup', () => { 
+                setTimeout(() => { isDragging = false; }, 50);
+                isDown = false; 
+            });
+            track.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                isDragging = true;
+                const x = e.pageX - track.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                track.scrollLeft = scrollLeft - walk;
+            });
+        });
+    });
     </script>
 
 
