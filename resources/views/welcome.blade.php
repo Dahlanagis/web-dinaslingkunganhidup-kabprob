@@ -1035,9 +1035,17 @@
                     <h2 class="section-title">Galeri Dokumentasi</h2>
                     <p class="text-muted mt-2" style="max-width:500px;margin-bottom:0;font-size:.93rem;line-height:1.7;">Potret aktivitas pelayanan lapangan, pengangkutan sampah, dan program kerja DLH.</p>
                 </div>
-                <a href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
-                    Semua Foto <i class="bi bi-arrow-right ms-1"></i>
-                </a>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="gallery-nav-btn" onclick="slideGallery(-1)" aria-label="Sebelumnya" title="Geser ke Kiri">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button type="button" class="gallery-nav-btn" onclick="slideGallery(1)" aria-label="Berikutnya" title="Geser ke Kanan">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                    <a href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2 ms-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
+                        Semua Foto <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
             </div>
             
             <ul class="nav gallery-tabs gap-2 justify-content-center justify-content-md-start mb-4" id="galTab" role="tablist">
@@ -1336,35 +1344,80 @@
         showLbModal();
     }
 
-    // Drag to scroll for .gallery-scroll containers
+    // Navigasi tombol panah geser galeri
+    function slideGallery(dir) {
+        const activeTab = document.querySelector('#galTab .nav-link.active');
+        const targetId = activeTab ? activeTab.getAttribute('data-bs-target') : '#galFoto';
+        const pane = document.querySelector(targetId);
+        if (!pane) return;
+        const track = pane.querySelector('.gallery-scroll');
+        if (!track) return;
+        const item = track.querySelector('.gallery-item');
+        const scrollAmount = item ? (item.offsetWidth + 18) * dir : 350 * dir;
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    // Drag to scroll for .gallery-scroll containers with drag threshold
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.gallery-scroll').forEach(track => {
             let isDown = false;
             let startX, scrollLeft;
-            let isDragging = false;
+            let hasDragged = false;
 
             track.addEventListener('mousedown', (e) => {
                 isDown = true;
-                isDragging = false;
+                hasDragged = false;
                 startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
             });
             track.addEventListener('mouseleave', () => { isDown = false; });
             track.addEventListener('mouseup', () => { 
-                setTimeout(() => { isDragging = false; }, 50);
                 isDown = false; 
+                setTimeout(() => { hasDragged = false; }, 80);
             });
             track.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                e.preventDefault();
-                isDragging = true;
                 const x = e.pageX - track.offsetLeft;
                 const walk = (x - startX) * 1.5;
-                track.scrollLeft = scrollLeft - walk;
+                if (Math.abs(walk) > 6) {
+                    hasDragged = true;
+                    e.preventDefault();
+                    track.scrollLeft = scrollLeft - walk;
+                }
             });
+
+            // Prevent accidental click when dragging
+            track.addEventListener('click', (e) => {
+                if (hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
         });
     });
     </script>
+    <style>
+        .gallery-nav-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid #e2e8f0;
+            background: #ffffff;
+            color: #0f172a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .gallery-nav-btn:hover {
+            background: #16a34a;
+            color: #ffffff;
+            border-color: #16a34a;
+            transform: scale(1.06);
+        }
+    </style>
 
 
         <!-- MITRA -->
