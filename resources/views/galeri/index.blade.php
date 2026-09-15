@@ -283,6 +283,40 @@
 
 
 <style>
+    /* TAB SWITCHER HIJAU GELAP */
+    #galeriMainTabs .nav-link {
+        color: #064e3b;
+        background: transparent;
+        border: 1.5px solid transparent;
+        transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    #galeriMainTabs .nav-link i {
+        color: #059669;
+        transition: color 0.25s ease;
+    }
+    #galeriMainTabs .nav-link:hover {
+        background: rgba(4, 120, 87, 0.08);
+        color: #022c22;
+        border-color: rgba(4, 120, 87, 0.25);
+    }
+    #galeriMainTabs .nav-link.active {
+        background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #047857 100%) !important;
+        color: #ffffff !important;
+        border-color: transparent !important;
+        box-shadow: 0 6px 18px rgba(6, 78, 59, 0.35);
+    }
+    #galeriMainTabs .nav-link.active i {
+        color: #86efac !important;
+    }
+    #galeriMainTabs .nav-link.active .badge {
+        background: #ffffff !important;
+        color: #064e3b !important;
+    }
+    #galeriMainTabs .nav-link:not(.active) .badge {
+        background: rgba(6, 78, 59, 0.12) !important;
+        color: #064e3b !important;
+    }
+
     /* SUBPAGE HERO STYLES */
     .subpage-header {
         background: linear-gradient(135deg, #021a10 0%, #064e3b 50%, #03271d 100%);
