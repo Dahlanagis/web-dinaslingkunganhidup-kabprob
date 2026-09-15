@@ -1,19 +1,35 @@
 @php
-    $thumb = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop';
-    if (!empty($gallery->images) && is_array($gallery->images) && count($gallery->images) > 0) {
-        $thumb = asset('storage/' . $gallery->images[0]);
+    $images = $gallery->images ?? [];
+    if (!is_array($images)) {
+        $images = !empty($images) ? [$images] : [];
     }
+    $images = array_values(array_filter($images, fn($img) => !empty($img)));
+    $count = count($images);
+    $allUrls = [];
+    foreach ($images as $img) {
+        $allUrls[] = str_starts_with($img, 'http') ? $img : asset('storage/' . ltrim($img, '/'));
+    }
+    $thumb = $count > 0 ? $allUrls[0] : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop';
     $mediaUrl = $gallery->type === 'video' ? ($gallery->video_url ?? '') : $thumb;
 @endphp
 <div class="col-lg-4 col-md-6">
-    <div class="card h-100 rounded-4 overflow-hidden shadow-sm bg-white gallery-card-box" style="cursor: pointer;" onclick="previewGallery('{{ addslashes($gallery->title) }}', '{{ $gallery->type }}', '{{ $mediaUrl }}')">
+    <div class="card h-100 rounded-4 overflow-hidden shadow-sm bg-white gallery-card-box" style="cursor: pointer;" onclick="if(typeof openAlbumModal==='function'){ openAlbumModal('{{ addslashes($gallery->title) }}', {{ json_encode($allUrls) }}, '{{ addslashes($gallery->description ?? '') }}'); } else { previewGallery('{{ addslashes($gallery->title) }}', '{{ $gallery->type }}', '{{ $mediaUrl }}'); }">
         <div class="position-relative overflow-hidden" style="height: 220px;">
             <img src="{{ $thumb }}" alt="{{ $gallery->title }}" class="w-100 h-100 object-fit-cover gallery-img-thumb">
             <div class="position-absolute top-0 start-0 m-3">
-                <span class="badge {{ $gallery->type === 'video' ? 'bg-danger' : 'bg-success' }} text-white px-3 py-1.5 rounded-pill font-monospace small">
-                    <i class="bi {{ $gallery->type === 'video' ? 'bi-play-circle-fill' : 'bi-camera-fill' }} me-1"></i>
-                    {{ strtoupper($gallery->type) }}
-                </span>
+                @if($gallery->type === 'video')
+                    <span class="badge bg-danger text-white px-3 py-1.5 rounded-pill font-monospace small">
+                        <i class="bi bi-play-circle-fill me-1"></i> VIDEO
+                    </span>
+                @elseif($count > 1)
+                    <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-sm" style="background: linear-gradient(135deg, #059669, #10b981) !important;">
+                        <i class="bi bi-images me-1"></i> ALBUM ({{ $count }})
+                    </span>
+                @else
+                    <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small">
+                        <i class="bi bi-camera-fill me-1"></i> FOTO
+                    </span>
+                @endif
             </div>
             @if($gallery->type === 'video')
             <div class="position-absolute top-50 start-50 translate-middle">
@@ -24,7 +40,7 @@
             @else
             <div class="position-absolute bottom-0 end-0 m-3">
                 <span class="badge bg-dark bg-opacity-70 text-white rounded-pill px-2.5 py-1 small">
-                    <i class="bi bi-arrows-fullscreen me-1"></i> Perbesar
+                    <i class="bi {{ $count > 1 ? 'bi-collection-play-fill text-warning' : 'bi-arrows-fullscreen' }} me-1"></i> {{ $count > 1 ? 'Buka Album (' . $count . ')' : 'Perbesar' }}
                 </span>
             </div>
             @endif

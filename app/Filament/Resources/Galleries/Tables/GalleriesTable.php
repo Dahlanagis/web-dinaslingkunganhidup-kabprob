@@ -7,7 +7,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 
@@ -17,29 +17,10 @@ class GalleriesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('images')
-                    ->label('Preview Media')
-                    ->disk('public')
-                    ->square()
-                    ->size(80)
-                    ->stacked()
-                    ->limit(3)
-                    ->getStateUsing(function ($record) {
-                        // Jika ada gambar yang diupload, gunakan gambar tersebut
-                        if (!empty($record->images)) {
-                            return $record->images;
-                        }
-                        
-                        // Jika tipe video dan ada link youtube, ambil thumbnail youtube
-                        if ($record->type === 'video' && !empty($record->video_url)) {
-                            preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $record->video_url, $match);
-                            if (isset($match[1])) {
-                                return ['https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg'];
-                            }
-                        }
-                        
-                        return null;
-                    }),
+                ViewColumn::make('images')
+                    ->label('Media / Album')
+                    ->view('filament.tables.columns.gallery-preview'),
+
                 TextColumn::make('title')
                     ->label('Judul Galeri')
                     ->searchable()

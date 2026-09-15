@@ -169,9 +169,19 @@
             <!-- Preview Daftar Foto / Berkas -->
             <template x-if="previews.length > 0">
                 <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
-                    <p style="font-size: 0.78rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">
-                        Berkas Terpilih (<span x-text="previews.length"></span>):
-                    </p>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 4px;">
+                        <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <template x-if="previews.length > 1">
+                                <span style="color: #166534; display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; padding: 3px 9px; border-radius: 9999px; border: 1px solid #bbf7d0;">
+                                    📁 ALBUM FOTO TERBENTUK: <strong x-text="`${previews.length} FOTO`"></strong>
+                                </span>
+                            </template>
+                            <template x-if="previews.length <= 1">
+                                <span style="color: #475569;">Berkas Terpilih (<span x-text="previews.length"></span>):</span>
+                            </template>
+                        </span>
+                        <span style="font-size: 0.72rem; color: #64748b;">Klik tanda ✕ pada foto untuk menghapus foto tertentu</span>
+                    </div>
                     <div style="display: flex; flex-wrap: wrap; gap: 12px;">
                         <template x-for="(item, idx) in previews" :key="idx">
                             <div style="position: relative; width: 90px; height: 90px; border-radius: 8px; overflow: hidden; border: 1px solid #cbd5e1; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
