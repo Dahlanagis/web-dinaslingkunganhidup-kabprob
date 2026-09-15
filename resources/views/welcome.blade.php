@@ -1029,26 +1029,13 @@
 <!-- GALERI -->
     <section class="py-5" style="background:#fff;">
         <div class="container py-3">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
-                <div>
-                    <div class="section-label">Visual</div>
-                    <h2 class="section-title">Galeri Dokumentasi</h2>
-                    <p class="text-muted mt-2" style="max-width:500px;margin-bottom:0;font-size:.93rem;line-height:1.7;">Potret aktivitas pelayanan lapangan, pengangkutan sampah, dan program kerja DLH.</p>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="gallery-nav-btn" onclick="slideGallery(-1)" aria-label="Sebelumnya" title="Geser ke Kiri">
-                        <i class="bi bi-chevron-left"></i>
-                    </button>
-                    <button type="button" class="gallery-nav-btn" onclick="slideGallery(1)" aria-label="Berikutnya" title="Geser ke Kanan">
-                        <i class="bi bi-chevron-right"></i>
-                    </button>
-                    <a id="btnAllGallery" href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2 ms-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
-                        <span id="btnAllGalleryText">Semua Foto</span> <i class="bi bi-arrow-right ms-1"></i>
-                    </a>
-                </div>
+            <div class="text-center mb-4">
+                <div class="section-label">Visual</div>
+                <h2 class="section-title">Galeri Dokumentasi</h2>
+                <p class="text-muted mt-2" style="max-width:500px;margin:8px auto 0;font-size:.93rem;line-height:1.7;">Potret aktivitas pelayanan lapangan, pengangkutan sampah, dan program kerja DLH.</p>
             </div>
             
-            <ul class="nav gallery-tabs gap-2 justify-content-center justify-content-md-start mb-4" id="galTab" role="tablist">
+            <ul class="nav gallery-tabs gap-2 justify-content-center mb-4" id="galTab" role="tablist">
                 <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#galFoto"><i class="bi bi-camera-fill me-2"></i>Galeri Foto</button></li>
                 <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#galVideo"><i class="bi bi-play-btn-fill me-2"></i>Galeri Video</button></li>
             </ul>
@@ -1356,19 +1343,6 @@
         showLbModal();
     }
 
-    // Navigasi tombol panah geser galeri
-    function slideGallery(dir) {
-        const activeTab = document.querySelector('#galTab .nav-link.active');
-        const targetId = activeTab ? activeTab.getAttribute('data-bs-target') : '#galFoto';
-        const pane = document.querySelector(targetId);
-        if (!pane) return;
-        const track = pane.querySelector('.gallery-scroll');
-        if (!track) return;
-        const item = track.querySelector('.gallery-item');
-        const scrollAmount = item ? (item.offsetWidth + 18) * dir : 350 * dir;
-        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-
     // Drag to scroll for .gallery-scroll containers with drag threshold
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.gallery-scroll').forEach(track => {
@@ -1406,49 +1380,8 @@
                 }
             }, true);
         });
-
-        // Sinkronisasi teks tombol galeri ketika tab berganti
-        const galTab = document.getElementById('galTab');
-        if (galTab) {
-            galTab.addEventListener('shown.bs.tab', (e) => {
-                const isVideo = e.target.getAttribute('data-bs-target') === '#galVideo';
-                const btn = document.getElementById('btnAllGallery');
-                const txt = document.getElementById('btnAllGalleryText');
-                if (btn && txt) {
-                    if (isVideo) {
-                        btn.href = '{{ url("/informasi/galeri?type=video") }}';
-                        txt.innerText = 'Semua Video';
-                    } else {
-                        btn.href = '{{ url("/informasi/galeri") }}';
-                        txt.innerText = 'Semua Foto';
-                    }
-                }
-            });
-        }
     });
     </script>
-    <style>
-        .gallery-nav-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1.5px solid #e2e8f0;
-            background: #ffffff;
-            color: #0f172a;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-        .gallery-nav-btn:hover {
-            background: #16a34a;
-            color: #ffffff;
-            border-color: #16a34a;
-            transform: scale(1.06);
-        }
-    </style>
 
 
         <!-- MITRA -->
