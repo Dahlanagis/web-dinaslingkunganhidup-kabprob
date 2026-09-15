@@ -20,14 +20,14 @@
         </nav>
         <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3 subpage-pill-badge">
             <span class="subpage-pulse-beacon"></span>
-            <i class="bi bi-images text-warning"></i>
-            <span>Dokumentasi Visual &amp; Galeri Foto Resmi</span>
+            <i class="bi bi-camera-reels text-warning"></i>
+            <span>Dokumentasi Visual &amp; Galeri Resmi DLH</span>
         </div>
         <h1 class="fw-extrabold display-5 mb-2" style="font-weight: 800; letter-spacing: -0.5px;">
-            Galeri Gambar &amp; <span class="header-text-gradient">Foto Kegiatan</span>
+            Galeri Dokumentasi &amp; <span class="header-text-gradient">Publikasi Visual</span>
         </h1>
         <p class="text-white-75 mb-0" style="max-width: 720px; font-size: 1.02rem; line-height: 1.7;">
-            Dokumentasi foto resmi aktivitas lapangan, pemeliharaan taman dan RTH, aksi bersih lingkungan, serta program kerja Dinas Lingkungan Hidup Kabupaten Probolinggo.
+            Dokumentasi foto dan video resmi aktivitas lapangan, pemeliharaan taman dan RTH, aksi bersih lingkungan, serta program kerja Dinas Lingkungan Hidup Kabupaten Probolinggo.
         </p>
     </div>
 </section>
@@ -35,105 +35,209 @@
 <!-- MAIN CONTENT -->
 <div class="py-5" style="background: var(--slate50);">
     <div class="container">
-        <!-- TOP STATS BAR (Glassmorphism Style) -->
+        <!-- TOP STATS & TAB SWITCHER BAR -->
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-5 p-3.5 rounded-4 subpage-toolbar-glass">
-            <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-success text-white px-3.5 py-2 rounded-pill fw-bold shadow-xs" style="font-size: 0.82rem;">
-                    <i class="bi bi-camera-fill me-1.5"></i> Dokumentasi Gambar
-                </span>
-                <span class="text-muted small">
-                    Menampilkan <strong>{{ $galleries->count() }}</strong> foto kegiatan lapangan resmi
-                </span>
-            </div>
+            <ul class="nav nav-pills gap-2 mb-0" id="galeriMainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill fw-bold px-4 py-2 d-flex align-items-center gap-2 {{ ($activeType ?? 'foto') !== 'video' ? 'active' : '' }}" id="foto-pill-tab" data-bs-toggle="pill" data-bs-target="#tabPaneFoto" type="button" role="tab">
+                        <i class="bi bi-camera-fill"></i> Galeri Foto
+                        <span class="badge {{ ($activeType ?? 'foto') !== 'video' ? 'bg-white text-success' : 'bg-dark bg-opacity-25 text-white' }} rounded-pill ms-1">{{ $photoGalleries->count() }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill fw-bold px-4 py-2 d-flex align-items-center gap-2 {{ ($activeType ?? 'foto') === 'video' ? 'active' : '' }}" id="video-pill-tab" data-bs-toggle="pill" data-bs-target="#tabPaneVideo" type="button" role="tab">
+                        <i class="bi bi-play-btn-fill"></i> Galeri Video
+                        <span class="badge {{ ($activeType ?? 'foto') === 'video' ? 'bg-white text-success' : 'bg-dark bg-opacity-25 text-white' }} rounded-pill ms-1">{{ $videoGalleries->count() }}</span>
+                    </button>
+                </li>
+            </ul>
             <div class="text-muted small">
-                <i class="bi bi-info-circle me-1 text-success"></i> Klik foto untuk memperbesar tampilan resolusi tinggi
+                <i class="bi bi-info-circle me-1 text-success"></i> Klik foto untuk membuka resolusi tinggi atau klik video untuk memutar
             </div>
         </div>
 
-        <!-- PHOTO GRID -->
-        <div class="row g-4">
-            @forelse($galleries as $g)
-                @php
-                    $images = $g->images ?? [];
-                    if (!is_array($images)) {
-                        $images = !empty($images) ? [$images] : [];
-                    }
-                    $images = array_values(array_filter($images, fn($img) => !empty($img)));
-                    $count = count($images);
-                    $allUrls = [];
-                    foreach ($images as $img) {
-                        $allUrls[] = str_starts_with($img, 'http') ? $img : asset('storage/' . ltrim($img, '/'));
-                    }
-                    $thumb = $count > 0 ? $allUrls[0] : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop';
-                @endphp
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 rounded-4 overflow-hidden shadow-sm bg-white gallery-card-box border-0 position-relative" 
-                         style="cursor: pointer; transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);" 
-                         onclick="openAlbumModal('{{ addslashes($g->title) }}', {{ json_encode($allUrls) }}, '{{ addslashes($g->description ?? '') }}')">
-                        <div class="card-accent-bar accent-green"></div>
-                        
-                        <div class="position-relative overflow-hidden" style="height: 235px;">
-                            <img src="{{ $thumb }}" alt="{{ $g->title }}" class="w-100 h-100 object-fit-cover gallery-img-thumb" style="transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);">
-                            <div class="news-img-gradient-overlay"></div>
-                            
-                            <div class="position-absolute top-0 start-0 m-3" style="z-index: 2;">
-                                @if($count > 1)
-                                    <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-sm d-inline-flex align-items-center gap-1.5" style="background: linear-gradient(135deg, #059669, #10b981) !important;">
-                                        <i class="bi bi-images"></i> ALBUM ({{ $count }} FOTO)
-                                    </span>
-                                @else
-                                    <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-xs">
-                                        <i class="bi bi-image-fill me-1"></i> FOTO
-                                    </span>
-                                @endif
-                            </div>
+        <div class="tab-content" id="galeriMainTabContent">
+            <!-- PANE FOTO -->
+            <div class="tab-pane fade {{ ($activeType ?? 'foto') !== 'video' ? 'show active' : '' }}" id="tabPaneFoto" role="tabpanel">
+                <div class="row g-4">
+                    @forelse($photoGalleries as $g)
+                        @php
+                            $images = $g->images ?? [];
+                            if (!is_array($images)) {
+                                $images = !empty($images) ? [$images] : [];
+                            }
+                            $images = array_values(array_filter($images, fn($img) => !empty($img)));
+                            $count = count($images);
+                            $allUrls = [];
+                            foreach ($images as $img) {
+                                $allUrls[] = str_starts_with($img, 'http') ? $img : asset('storage/' . ltrim($img, '/'));
+                            }
+                            $thumb = $count > 0 ? $allUrls[0] : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop';
+                        @endphp
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card h-100 rounded-4 overflow-hidden shadow-sm bg-white gallery-card-box border-0 position-relative" 
+                                 style="cursor: pointer; transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);" 
+                                 onclick="openAlbumModal('{{ addslashes($g->title) }}', {{ json_encode($allUrls) }}, '{{ addslashes($g->description ?? '') }}')">
+                                <div class="card-accent-bar accent-green"></div>
+                                
+                                <div class="position-relative overflow-hidden" style="height: 235px;">
+                                    <img src="{{ $thumb }}" alt="{{ $g->title }}" class="w-100 h-100 object-fit-cover gallery-img-thumb" style="transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);">
+                                    <div class="news-img-gradient-overlay"></div>
+                                    
+                                    <div class="position-absolute top-0 start-0 m-3" style="z-index: 2;">
+                                        @if($count > 1)
+                                            <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-sm d-inline-flex align-items-center gap-1.5" style="background: linear-gradient(135deg, #059669, #10b981) !important;">
+                                                <i class="bi bi-images"></i> ALBUM ({{ $count }} FOTO)
+                                            </span>
+                                        @else
+                                            <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-xs">
+                                                <i class="bi bi-image-fill me-1"></i> FOTO
+                                            </span>
+                                        @endif
+                                    </div>
 
-                            <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 2;">
-                                @if($count > 1)
-                                    <span class="badge bg-dark bg-opacity-75 text-white rounded-pill px-3 py-1.5 small shadow-sm backdrop-blur d-inline-flex align-items-center gap-1">
-                                        <i class="bi bi-collection-play-fill text-warning"></i> Buka Album ({{ $count }})
+                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 2;">
+                                        @if($count > 1)
+                                            <span class="badge bg-dark bg-opacity-75 text-white rounded-pill px-3 py-1.5 small shadow-sm backdrop-blur d-inline-flex align-items-center gap-1">
+                                                <i class="bi bi-collection-play-fill text-warning"></i> Buka Album ({{ $count }})
+                                            </span>
+                                        @else
+                                            <span class="badge bg-dark bg-opacity-75 text-white rounded-pill px-3 py-1.5 small shadow-sm backdrop-blur">
+                                                <i class="bi bi-arrows-fullscreen me-1"></i> Perbesar
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <span class="text-success fw-bold text-uppercase small mb-1.5" style="font-size: 0.74rem; letter-spacing: 0.8px;">
+                                        {{ $g->category ?? 'Dokumentasi DLH' }}
                                     </span>
-                                @else
-                                    <span class="badge bg-dark bg-opacity-75 text-white rounded-pill px-3 py-1.5 small shadow-sm backdrop-blur">
-                                        <i class="bi bi-arrows-fullscreen me-1"></i> Perbesar
-                                    </span>
-                                @endif
+                                    <h5 class="fw-extrabold text-dark mb-2 news-title" style="font-size: 1.08rem; line-height: 1.45;">
+                                        {{ $g->title }}
+                                    </h5>
+                                    @if($g->description)
+                                    <p class="text-muted small mb-0 flex-grow-1" style="line-height: 1.65; font-size: 0.87rem;">
+                                        {{ Str::limit($g->description, 95) }}
+                                    </p>
+                                    @endif
+                                    <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between text-muted" style="font-size: 0.78rem;">
+                                        <span><i class="bi bi-calendar3 me-1 text-success"></i> {{ $g->created_at ? $g->created_at->translatedFormat('d M Y') : 'Kegiatan DLH' }}</span>
+                                        @if($count > 1)
+                                            <span class="text-success fw-bold d-inline-flex align-items-center gap-1"><i class="bi bi-images"></i> {{ $count }} Foto Album</span>
+                                        @else
+                                            <span class="text-success fw-bold d-inline-flex align-items-center gap-1"><i class="bi bi-zoom-in"></i> Lihat Foto</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body p-4 d-flex flex-column">
-                            <span class="text-success fw-bold text-uppercase small mb-1.5" style="font-size: 0.74rem; letter-spacing: 0.8px;">
-                                {{ $g->category ?? 'Dokumentasi DLH' }}
-                            </span>
-                            <h5 class="fw-extrabold text-dark mb-2 news-title" style="font-size: 1.08rem; line-height: 1.45;">
-                                {{ $g->title }}
-                            </h5>
-                            @if($g->description)
-                            <p class="text-muted small mb-0 flex-grow-1" style="line-height: 1.65; font-size: 0.87rem;">
-                                {{ Str::limit($g->description, 95) }}
-                            </p>
-                            @endif
-                            <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between text-muted" style="font-size: 0.78rem;">
-                                <span><i class="bi bi-calendar3 me-1 text-success"></i> {{ $g->created_at ? $g->created_at->translatedFormat('d M Y') : 'Kegiatan DLH' }}</span>
-                                @if($count > 1)
-                                    <span class="text-success fw-bold d-inline-flex align-items-center gap-1"><i class="bi bi-images"></i> {{ $count }} Foto Album</span>
-                                @else
-                                    <span class="text-success fw-bold d-inline-flex align-items-center gap-1"><i class="bi bi-zoom-in"></i> Lihat Foto</span>
-                                @endif
+                    @empty
+                        <div class="col-12 text-center py-5">
+                            <div class="py-5 bg-white rounded-4 border shadow-sm p-4 mx-auto" style="max-width: 580px;">
+                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3 text-muted" style="width: 76px; height: 76px; font-size: 2.5rem;">
+                                    <i class="bi bi-images"></i>
+                                </div>
+                                <h4 class="fw-bold text-dark mb-2">Belum Ada Dokumentasi Gambar</h4>
+                                <p class="text-muted small mb-0">Foto kegiatan belum tersedia saat ini.</p>
                             </div>
                         </div>
-                    </div>
+                    @endforelse
                 </div>
-            @empty
-                <div class="col-12 text-center py-5">
-                    <div class="py-5 bg-white rounded-4 border shadow-sm p-4 mx-auto" style="max-width: 580px;">
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3 text-muted" style="width: 76px; height: 76px; font-size: 2.5rem;">
-                            <i class="bi bi-images"></i>
+            </div>
+
+            <!-- PANE VIDEO -->
+            <div class="tab-pane fade {{ ($activeType ?? 'foto') === 'video' ? 'show active' : '' }}" id="tabPaneVideo" role="tabpanel">
+                <div class="row g-4">
+                    @forelse($videoGalleries as $vg)
+                        @php
+                            $thumb = !empty($vg->images) && is_array($vg->images) && count($vg->images) > 0 ? asset('storage/' . $vg->images[0]) : null;
+                            $embed = $vg->video_url ?? '';
+                            preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $embed, $match);
+                            if (isset($match[1])) {
+                                $embed = 'https://www.youtube.com/embed/' . $match[1];
+                                if (!$thumb) {
+                                    $thumb = 'https://img.youtube.com/vi/' . $match[1] . '/hqdefault.jpg';
+                                }
+                            }
+                            $videoThumb = $thumb ?: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop';
+                        @endphp
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card h-100 rounded-4 overflow-hidden shadow-sm bg-white gallery-card-box border-0 position-relative" 
+                                 style="cursor: pointer; transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);" 
+                                 onclick="openVideoModal('{{ addslashes($vg->title) }}', '{{ $embed }}')">
+                                <div class="card-accent-bar" style="background: linear-gradient(90deg, #16a34a, #059669);"></div>
+                                
+                                <div class="position-relative overflow-hidden" style="height: 235px;">
+                                    <img src="{{ $videoThumb }}" alt="{{ $vg->title }}" class="w-100 h-100 object-fit-cover gallery-img-thumb" style="transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);">
+                                    <div class="news-img-gradient-overlay"></div>
+                                    
+                                    <!-- Play Button Center Overlay -->
+                                    <div class="position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 58px; height: 58px; background: rgba(22, 163, 74, 0.92); color: #fff; font-size: 1.6rem; z-index: 2; transition: transform 0.3s ease;">
+                                        <i class="bi bi-play-fill"></i>
+                                    </div>
+
+                                    <div class="position-absolute top-0 start-0 m-3" style="z-index: 2;">
+                                        <span class="badge bg-success text-white px-3 py-1.5 rounded-pill font-monospace small shadow-xs">
+                                            <i class="bi bi-play-btn-fill me-1"></i> VIDEO
+                                        </span>
+                                    </div>
+
+                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 2;">
+                                        <span class="badge bg-dark bg-opacity-75 text-white rounded-pill px-3 py-1.5 small shadow-sm backdrop-blur">
+                                            <i class="bi bi-play-circle me-1"></i> Putar Video
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <span class="text-success fw-bold text-uppercase small mb-1.5" style="font-size: 0.74rem; letter-spacing: 0.8px;">
+                                        {{ $vg->category ?? 'Dokumentasi Video DLH' }}
+                                    </span>
+                                    <h5 class="fw-extrabold text-dark mb-2 news-title" style="font-size: 1.08rem; line-height: 1.45;">
+                                        {{ $vg->title }}
+                                    </h5>
+                                    @if($vg->description)
+                                    <p class="text-muted small mb-0 flex-grow-1" style="line-height: 1.65; font-size: 0.87rem;">
+                                        {{ Str::limit($vg->description, 95) }}
+                                    </p>
+                                    @endif
+                                    <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between text-muted" style="font-size: 0.78rem;">
+                                        <span><i class="bi bi-youtube text-danger me-1"></i> Video Resmi DLH</span>
+                                        <span class="text-success fw-bold d-inline-flex align-items-center gap-1"><i class="bi bi-play-fill"></i> Tonton Video</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h4 class="fw-bold text-dark mb-2">Belum Ada Dokumentasi Gambar</h4>
-                        <p class="text-muted small mb-0">Foto kegiatan belum tersedia saat ini.</p>
-                    </div>
+                    @empty
+                        <div class="col-12 text-center py-5">
+                            <div class="py-5 bg-white rounded-4 border shadow-sm p-4 mx-auto" style="max-width: 580px;">
+                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3 text-muted" style="width: 76px; height: 76px; font-size: 2.5rem;">
+                                    <i class="bi bi-play-btn-fill text-danger"></i>
+                                </div>
+                                <h4 class="fw-bold text-dark mb-2">Belum Ada Dokumentasi Video</h4>
+                                <p class="text-muted small mb-0">Video kegiatan belum tersedia saat ini.</p>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
-            @endforelse
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VIDEO PLAYER -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-white rounded-4 overflow-hidden border-0 shadow-lg" style="box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;">
+            <div class="modal-header border-0 pb-0 justify-content-between align-items-center p-3 p-md-4">
+                <div class="d-flex align-items-center gap-2 overflow-hidden me-2">
+                    <span class="badge bg-danger rounded-pill px-2.5 py-1 font-monospace small"><i class="bi bi-play-fill"></i> VIDEO</span>
+                    <h5 class="modal-title fw-bold text-white mb-0 text-truncate" id="videoModalTitle"></h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 p-md-4 text-center">
+                <div id="videoModalContainer" class="ratio ratio-16x9 rounded-3 overflow-hidden bg-black border border-secondary border-opacity-25"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -390,6 +494,35 @@
             }
         }
     }
+
+    // Video Modal Handler
+    let videoModalInstance = null;
+    function openVideoModal(title, embedUrl) {
+        document.getElementById('videoModalTitle').innerText = title;
+        const container = document.getElementById('videoModalContainer');
+        container.innerHTML = `<iframe src="${embedUrl}?autoplay=1" title="${title}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border:0; width:100%; height:100%;"></iframe>`;
+        
+        if (!videoModalInstance) {
+            const modalEl = document.getElementById('videoModal');
+            videoModalInstance = new bootstrap.Modal(modalEl);
+            modalEl.addEventListener('hidden.bs.modal', function() {
+                container.innerHTML = '';
+            });
+        }
+        videoModalInstance.show();
+    }
+
+    // Auto switch tab if ?type=video is present
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('type') === 'video') {
+            const videoTabBtn = document.getElementById('video-pill-tab');
+            if (videoTabBtn) {
+                const tab = new bootstrap.Tab(videoTabBtn);
+                tab.show();
+            }
+        }
+    });
 
     // Fallback backward compatibility
     function previewImage(title, imgUrl, desc) {

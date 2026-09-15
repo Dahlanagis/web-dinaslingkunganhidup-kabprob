@@ -311,9 +311,11 @@ Route::get('/artikel/{slug}', function ($slug) {
     return view('berita.show', compact('post', 'recentPosts'));
 });
 
-// Galeri Gambar (Foto Dokumentasi saja)
-Route::get('/informasi/galeri', function () {
-    $galleries = \App\Models\Gallery::where(function($q) {
+// Galeri Foto & Video Dokumentasi
+Route::get('/informasi/galeri', function (\Illuminate\Http\Request $request) {
+    $activeType = $request->query('type', 'foto');
+
+    $photoGalleries = \App\Models\Gallery::where(function($q) {
         $q->where('type', 'foto')
           ->orWhereNull('type');
     })->where(function($q) {
@@ -321,7 +323,24 @@ Route::get('/informasi/galeri', function () {
           ->orWhere('video_url', '');
     })->latest()->get();
 
-    return view('galeri.index', compact('galleries'));
+    $videoGalleries = \App\Models\Gallery::where(function($q) {
+        $q->where('type', 'video')
+          ->orWhere(function($q2) {
+              $q2->whereNotNull('video_url')->where('video_url', '!=', '');
+          });
+    })->latest()->get();
+
+    $galleries = $photoGalleries; // Fallback compatibility
+
+    return view('galeri.index', compact('photoGalleries', 'videoGalleries', 'galleries', 'activeType'));
+});
+
+Route::get('/informasi/video', function () {
+    return redirect('/informasi/galeri?type=video');
+});
+
+Route::get('/video', function () {
+    return redirect('/informasi/galeri?type=video');
 });
 
 Route::get('/galeri', function () {

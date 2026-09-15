@@ -1042,8 +1042,8 @@
                     <button type="button" class="gallery-nav-btn" onclick="slideGallery(1)" aria-label="Berikutnya" title="Geser ke Kanan">
                         <i class="bi bi-chevron-right"></i>
                     </button>
-                    <a href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2 ms-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
-                        Semua Foto <i class="bi bi-arrow-right ms-1"></i>
+                    <a id="btnAllGallery" href="{{ url('/informasi/galeri') }}" class="btn fw-semibold px-4 py-2 ms-2" style="background:#f0fdf4;color:var(--g700);border:1px solid rgba(22,163,74,.2);border-radius:10px;white-space:nowrap;transition:all .3s;">
+                        <span id="btnAllGalleryText">Semua Foto</span> <i class="bi bi-arrow-right ms-1"></i>
                     </a>
                 </div>
             </div>
@@ -1162,6 +1162,18 @@
                         @empty
                             <p class="text-muted w-100 text-center py-4">Belum ada video galeri.</p>
                         @endforelse
+
+                        <!-- KARTU LIHAT SEMUA VIDEO KETIKA DIGESER KE SAMPING -->
+                        <a href="{{ url('/informasi/galeri?type=video') }}" class="gallery-item d-flex flex-column align-items-center justify-content-center text-decoration-none p-4 text-center" style="background: linear-gradient(145deg, #022c22 0%, #064e3b 50%, #047857 100%); border: 2px dashed rgba(74, 222, 128, 0.4); border-radius: 1.25rem; min-width: 260px; flex: 0 0 280px; transition: all .35s ease;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 text-white shadow-lg" style="width: 64px; height: 64px; background: rgba(255,255,255,0.15); font-size: 1.8rem; border: 1px solid rgba(255,255,255,0.25);">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                            <h5 class="text-white fw-bold mb-1.5" style="font-size: 1.1rem;">Lihat Semua Video</h5>
+                            <p class="text-white-50 small mb-3" style="line-height: 1.5; font-size: 0.82rem;">Jelajahi seluruh dokumentasi video resmi kegiatan DLH</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3 py-1.5 fw-bold text-success shadow-xs d-inline-flex align-items-center gap-1.5" style="font-size: 0.82rem;">
+                                Buka Semua Video <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1394,6 +1406,25 @@
                 }
             }, true);
         });
+
+        // Sinkronisasi teks tombol galeri ketika tab berganti
+        const galTab = document.getElementById('galTab');
+        if (galTab) {
+            galTab.addEventListener('shown.bs.tab', (e) => {
+                const isVideo = e.target.getAttribute('data-bs-target') === '#galVideo';
+                const btn = document.getElementById('btnAllGallery');
+                const txt = document.getElementById('btnAllGalleryText');
+                if (btn && txt) {
+                    if (isVideo) {
+                        btn.href = '{{ url("/informasi/galeri?type=video") }}';
+                        txt.innerText = 'Semua Video';
+                    } else {
+                        btn.href = '{{ url("/informasi/galeri") }}';
+                        txt.innerText = 'Semua Foto';
+                    }
+                }
+            });
+        }
     });
     </script>
     <style>
