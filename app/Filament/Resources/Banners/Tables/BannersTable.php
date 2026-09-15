@@ -22,13 +22,16 @@ class BannersTable
                     ->label('Judul Banner')
                     ->searchable()
                     ->sortable()
-                    ->weight('bold'),
+                    ->weight('bold')
+                    ->toggleable(),
                 ImageColumn::make('image')
                     ->label('Pratinjau Banner')
-                    ->disk('public'),
+                    ->disk('public')
+                    ->toggleable(),
                 IconColumn::make('is_active')
                     ->label('Status Aktif')
-                    ->boolean(),
+                    ->boolean()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->label('Dibuat Pada')
                     ->dateTime('d M Y H:i')

@@ -58,17 +58,14 @@
 
             <div style="margin-bottom: 20px;">
                 <!-- PARENT MENU CARD (DLH Deep Forest Green Gradient) -->
-                <div style="background: linear-gradient(135deg, #092612 0%, #14532d 100%); border-radius: 18px; padding: 16px 22px; color: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 8px 24px -4px rgba(9, 38, 18, 0.35); border: 1px solid rgba(134, 239, 172, 0.25); position: relative; overflow: hidden; transition: all 0.2s ease;"
-                     onmouseover="this.style.boxShadow='0 10px 28px -2px rgba(9, 38, 18, 0.45)'; this.style.borderColor='rgba(134, 239, 172, 0.4)';"
-                     onmouseout="this.style.boxShadow='0 8px 24px -4px rgba(9, 38, 18, 0.35)'; this.style.borderColor='rgba(134, 239, 172, 0.25)';"
+                <div style="background: linear-gradient(135deg, #092612 0%, #14532d 100%); border-radius: 18px; padding: 16px 22px; color: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 8px 24px -4px rgba(9, 38, 18, 0.35); border: 1px solid rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; transition: all 0.2s ease;"
+                     onmouseover="this.style.boxShadow='0 10px 28px -2px rgba(9, 38, 18, 0.45)'; this.style.borderColor='rgba(255, 255, 255, 0.2)';"
+                     onmouseout="this.style.boxShadow='0 8px 24px -4px rgba(9, 38, 18, 0.35)'; this.style.borderColor='rgba(255, 255, 255, 0.1)';"
                 >
-                    <!-- Subtle top emerald accent line -->
-                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #4ade80 0%, #22c55e 50%, #86efac 100%);"></div>
-
                     <!-- Left: Order Badge + Menu Label & URL -->
                     <div style="display: flex; align-items: center; gap: 16px; min-width: 0; position: relative; z-index: 2;">
-                        <!-- DLH Emerald & Gold Order Badge -->
-                        <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 900; font-size: 1.15rem; min-width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4); border: 1.5px solid #86efac; flex-shrink: 0; letter-spacing: -0.02em;">
+                        <!-- DLH Emerald Order Badge -->
+                        <div style="background: linear-gradient(135deg, #15803d 0%, #166534 100%); color: #ffffff; font-weight: 900; font-size: 1.15rem; min-width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.2); flex-shrink: 0; letter-spacing: -0.02em;">
                             {{ $orderPadded }}
                         </div>
 
@@ -154,8 +151,8 @@
                 <!-- SUB-MENU LIST (High-Precision Tree Guide Line) -->
                 @if($hasChildren)
                     <div style="margin-left: 28px; position: relative; padding-left: 28px; margin-top: 12px; margin-bottom: 16px;">
-                        <!-- Solid High-Precision Emerald Track Rail -->
-                        <div style="position: absolute; left: 12px; top: -6px; bottom: 28px; width: 2.5px; background: linear-gradient(180deg, #86efac 0%, #cbd5e1 80%, rgba(203, 213, 225, 0.2) 100%); border-radius: 2px;"></div>
+                        <!-- Solid High-Precision Track Rail -->
+                        <div style="position: absolute; left: 12px; top: -6px; bottom: 28px; width: 2.5px; background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 80%, rgba(203, 213, 225, 0.2) 100%); border-radius: 2px;"></div>
 
                         @foreach($root->children as $child)
                             <div style="position: relative; margin-bottom: 10px;">

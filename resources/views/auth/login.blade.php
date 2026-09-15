@@ -437,12 +437,6 @@
                     </div>
                 @endif
 
-                <div class="mb-3 p-3 rounded-3" style="background: #f0fdf4; border: 1px solid #bbf7d0; font-size: 0.82rem; color: #166534;">
-                    <div class="fw-bold mb-1"><i class="bi bi-shield-lock-fill me-1 text-success"></i> Kredensial Administrator:</div>
-                    <div style="line-height: 1.5;">Email: <strong>superadminDLH@gmail.com</strong> (atau: <strong>superadminDLH</strong>)</div>
-                    <div style="line-height: 1.5;">Password: <strong>password</strong></div>
-                </div>
-
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 

@@ -16,6 +16,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        \Filament\Tables\Columns\Column::configureUsing(function (\Filament\Tables\Columns\Column $column): void {
+            $column->toggleable();
+        });
+
         \Filament\Support\Facades\FilamentView::registerRenderHook(
             'panels::head.start',
             function (): string {
@@ -866,45 +870,7 @@ class AppServiceProvider extends ServiceProvider
 
                     <!-- Menu Items (Biasa & Keren) -->
                     <div style="display: flex; flex-direction: column; gap: 2px;">
-                        ' . ($isSuperAdmin ? '
-                        <a href="/admin/users" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: #1e293b; transition: all 0.15s ease;" onmouseover="this.style.backgroundColor=\'#f1f5f9\'; this.style.transform=\'translateX(2px)\';" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.transform=\'translateX(0)\';">
-                            <div style="display: flex; align-items: center; gap: 9px;">
-                                <div style="width: 28px; height: 28px; border-radius: 8px; background: #f8fafc; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; color: #475569;">
-                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
-                                </div>
-                                <div style="display: flex; flex-direction: column;">
-                                    <span style="font-size: 0.8rem; font-weight: 700; color: #1e293b; line-height: 1.2;">Kelola Pengguna</span>
-                                    <span style="font-size: 0.67rem; color: #64748b; line-height: 1.2;">Manajemen akun sistem</span>
-                                </div>
-                            </div>
-                            <svg style="width: 13px; height: 13px; color: #94a3b8;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-                        </a>' : '') . '
 
-                        <a href="/" target="_blank" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: #1e293b; transition: all 0.15s ease;" onmouseover="this.style.backgroundColor=\'#f1f5f9\'; this.style.transform=\'translateX(2px)\';" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.transform=\'translateX(0)\';">
-                            <div style="display: flex; align-items: center; gap: 9px;">
-                                <div style="width: 28px; height: 28px; border-radius: 8px; background: #ecfdf5; border: 1px solid #a7f3d0; display: flex; align-items: center; justify-content: center; color: #15803d;">
-                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
-                                </div>
-                                <div style="display: flex; flex-direction: column;">
-                                    <span style="font-size: 0.8rem; font-weight: 700; color: #1e293b; line-height: 1.2;">Portal Web Publik</span>
-                                    <span style="font-size: 0.67rem; color: #64748b; line-height: 1.2;">Buka situs utama DLH</span>
-                                </div>
-                            </div>
-                            <svg style="width: 13px; height: 13px; color: #15803d;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                        </a>
-
-                        <a href="/admin/activity-logs" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: #1e293b; transition: all 0.15s ease;" onmouseover="this.style.backgroundColor=\'#f1f5f9\'; this.style.transform=\'translateX(2px)\';" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.transform=\'translateX(0)\';">
-                            <div style="display: flex; align-items: center; gap: 9px;">
-                                <div style="width: 28px; height: 28px; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; display: flex; align-items: center; justify-content: center; color: #2563eb;">
-                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                </div>
-                                <div style="display: flex; flex-direction: column;">
-                                    <span style="font-size: 0.8rem; font-weight: 700; color: #1e293b; line-height: 1.2;">Log Aktivitas</span>
-                                    <span style="font-size: 0.67rem; color: #64748b; line-height: 1.2;">Catatan riwayat sistem</span>
-                                </div>
-                            </div>
-                            <svg style="width: 13px; height: 13px; color: #94a3b8;" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-                        </a>
 
                         <button type="button" onclick="event.preventDefault(); event.stopPropagation(); window.openRoleSelectorModal();" style="width: 100%; border: none; background: transparent; display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 9px; text-decoration: none; color: #1e293b; cursor: pointer; transition: all 0.15s ease; text-align: left;" onmouseover="this.style.backgroundColor=\'#f0fdf4\'; this.style.transform=\'translateX(2px)\';" onmouseout="this.style.backgroundColor=\'transparent\'; this.style.transform=\'translateX(0)\';">
                             <div style="display: flex; align-items: center; gap: 9px;">
