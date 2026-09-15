@@ -1044,24 +1044,52 @@
                         @php
                             // Get all galleries of type foto
                             $galleries = \App\Models\Gallery::where('type', 'foto')->latest()->take(10)->get();
-                            $allPhotos = [];
-                            foreach($galleries as $g) {
-                                $imgs = $g->images ?? [];
-                                foreach($imgs as $img) {
-                                    $allPhotos[] = ['title' => $g->title, 'path' => $img, 'cat' => $g->category];
-                                }
-                            }
                         @endphp
-                        @forelse($allPhotos as $foto)
+                        @forelse($galleries as $g)
                             @php
-                                $imgSrc = asset('storage/' . $foto['path']);
+                                $imgs = $g->images ?? [];
+                                if (!is_array($imgs)) {
+                                    $imgs = !empty($imgs) ? [$imgs] : [];
+                                }
+                                $imgs = array_values(array_filter($imgs, fn($i) => !empty($i)));
+                                $count = count($imgs);
+                                $allUrls = [];
+                                foreach($imgs as $img) {
+                                    $allUrls[] = str_starts_with($img, 'http') ? $img : asset('storage/' . ltrim($img, '/'));
+                                }
+                                $thumbSrc = $count > 0 ? $allUrls[0] : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop';
                             @endphp
-                            <div class="gallery-item" style="cursor:pointer;" onclick="openLightbox('{{ $imgSrc }}', '{{ addslashes($foto['title']) }}', 'photo')">
-                                <img src="{{ $imgSrc }}" alt="{{ $foto['title'] }}">
+                            <div class="gallery-item" style="cursor:pointer;" onclick="openAlbumLightbox({{ json_encode($allUrls) }}, '{{ addslashes($g->title) }}', '{{ addslashes($g->category ?? 'Kegiatan Lapangan') }}')">
+                                <img src="{{ $thumbSrc }}" alt="{{ $g->title }}">
                                 <div class="gallery-item-overlay"></div>
+
+                                @if($count > 1)
+                                    <!-- Badge Album di Pojok Kiri Atas -->
+                                    <div class="position-absolute top-0 start-0 m-3" style="z-index: 3;">
+                                        <span class="badge" style="background: linear-gradient(135deg, #059669, #10b981); color:#fff; font-size:.72rem; padding: 5px 12px; border-radius: 100px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                            <i class="bi bi-images"></i> ALBUM ({{ $count }} FOTO)
+                                        </span>
+                                    </div>
+                                    <!-- Indikator Album di Pojok Kanan Atas -->
+                                    <div class="position-absolute top-0 end-0 m-3" style="z-index: 3;">
+                                        <span class="badge" style="background: rgba(15,23,42,0.75); backdrop-filter: blur(4px); color: #fff; font-size: .68rem; padding: 4px 9px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.2);">
+                                            <i class="bi bi-collection-fill text-warning"></i> {{ $count }}
+                                        </span>
+                                    </div>
+                                @endif
+
                                 <div class="gallery-item-content">
-                                    <span class="badge mb-2" style="background:rgba(4,120,87,.9);color:#fff;font-size:.7rem;padding:4px 10px;border-radius:100px;backdrop-filter:blur(4px);"><i class="bi bi-images me-1"></i>{{ $foto['cat'] ?? 'FOTO' }}</span>
-                                    <h6>{{ $foto['title'] }}</h6>
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                        <span class="badge" style="background:rgba(4,120,87,.9);color:#fff;font-size:.7rem;padding:4px 10px;border-radius:100px;backdrop-filter:blur(4px);">
+                                            <i class="bi bi-tag-fill me-1"></i>{{ $g->category ?? 'FOTO' }}
+                                        </span>
+                                        @if($count > 1)
+                                            <span class="text-white-50 small" style="font-size: 0.72rem;">
+                                                <i class="bi bi-camera me-1"></i>{{ $count }} Foto Dokumentasi
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <h6>{{ $g->title }}</h6>
                                 </div>
                             </div>
                         @empty
@@ -1114,34 +1142,180 @@
         </div>
     </section>
 
-    <!-- LIGHTBOX MODAL -->
+    <!-- LIGHTBOX MODAL UNTUK GAMBAR / ALBUM / VIDEO -->
     <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content bg-transparent border-0">
-          <div class="modal-header border-0 pb-1 justify-content-end">
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1) grayscale(100%) brightness(200%);"></button>
+        <div class="modal-content bg-dark text-white rounded-4 overflow-hidden border-0 shadow-lg" style="box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;">
+          <div class="modal-header border-0 pb-0 justify-content-between align-items-center p-3 p-md-4">
+            <div class="d-flex align-items-center gap-2 overflow-hidden me-2">
+                <span id="lbCounterBadge" class="badge bg-success rounded-pill px-2.5 py-1 font-monospace small flex-shrink-0" style="display:none;"></span>
+                <h5 class="modal-title fw-bold text-white mb-0 text-truncate" id="lightboxTitle"></h5>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body text-center p-0" id="lightboxBody">
+          <div class="modal-body text-center p-3 p-md-4 position-relative" id="lightboxBody">
             <!-- Content injected via JS -->
           </div>
-          <div class="text-center mt-3 text-white h5" id="lightboxTitle"></div>
+          <!-- Thumbnail Bar untuk Album -->
+          <div id="lbThumbBar" class="d-flex gap-2 justify-content-center overflow-x-auto py-2 px-3 bg-black bg-opacity-50 border-top border-secondary border-opacity-25" style="display:none !important;"></div>
         </div>
       </div>
     </div>
 
     <script>
+    let lbPhotos = [];
+    let lbIndex = 0;
+    let lbModalInstance = null;
+
+    function openAlbumLightbox(photos, title, category) {
+        if (!Array.isArray(photos)) {
+            photos = photos ? [photos] : [];
+        }
+        lbPhotos = photos;
+        lbIndex = 0;
+
+        document.getElementById('lightboxTitle').innerText = title;
+        const badge = document.getElementById('lbCounterBadge');
+        const thumbBar = document.getElementById('lbThumbBar');
+
+        if (lbPhotos.length > 1) {
+            badge.style.display = 'inline-block';
+            thumbBar.style.setProperty('display', 'flex', 'important');
+            
+            // Render thumbnail strip
+            thumbBar.innerHTML = '';
+            lbPhotos.forEach((src, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `btn p-0 rounded-3 overflow-hidden border-2 flex-shrink-0 transition-all ${idx === 0 ? 'border-success opacity-100 shadow-sm' : 'border-secondary opacity-50'}`;
+                btn.style.width = '48px';
+                btn.style.height = '48px';
+                btn.onclick = () => setLbPhoto(idx);
+
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'w-100 h-100 object-fit-cover';
+                btn.appendChild(img);
+                thumbBar.appendChild(btn);
+            });
+        } else {
+            badge.style.display = 'none';
+            thumbBar.style.setProperty('display', 'none', 'important');
+            thumbBar.innerHTML = '';
+        }
+
+        renderLbBody();
+        showLbModal();
+    }
+
+    function renderLbBody() {
+        const body = document.getElementById('lightboxBody');
+        const photoUrl = lbPhotos[lbIndex] || '';
+
+        let navHtml = '';
+        if (lbPhotos.length > 1) {
+            navHtml = `
+                <button type="button" onclick="navigateLb(-1)" class="btn btn-dark bg-opacity-75 text-white position-absolute start-0 top-50 translate-middle-y ms-3 rounded-circle shadow-lg d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; z-index: 5; border: 1px solid rgba(255,255,255,0.2);">
+                    <i class="bi bi-chevron-left fs-5"></i>
+                </button>
+                <button type="button" onclick="navigateLb(1)" class="btn btn-dark bg-opacity-75 text-white position-absolute end-0 top-50 translate-middle-y me-3 rounded-circle shadow-lg d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; z-index: 5; border: 1px solid rgba(255,255,255,0.2);">
+                    <i class="bi bi-chevron-right fs-5"></i>
+                </button>
+            `;
+            document.getElementById('lbCounterBadge').innerText = `Foto ${lbIndex + 1} dari ${lbPhotos.length}`;
+        }
+
+        body.innerHTML = `
+            <div class="position-relative rounded-4 overflow-hidden bg-black d-flex align-items-center justify-content-center border border-secondary border-opacity-25" style="min-height: 380px; max-height: 72vh;">
+                <img id="lbMainImg" src="${photoUrl}" class="img-fluid rounded" alt="Foto Galeri" style="max-height: 70vh; object-fit: contain; transition: opacity 0.15s ease;">
+                ${navHtml}
+            </div>
+        `;
+
+        // Update active thumb
+        const thumbBar = document.getElementById('lbThumbBar');
+        if (thumbBar && thumbBar.children.length > 0) {
+            const thumbs = thumbBar.children;
+            for (let i = 0; i < thumbs.length; i++) {
+                if (i === lbIndex) {
+                    thumbs[i].className = 'btn p-0 rounded-3 overflow-hidden border-2 border-success opacity-100 shadow-sm flex-shrink-0';
+                    thumbs[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                } else {
+                    thumbs[i].className = 'btn p-0 rounded-3 overflow-hidden border-2 border-secondary border-opacity-50 opacity-50 flex-shrink-0';
+                }
+            }
+        }
+    }
+
+    function setLbPhoto(idx) {
+        if (idx < 0 || idx >= lbPhotos.length) return;
+        lbIndex = idx;
+        const img = document.getElementById('lbMainImg');
+        if (img) {
+            img.style.opacity = '0.3';
+            setTimeout(() => {
+                img.src = lbPhotos[lbIndex];
+                img.style.opacity = '1';
+                document.getElementById('lbCounterBadge').innerText = `Foto ${lbIndex + 1} dari ${lbPhotos.length}`;
+            }, 100);
+        } else {
+            renderLbBody();
+        }
+
+        const thumbBar = document.getElementById('lbThumbBar');
+        if (thumbBar && thumbBar.children.length > 0) {
+            const thumbs = thumbBar.children;
+            for (let i = 0; i < thumbs.length; i++) {
+                thumbs[i].className = (i === lbIndex) 
+                    ? 'btn p-0 rounded-3 overflow-hidden border-2 border-success opacity-100 shadow-sm flex-shrink-0'
+                    : 'btn p-0 rounded-3 overflow-hidden border-2 border-secondary border-opacity-50 opacity-50 flex-shrink-0';
+            }
+        }
+    }
+
+    function navigateLb(direction) {
+        if (lbPhotos.length <= 1) return;
+        lbIndex = (lbIndex + direction + lbPhotos.length) % lbPhotos.length;
+        setLbPhoto(lbIndex);
+    }
+
+    function showLbModal() {
+        const modalEl = document.getElementById('lightboxModal');
+        if (!lbModalInstance) {
+            lbModalInstance = new bootstrap.Modal(modalEl);
+            modalEl.addEventListener('keydown', function(e) {
+                if (lbPhotos.length > 1) {
+                    if (e.key === 'ArrowLeft') navigateLb(-1);
+                    else if (e.key === 'ArrowRight') navigateLb(1);
+                }
+            });
+        }
+        lbModalInstance.show();
+    }
+
     function openLightbox(src, title, type) {
         const body = document.getElementById('lightboxBody');
         const titleEl = document.getElementById('lightboxTitle');
+        const badge = document.getElementById('lbCounterBadge');
+        const thumbBar = document.getElementById('lbThumbBar');
+
         titleEl.innerText = title;
+        badge.style.display = 'none';
+        thumbBar.style.setProperty('display', 'none', 'important');
+        thumbBar.innerHTML = '';
+        lbPhotos = [];
         
         if(type === 'video') {
-            body.innerHTML = `<div class="ratio ratio-16x9"><iframe src="${src}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen class="rounded"></iframe></div>`;
+            body.innerHTML = `<div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg"><iframe src="${src}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen class="rounded"></iframe></div>`;
         } else {
-            body.innerHTML = `<img src="${src}" class="img-fluid rounded shadow-lg" alt="${title}" style="max-height:80vh;">`;
+            body.innerHTML = `
+                <div class="rounded-4 overflow-hidden bg-black d-flex align-items-center justify-content-center border border-secondary border-opacity-25" style="min-height: 380px; max-height: 72vh;">
+                    <img src="${src}" class="img-fluid rounded" alt="${title}" style="max-height:70vh; object-fit: contain;">
+                </div>
+            `;
         }
         
-        new bootstrap.Modal(document.getElementById('lightboxModal')).show();
+        showLbModal();
     }
     </script>
 
